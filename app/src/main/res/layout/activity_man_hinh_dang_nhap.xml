@@ -1,16 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Auto layout, variables, and unit scale are not yet supported -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".man_hinh_dang_nhap">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="28sp"
-    android:text=""/>
+    android:layout_height="932dp"
+    android:clipToOutline="true"
+    android:background="#DE95A8">
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/image_1"
+        android:layout_width="367dp"
+        android:layout_height="367dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/logo_petfood" />
+    <View
+        android:id="@+id/rectangle_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="368dp"
+        android:background="@drawable/khung_radius_top_30"
+        />
+    <TextView
+        android:id="@+id/sign_up"
+        android:layout_width="150dp"
+        android:layout_height="53dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="386dp"
+        android:text="@string/sign_up"
+        android:textAppearance="@style/sign_up"
+        android:gravity="center_horizontal|center_vertical"
+        android:lineHeight="28sp"
+        />
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="153dp"
+        android:layout_height="43dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="462dp"
+        android:text="@string/user_name"
+        android:textAppearance="@style/user_name"
+        android:gravity="center_horizontal|center_vertical"
+        />
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="31dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="520dp"
+        android:drawableStart="@drawable/ic_userlogin"
+        android:background="@drawable/khungedittextlogin"/>
+</RelativeLayout>
+
+
