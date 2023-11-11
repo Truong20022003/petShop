@@ -8,9 +8,11 @@
     android:gravity="center"
     tools:context=".man_hinh_cho">
 
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/logo_petfood"
+
         />
 </LinearLayout>
