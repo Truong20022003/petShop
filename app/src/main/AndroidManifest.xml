@@ -13,6 +13,9 @@
         android:theme="@style/Theme.PetShop"
         tools:targetApi="31">
         <activity
+            android:name=".man_hinh_dang_ky"
+            android:exported="false" />
+        <activity
             android:name=".man_hinh_dang_nhap"
             android:exported="false" />
         <activity
