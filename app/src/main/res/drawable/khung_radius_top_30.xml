@@ -4,8 +4,7 @@
 
     >
 <corners android:topRightRadius="30dp" android:topLeftRadius="30dp"/>
-    <size android:width="430dp"
-        android:height="564dp"/>
+
     <solid android:color="@color/vang_nhat"/>
 
 </shape>

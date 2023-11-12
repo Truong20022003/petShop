@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Pet Shop</string>
-    <string name="sign_up">Sign up</string>
-    <string name="user_name">User name</string>
+    <string name="sign_up">Đăng nhập</string>
+    <string name="user_name">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
 </resources>
