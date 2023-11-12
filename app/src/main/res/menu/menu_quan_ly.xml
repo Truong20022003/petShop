@@ -1,4 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_manage_users"
+        android:title="Quản lý người dùng"
+        android:icon="@drawable/ic_qlnguoidung"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_manage_products"
+        android:title="Quản lý sản phẩm"
+        android:icon="@drawable/ic_qlsanpham"
+        android:orderInCategory="200"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_manage_categories"
+        android:title="Quản lý loại sản phẩm"
+        android:icon="@drawable/ic_loaisp"
+        android:orderInCategory="300"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_manage_orders"
+        android:title="Quản lý đơn hàng"
+        android:icon="@drawable/ic_qldonhang"
+        android:orderInCategory="400"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_manage_deposit"
+        android:title="Quản lý nạp tiền"
+        android:icon="@drawable/ic_qlnaptien"
+        android:orderInCategory="500"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_statistics"
+        android:title="Thống kê"
+        android:icon="@drawable/ic_thongke"
+        android:orderInCategory="600"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_about_us"
+        android:title="Về chúng tôi"
+        android:icon="@drawable/ic_vechungtoi"
+        android:orderInCategory="700"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="Đăng xuất"
+        android:icon="@drawable/ic_dangxuat"
+        android:orderInCategory="800"
+        app:showAsAction="never" />
 </menu>

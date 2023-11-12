@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_bot_product"
+        android:icon="@drawable/ic_home"
+        android:title="" />
+
+    <item
+        android:id="@+id/nav_bot_category"
+        android:icon="@drawable/ic_sanpham"
+        android:title="" />
+
+    <item
+        android:id="@+id/nav_bot_bill"
+        android:icon="@drawable/ic_giohang"
+        android:title="" />
+
+    <item
+        android:id="@+id/nav_bot_member"
+        android:icon="@drawable/ic_naptien"
+        android:title="" />
+
+
+</menu>

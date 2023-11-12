@@ -9,11 +9,10 @@
 
     <ImageView
         android:id="@+id/image_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200sp"
+        android:layout_height="200sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-30sp"
         android:background="@drawable/ic_logo" />
 
     <View
@@ -62,6 +61,7 @@
         android:layout_below="@+id/txtTen_Dang_Nhap"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15sp"
+        android:layout_marginHorizontal="10sp"
         android:fontFamily="@font/baloothambi2regular"
         android:background="@drawable/khungedittextlogin"
         android:drawableStart="@drawable/ic_userlogin"
@@ -89,6 +89,7 @@
         android:layout_below="@+id/txt_Mat_Khau"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15sp"
+        android:layout_marginHorizontal="10sp"
         android:background="@drawable/khungedittextlogin"
         android:drawableStart="@drawable/ic_passwordlogin"
         android:autofillHints="password"
