@@ -5,8 +5,9 @@
     android:orientation="vertical"
     android:gravity="center_horizontal">
     <ImageView
-        android:layout_width="230sp"
+        android:layout_width="match_parent"
         android:layout_height="230sp"
         android:src="@drawable/logo_petfood"
+        android:background="@color/mau_hong"
         />
 </LinearLayout>
