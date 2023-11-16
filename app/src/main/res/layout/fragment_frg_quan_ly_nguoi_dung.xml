@@ -3,21 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.frgQuanLyNguoiDung">
 
     <ListView
     android:id="@+id/lv_Nguoi_Dung"
     android:layout_width="match_parent"
+        tools:listitem="@layout/item_ql_nd"
     android:layout_height="match_parent"/>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fl_Nguoi_Dung"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="#DDEDEF"
-        android:text="ADD"/>
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="80sp"
+        app:srcCompat="@drawable/add_doan"
+        app:fabSize="auto"
+        app:maxImageSize="60dp"/>
 
 </FrameLayout>
