@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import fpoly.truongtqph41980.petshop.Dao.LoaiSanPhamDao;
 import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.adapter.adapter_loai_san_pham;
-import fpoly.truongtqph41980.petshop.model.LoaiSanPham;
+import fpoly.truongtqph41980.petshop.Model.LoaiSanPham;
 
 
 public class frgQuanLyLoaiSanPham extends Fragment {

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.LoaiSanPhamDao;
 import fpoly.truongtqph41980.petshop.R;
-import fpoly.truongtqph41980.petshop.model.LoaiSanPham;
+import fpoly.truongtqph41980.petshop.Model.LoaiSanPham;
 
 public class adapter_loai_san_pham extends RecyclerView.Adapter<adapter_loai_san_pham.viewhl> {
     private final Context context;
