@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thêm Người Dùng"
+        android:textSize="20sp"
+
+        />
+    <EditText
+        android:id="@+id/Add_ten_TK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập tên tài khoản"
+        />
+    <EditText
+        android:id="@+id/Add_Mk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập mật khẩu"
+        />
+    <EditText
+        android:id="@+id/Add_Ho_Ten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập họ tên"
+        />
+    <EditText
+        android:id="@+id/Add_So_DT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập số ddienj thoại"
+        />
+    <EditText
+        android:id="@+id/Add_Dia_Chi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập địa chỉ"
+        />
+    <EditText
+        android:id="@+id/Add_Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập email"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10sp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_huy_ND"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hủy" />
+
+
+
+        <Button
+            android:id="@+id/btn_them_ND"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/khung_item"
+    >
+    <TextView
+        android:id="@+id/txt_Ma_Nguoi_dung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:text="Mã người dùng: "
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txt_Ten_Nguoi_Dung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:text="Tên người dùng: "
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txt_Dia_chi_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:text="Địa chỉ email: "
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txt_So_Dien_Thoai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:text="Số điện thoại: "
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txt_Dia_Chi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:text="Địa chỉ: "
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txt_Coins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:text="Coins: "
+        android:textSize="20sp" />
+
+
+</LinearLayout>
