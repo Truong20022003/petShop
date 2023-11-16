@@ -20,10 +20,11 @@
             android:text="Mã loại sản "
             android:textSize="20sp" />
         <ImageButton
+            android:id="@+id/btnxoa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_xoa"
-            android:background="none"
+            android:background="@drawable/khung_item"
             android:layout_gravity="right|center"
             android:layout_marginRight="10sp"
          />
