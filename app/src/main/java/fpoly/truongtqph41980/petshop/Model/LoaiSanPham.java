@@ -1,4 +1,4 @@
-package fpoly.truongtqph41980.petshop.model;
+package fpoly.truongtqph41980.petshop.Model;
 
 public class LoaiSanPham {
     private int maloaisp;
