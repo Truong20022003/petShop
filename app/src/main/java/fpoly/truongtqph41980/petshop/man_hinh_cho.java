@@ -19,7 +19,8 @@ public class man_hinh_cho extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(man_hinh_cho.this, man_hinh_dang_nhap.class);
                 startActivity(intent);
+                finish();
             }
-        },3000);
+        },1000);
     }
 }

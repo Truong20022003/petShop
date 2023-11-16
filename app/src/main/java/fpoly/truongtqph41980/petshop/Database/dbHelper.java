@@ -26,7 +26,12 @@ public class dbHelper extends SQLiteOpenHelper {
                 " sotien integer not null," +
                 "loaitaikhoan text not null)";
         sqLiteDatabase.execSQL(taiKhoan);
-//        sqLiteDatabase.execSQL("INSERT INTO TAIKHOAN VALUES(1,'admin1','123','Trần Quang Trường','truong@gmail.com','0787613866','nghe an',1000,'admin')");
+        sqLiteDatabase.execSQL("INSERT INTO TAIKHOAN VALUES(1,'truongtq','123','Trần Quang Trường','truong@gmail.com','0787613866','nghe an',1000,'admin')");
+        sqLiteDatabase.execSQL("INSERT INTO TAIKHOAN VALUES(2,'doandt','123','Đỗ Thế Đoàn','truong@gmail.com','0787613866','nghe an',1000,'admin')");
+        sqLiteDatabase.execSQL("INSERT INTO TAIKHOAN VALUES(3,'hoangtn','123','Trần Ngọc hoàng','truong@gmail.com','0787613866','nghe an',1000,'admin')");
+        sqLiteDatabase.execSQL("INSERT INTO TAIKHOAN VALUES(4,'truongtq1','123','Trần Quang Trường','truong@gmail.com','0787613866','nghe an',1000,'khachhang')");
+        sqLiteDatabase.execSQL("INSERT INTO TAIKHOAN VALUES(5,'doandt1','123','Đỗ Thế Đoàn','truong@gmail.com','0787613866','nghe an',1000,'khachhang')");
+        sqLiteDatabase.execSQL("INSERT INTO TAIKHOAN VALUES(6,'hoangtn1','123','Trần Ngọc hoàng','truong@gmail.com','0787613866','nghe an',1000,'khachhang')");
 
 
         //2. Bảng loại sản phẩm
@@ -34,7 +39,11 @@ public class dbHelper extends SQLiteOpenHelper {
                 "maloaisanpham integer primary key autoincrement," +
                 " tenloaisanpham text not null)";
         sqLiteDatabase.execSQL(loaiSanPham);
-
+        sqLiteDatabase.execSQL("INSERT INTO LOAISANPHAM VALUES(1,'Đồ ăn cho chó')");
+        sqLiteDatabase.execSQL("INSERT INTO LOAISANPHAM VALUES(2,'Đồ ăn cho mèo')");
+        sqLiteDatabase.execSQL("INSERT INTO LOAISANPHAM VALUES(3,'Phụ kiện cho chó')");
+        sqLiteDatabase.execSQL("INSERT INTO LOAISANPHAM VALUES(4,'Phụ kiện cho mèo')");
+        sqLiteDatabase.execSQL("INSERT INTO LOAISANPHAM VALUES(5,'Sữa tắm')");
 
 
         ///3. Bảng sản phẩm
@@ -44,8 +53,11 @@ public class dbHelper extends SQLiteOpenHelper {
                 " gia integer not null," +
                 " maloaisanpham integer REFERENCES LOAISANPHAM(maloaisanpham))";
         sqLiteDatabase.execSQL(sanPham);
-
-
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(1,'Xúc xích cho mèo',10,2)");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(2,'Xúc xích cho chó',10,1)");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(3,'Hạt cho mèo',10,2)");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(4,'Pate cho mèo',10,2)");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(5,'Túi đựng mèo',10,4)");
 
         //4. Bảng giỏ hàng
         String gioHang = "CREATE TABLE GIOHANG(" +
@@ -54,9 +66,27 @@ public class dbHelper extends SQLiteOpenHelper {
                 " masanpham integer REFERENCES SANPHAM(masanpham)," +
                 " soluong integer not null)";
         sqLiteDatabase.execSQL(gioHang);
+        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(1,2,1,3)");
+        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(2,4,2,4)");
+        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(3,1,1,1)");
+        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(4,3,4,10)");
+        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(5,5,3,7)");
+
+        //5. Bảng đơn hảng
+        String donHang = "CREATE TABLE DONHANG(" +
+                "madonhang integer primary key autoincrement," +
+                " mataikhoan integer REFERENCES TAIKHOAN(mataikhoan)," +
+                " ngaydathang text not null," +
+                " tongtien integer not null)";
+        sqLiteDatabase.execSQL(donHang);
+        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(1,2,'16/11/2023',100)");
+        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(2,5,'16/12/2023',200)");
+        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(3,2,'17/09/2023',300)");
+        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(4,4,'18/01/2023',400)");
+        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(5,3,'19/11/2023',50)");
 
 
-        //5. Bảng lịch sử mua
+        //6. Bảng lịch sử mua
         String lichSuMua = "CREATE TABLE LICHSUMUA(" +
                 "malichsudonhang integer primary key autoincrement," +
                 " mataikhoan integer REFERENCES TAIKHOAN(mataikhoan)," +
@@ -65,15 +95,14 @@ public class dbHelper extends SQLiteOpenHelper {
                 " ngaymua text not null," +
                 " trangthai text not null)";
         sqLiteDatabase.execSQL(lichSuMua);
+        sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(1,1,1,1,'16/11/2023','Giao hàng thành công')");
+        sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(2,3,4,2,'16/11/2023','Giao hàng thành công')");
+        sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(3,3,3,3,'16/11/2023','Giao hàng thành công')");
+        sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(4,5,2,4,'16/11/2023','Giao hàng thành công')");
+        sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(5,2,1,5,'16/11/2023','Giao hàng thành công')");
 
 
-        //6. Bảng đơn hảng
-        String donHang = "CREATE TABLE DONHANG(" +
-                "madonhang integer primary key autoincrement," +
-                " mataikhoan integer REFERENCES TAIKHOAN(mataikhoan)," +
-                " ngaydathang text not null," +
-                " tongtien integer not null)";
-        sqLiteDatabase.execSQL(donHang);
+
 
 
         //7. Bảng chi tiết đơn hàng
@@ -85,7 +114,11 @@ public class dbHelper extends SQLiteOpenHelper {
                 " dongia integer not null," +
                 " thanhtien integer not null)";
         sqLiteDatabase.execSQL(chiTietDonHang);
-
+        sqLiteDatabase.execSQL("INSERT INTO CHITIETDONHANG VALUES(1,2,5,5,20,20)");
+        sqLiteDatabase.execSQL("INSERT INTO CHITIETDONHANG VALUES(2,4,1,4,30,30)");
+        sqLiteDatabase.execSQL("INSERT INTO CHITIETDONHANG VALUES(3,1,2,3,30,30)");
+        sqLiteDatabase.execSQL("INSERT INTO CHITIETDONHANG VALUES(4,5,3,2,30,30)");
+        sqLiteDatabase.execSQL("INSERT INTO CHITIETDONHANG VALUES(5,3,5,5,10,10)");
 
         //8. Bảng thanh toán
         String thanhToan = "CREATE TABLE THANHTOAN(" +
@@ -94,7 +127,11 @@ public class dbHelper extends SQLiteOpenHelper {
                 " ngaythanhtoan text not null," +
                 " sotien integer not null)";
         sqLiteDatabase.execSQL(thanhToan);
-
+        sqLiteDatabase.execSQL("INSERT INTO THANHTOAN VALUES(1,2,'16/11/2023',30)");
+        sqLiteDatabase.execSQL("INSERT INTO THANHTOAN VALUES(2,3,'14/11/2023',300)");
+        sqLiteDatabase.execSQL("INSERT INTO THANHTOAN VALUES(3,4,'19/11/2023',50)");
+        sqLiteDatabase.execSQL("INSERT INTO THANHTOAN VALUES(4,1,'18/11/2023',70)");
+        sqLiteDatabase.execSQL("INSERT INTO THANHTOAN VALUES(5,5,'17/11/2023',40)");
 
         //9. Bảng đánh giá
         String danhGia = "CREATE TABLE DANHGIA(" +
@@ -105,7 +142,11 @@ public class dbHelper extends SQLiteOpenHelper {
                 " nhanxet text not null," +
                 " ngaydanhgia text not null)";
         sqLiteDatabase.execSQL(danhGia);
-
+        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(1,1,2,'Tốt','Mèo rất thích','11/11/2023')");
+        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(2,5,2,'Tốt','Mèo rất thích','11/11/2023')");
+        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(3,4,2,'Tốt','Mèo rất thích','11/11/2023')");
+        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(4,3,2,'Tốt','Mèo rất thích','11/11/2023')");
+        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(5,2,2,'Tốt','Mèo rất thích','11/11/2023')");
     }
 
     @Override
