@@ -6,10 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.frgQuanLyDonHang">
 
-<!--    <ListView-->
-<!--        android:id="@+id/lv_Don_Hang"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
+    <ListView
+        android:id="@+id/lv_Don_Hang"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fl_Don_Hang"
