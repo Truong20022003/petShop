@@ -1,17 +1,14 @@
 package fpoly.truongtqph41980.petshop.Dao;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fpoly.truongtqph41980.petshop.Database.dbHelper;
-import fpoly.truongtqph41980.petshop.model.LoaiSanPham;
+import fpoly.truongtqph41980.petshop.Model.LoaiSanPham;
 
 public class LoaiSanPhamDao {
     private SQLiteDatabase db;
@@ -47,7 +44,6 @@ public class LoaiSanPhamDao {
     }
 
 public ArrayList<LoaiSanPham> getalltheloai(){
-
     ArrayList<LoaiSanPham> list = new ArrayList<>();
     Cursor cursor = db.rawQuery("SELECT *FROM LOAISANPHAM",null);
     if (cursor.getCount()!=0) {

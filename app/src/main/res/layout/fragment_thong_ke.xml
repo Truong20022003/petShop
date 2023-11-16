@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30sp"
-        android:background="@drawable/khung_item"
         android:layout_marginBottom="10sp"
+        android:background="@drawable/khung_item"
         android:orientation="vertical">
 
         <TextView
@@ -123,11 +123,11 @@
                 android:src="@drawable/ic_tien_doan" />
         </FrameLayout>
     </LinearLayout>
+
     <ImageView
-        android:layout_width="320sp"
-        android:layout_height="320sp"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="40sp"
-        android:background="@drawable/logo_petfood"
-        android:layout_marginBottom="30sp"/>
+        android:layout_width="250sp"
+        android:layout_height="250sp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="45sp"
+        android:background="@drawable/logo_petfood" />
 </FrameLayout>
