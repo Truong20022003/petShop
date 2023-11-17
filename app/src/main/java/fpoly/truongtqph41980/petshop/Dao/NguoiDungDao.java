@@ -20,7 +20,12 @@ public class NguoiDungDao {
 
     public NguoiDungDao(Context context) {
         this.dbHelper = new dbHelper(context);
-        sharedPreferences = context.getSharedPreferences("NGUOIDUNG", context.MODE_PRIVATE);
+        if (context != null) {
+            sharedPreferences = context.getSharedPreferences("NGUOIDUNG", context.MODE_PRIVATE);
+        } else {
+            // Xử lý khi context là null, có thể thông báo lỗi hoặc thực hiện xử lý phù hợp
+            Log.e(TAG, "Context is null in NguoiDungDao constructor");
+        }
 
     }
     public ArrayList<NguoiDung> getAllNguoiDung(){
@@ -91,5 +96,12 @@ public class NguoiDungDao {
         long result = db.insert("TAIKHOAN", null, values);
         return result != -1;
     }
-
+    public boolean tenDangNhapDaTonTai(String tenDangNhap) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "SELECT * FROM TAIKHOAN WHERE tendangnhap =?";
+        Cursor cursor = db.rawQuery(query, new String[]{tenDangNhap});
+        boolean tonTai = cursor.getCount() > 0;
+        cursor.close();
+        return tonTai;
+    }
 }

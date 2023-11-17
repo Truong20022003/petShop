@@ -8,6 +8,7 @@
     android:background="@drawable/khung_radius_top_30"
   >
     <ImageView
+        android:id="@+id/imgTroVeDangNhap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_back"
@@ -53,7 +54,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tipL_Ten_Dang_Nhap_DangKy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50sp"
                 android:theme="@style/PesShop2"
                 android:textColorHint="@color/mau_chu"
 
@@ -64,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Nhập tên đăng nhập"
                     android:fontFamily="@font/baloothambi2regular"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColorHint="@color/mau_chu"
                     />
             </com.google.android.material.textfield.TextInputLayout>
@@ -80,14 +81,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tipL_Nhap_Pass_DangKy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="50sp">
                 <EditText
                     android:id="@+id/edt_Nhap_Pass_DangKy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập mật khẩu"
                     android:fontFamily="@font/baloothambi2regular"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,14 +103,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tiL_Nhap_Lai_Pass_DangKy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="50sp">
                 <EditText
                     android:id="@+id/edt_Nhap_Lai_Pass_DangKy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập lại mật khẩu"
                     android:fontFamily="@font/baloothambi2regular"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,14 +125,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tiL_Nhap_Ho_Ten_DangKy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="50sp">
                 <EditText
                     android:id="@+id/edt_Nhap_Ho_Ten_DangKy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập họ và tên"
                     android:fontFamily="@font/baloothambi2regular"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,14 +147,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tiL_Nhap_SDT_DangKy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="50sp">
                 <EditText
                     android:id="@+id/edt_Nhap_SDT_DangKy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập số điện thoại"
                     android:fontFamily="@font/baloothambi2regular"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,14 +169,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tiL_Nhap_Dia_Chi_DangKy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="50sp">
                 <EditText
                     android:id="@+id/edt_Nhap_Dia_Chi_DangKy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập địa chỉ"
                     android:fontFamily="@font/baloothambi2regular"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,14 +191,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tiL_Nhap_Email_DangKy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="50sp">
                 <EditText
                     android:id="@+id/edt_Nhap_Email_DangKy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập email"
                     android:fontFamily="@font/baloothambi2regular"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -217,17 +218,17 @@
         android:background="@drawable/khung_button_dangnhap"
         android:layout_marginTop="12sp"
         />
-    <Button
-        android:id="@+id/btn_Tro_ve_DangKy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_Dang_Ky_DangKy"
-        android:text="Trở về"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="@font/baloothambi2semibold"
-        android:textSize="22sp"
-        android:background="@drawable/khung_button_dangnhap"
-        android:layout_marginTop="12sp"
-        />
+<!--    <Button-->
+<!--        android:id="@+id/btn_Tro_ve_DangKy"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/btn_Dang_Ky_DangKy"-->
+<!--        android:text="Trở về"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:fontFamily="@font/baloothambi2semibold"-->
+<!--        android:textSize="22sp"-->
+<!--        android:background="@drawable/khung_button_dangnhap"-->
+<!--        android:layout_marginTop="12sp"-->
+<!--        />-->
 </RelativeLayout>
