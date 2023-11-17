@@ -31,15 +31,18 @@
             android:layout_marginTop="40sp"
             android:orientation="vertical">
 
-            <TextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/btnlich_bat_dau"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Từ ngày :"
+                android:inputType="none"
+                android:focusable="false"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <ImageButton
+                android:id="@+id/btnlichtruoc"
                 android:layout_width="40sp"
                 android:layout_height="40sp"
                 android:layout_gravity="end"
@@ -52,26 +55,40 @@
             android:layout_marginLeft="30sp"
             android:orientation="vertical">
 
-            <TextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/btnlich_ket_thuc"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đến ngày:"
+                android:inputType="none"
+                android:focusable="false"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <ImageButton
+                android:id="@+id/btnlichsau"
                 android:layout_width="40sp"
                 android:layout_height="40sp"
                 android:layout_gravity="end"
                 android:src="@drawable/ic_lich" />
         </FrameLayout>
+        <Button
+            android:id="@+id/btnthong_ke"
+            android:layout_width="120sp"
+            android:layout_height="50sp"
+            android:layout_marginBottom="5sp"
+            android:layout_gravity="center"
+            android:text="Thống kê"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:background="@drawable/khung_button"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="220sp"
+        android:layout_marginTop="280sp"
         android:background="@drawable/khung_item"
         android:orientation="vertical">
 
