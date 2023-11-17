@@ -23,21 +23,15 @@ public class man_hinh_dang_ky extends AppCompatActivity {
         setContentView(R.layout.activity_man_hinh_dang_ky);
         binding = ActivityManHinhDangKyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.imgTroVeDangNhap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(man_hinh_dang_ky.this, man_hinh_dang_nhap.class);
-                startActivity(intent);
-            }
+        binding.imgTroVeDangNhap.setOnClickListener(view -> {
+            Intent intent = new Intent(man_hinh_dang_ky.this, man_hinh_dang_nhap.class);
+            startActivity(intent);
         });
-        binding.btnDangKyDangKy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validateDangKy()) {
-                    clickDangKy();
-                }
-
+        binding.btnDangKyDangKy.setOnClickListener(view -> {
+            if (validateDangKy()) {
+                clickDangKy();
             }
+
         });
     }
     private void clickDangKy() {
@@ -94,6 +88,9 @@ public class man_hinh_dang_ky extends AppCompatActivity {
 
         if (nhapLaiMatKhau.isEmpty()) {
             binding.tiLNhapLaiPassDangKy.setError("Vui lòng nhập lại mật khẩu");
+            isValid = false;
+        } else if (nhapLaiMatKhau != matKhau ) {
+            binding.tiLNhapLaiPassDangKy.setError("Mật khẩu không trùng nhau");
             isValid = false;
         } else {
             binding.tiLNhapLaiPassDangKy.setError(null);
