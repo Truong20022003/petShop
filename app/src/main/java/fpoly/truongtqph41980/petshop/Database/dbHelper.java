@@ -8,8 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class dbHelper extends SQLiteOpenHelper {
     static String DB_NAME = "PetShop";
     static int DB_VERSION = 1;
+
     public dbHelper(Context context) {
-        super(context, DB_NAME,null,DB_VERSION);
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
@@ -102,9 +103,6 @@ public class dbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(5,2,1,5,'16/11/2023','Giao hàng thành công')");
 
 
-
-
-
         //7. Bảng chi tiết đơn hàng
         String chiTietDonHang = "CREATE TABLE CHITIETDONHANG(" +
                 "machitietdonhang integer primary key autoincrement," +
@@ -151,7 +149,7 @@ public class dbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        if (i != i1){
+        if (i != i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS TAIKHOAN");
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS SANPHAM");
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS LOAISANPHAM");
