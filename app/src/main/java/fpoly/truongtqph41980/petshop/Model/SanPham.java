@@ -6,16 +6,33 @@ private String tensanpham;
 private int gia;
 private int maloaisanpham;
 private String tenloaisanpham;
-
+private String mota;
     public SanPham() {
     }
 
-    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham) {
+    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham,String mota) {
         this.masanpham = masanpham;
         this.tensanpham = tensanpham;
         this.gia = gia;
         this.maloaisanpham = maloaisanpham;
         this.tenloaisanpham = tenloaisanpham;
+        this.mota=mota;
+    }
+
+    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String mota) {
+        this.masanpham = masanpham;
+        this.tensanpham = tensanpham;
+        this.gia = gia;
+        this.maloaisanpham = maloaisanpham;
+        this.mota = mota;
+    }
+
+    public String getMota() {
+        return mota;
+    }
+
+    public void setMota(String mota) {
+        this.mota = mota;
     }
 
     public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham) {

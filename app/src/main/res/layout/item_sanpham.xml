@@ -93,4 +93,13 @@
         android:fontFamily="@font/baloothambi2regular"
         android:text="ten loai san pham: "
         android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txtmo_ta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:fontFamily="@font/baloothambi2regular"
+        android:text="mô tả "
+        android:layout_marginBottom="10sp"
+        android:textSize="20sp" />
 </LinearLayout>

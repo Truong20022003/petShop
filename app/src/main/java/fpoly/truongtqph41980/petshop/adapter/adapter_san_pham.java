@@ -51,6 +51,7 @@ public class adapter_san_pham extends RecyclerView.Adapter<adapter_san_pham.view
         holder.txt.txtgiaSanPham.setText("Giá sản phẩm: " + String.valueOf(list.get(position).getGia()));
         holder.txt.txtmaLoaiSanPham2.setText("MÃ loại sản phẩm: " + String.valueOf(list.get(position).getMaloaisanpham()));
         holder.txt.txttenLoaiSanPham2.setText("Tên loại sản phẩm: " + list.get(position).getTenloaisanpham());
+        holder.txt.txtmoTa.setText("Mô tả: "+list.get(position).getMota());
         SanPham sp = list.get(position);
         holder.txt.btnxoa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +156,7 @@ public class adapter_san_pham extends RecyclerView.Adapter<adapter_san_pham.view
                 dialog.show();
                 suaspbiding.edtenSanPham.setText(sp.getTensanpham());
                 suaspbiding.edgiaSanPham.setText(String.valueOf(sp.getGia()));
+                suaspbiding.edmoTa.setText(sp.getMota());
                 SimpleAdapter simpleAdapter = new SimpleAdapter(
                         context,
                         listHM,
@@ -178,10 +180,12 @@ public class adapter_san_pham extends RecyclerView.Adapter<adapter_san_pham.view
                     public void onClick(View view) {
                         String tensanpham = suaspbiding.edtenSanPham.getText().toString();
                         String gia = suaspbiding.edgiaSanPham.getText().toString();
+                        String mota = suaspbiding.edmoTa.getText().toString();
+
                         HashMap<String, Object> hs = (HashMap<String, Object>) suaspbiding.spnmaLoaiSanPham.getSelectedItem();
                         int maloaisp = (int) hs.get("maloaisanpham");
 
-                        if (tensanpham.isEmpty() || gia.isEmpty()) {
+                        if (tensanpham.isEmpty() || gia.isEmpty()||mota.isEmpty()) {
                             if (tensanpham.equals("")) {
                                 suaspbiding.edtenSanPham.setError("Vui lòng không để trống tên sản phẩm");
                             } else {
@@ -192,15 +196,19 @@ public class adapter_san_pham extends RecyclerView.Adapter<adapter_san_pham.view
                             } else {
                                 suaspbiding.edgiaSanPham.setError(null);
                             }
+                            if (mota.equals("")) {
+                                suaspbiding.edmoTa.setError("Vui lòng không để trống giá sản phẩm");
+                            } else {
+                                suaspbiding.edmoTa.setError(null);
+                            }
                         } else {
                             try {
                                 int tien = Integer.parseInt(gia);
-
                                 if (tien <= 0) {
                                     suaspbiding.edgiaSanPham.setError("Giá sản phẩm phải lớn hơn 0");
                                 } else {
                                     suaspbiding.edgiaSanPham.setError(null);
-                                    boolean check = dao.update(sp.getMasanpham(), tensanpham, tien, maloaisp);
+                                    boolean check = dao.update(sp.getMasanpham(), tensanpham, tien, maloaisp,mota);
 
                                     if (check) {
                                         list.clear();
