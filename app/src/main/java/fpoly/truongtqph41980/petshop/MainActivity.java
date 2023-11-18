@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,17 +13,10 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.databinding.ActivityMainBinding;
 import fpoly.truongtqph41980.petshop.fragment.ThongKe;
-import fpoly.truongtqph41980.petshop.fragment.frgDonHang;
+import fpoly.truongtqph41980.petshop.fragment.frgGianHang;
 import fpoly.truongtqph41980.petshop.fragment.frgGioHang;
 import fpoly.truongtqph41980.petshop.fragment.frgNapTien;
 import fpoly.truongtqph41980.petshop.fragment.frgQuanLyDonHang;
@@ -84,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
             } else if (item.getItemId() == R.id.nav_bot_sanpham) {
-                replaceFragment(new frgDonHang());
+                replaceFragment(new frgGianHang());
 
             } else if (item.getItemId() == R.id.nav_bot_giohang) {
                 replaceFragment(new frgGioHang());

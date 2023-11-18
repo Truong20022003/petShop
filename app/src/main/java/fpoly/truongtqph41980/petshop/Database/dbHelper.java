@@ -49,17 +49,17 @@ public class dbHelper extends SQLiteOpenHelper {
 
         ///3. Bảng sản phẩm
         String sanPham = "CREATE TABLE SANPHAM(" +
-                "masanpham integer primary key autoincrement," +
+                " masanpham integer primary key autoincrement," +
                 " tensanpham text not null," +
                 " gia integer not null," +
-                " maloaisanpham integer REFERENCES LOAISANPHAM(maloaisanpham))";
+                " maloaisanpham integer REFERENCES LOAISANPHAM(maloaisanpham)," +
+                " mota text)";
         sqLiteDatabase.execSQL(sanPham);
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(1,'Xúc xích cho mèo',10,2)");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(2,'Xúc xích cho chó',10,1)");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(3,'Hạt cho mèo',10,2)");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(4,'Pate cho mèo',10,2)");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(5,'Túi đựng mèo',10,4)");
-
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(1,'Xúc xích cho mèo',10,2,'Mô tả: Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(2,'Xúc xích cho chó',10,1,'Mô tả: Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(3,'Hạt cho mèo',10,2,'Mô tả: Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(4,'Pate cho mèo',10,2,'Mô tả: Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(5,'Túi đựng mèo',10,4,'Mô tả: Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
         //4. Bảng giỏ hàng
         String gioHang = "CREATE TABLE GIOHANG(" +
                 "magiohang integer primary key autoincrement, " +
