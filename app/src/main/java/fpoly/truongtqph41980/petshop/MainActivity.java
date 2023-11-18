@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,16 +13,12 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.databinding.ActivityMainBinding;
 import fpoly.truongtqph41980.petshop.fragment.ThongKe;
+import fpoly.truongtqph41980.petshop.fragment.frgGianHang;
+import fpoly.truongtqph41980.petshop.fragment.frgGioHang;
+import fpoly.truongtqph41980.petshop.fragment.frgNapTien;
 import fpoly.truongtqph41980.petshop.fragment.frgQuanLyDonHang;
 import fpoly.truongtqph41980.petshop.fragment.frgQuanLyLoaiSanPham;
 import fpoly.truongtqph41980.petshop.fragment.frgQuanLyNapTien;
@@ -50,24 +45,11 @@ public class MainActivity extends AppCompatActivity {
         handleBottomNavigationItemSelected();
 
 
-        binding.navigationViewMain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                handleNavigationViewItemSelected(item);
-//                handleBottomNavigationItemSelected(item);
-                return false;
-            }
+        binding.navigationViewMain.setNavigationItemSelectedListener(item -> {
+            handleNavigationViewItemSelected(item);
+            return false;
         });
-//        binding.navBottomMain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                handleNavigationViewItemSelected(item);
-//                handleBottomNavigationItemSelected(item);
-//                return false;
-//            }
-//
-//
-//        });
+
 
     }
 
@@ -82,33 +64,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar,menu);
-//        getMenuInflater().inflate(R.menu.menu_nav_bottom,menu);
         mMenu = menu;
         return true;
     }
     private void handleBottomNavigationItemSelected() {
 
-        binding.navBottomMain.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.nav_bot_home) {
-                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    startActivity(intent);
+        binding.navBottomMain.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_bot_home) {
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                startActivity(intent);
+            } else if (item.getItemId() == R.id.nav_bot_sanpham) {
+                replaceFragment(new frgGianHang());
 
-                } else if (item.getItemId() == R.id.nav_bot_sanpham) {
-                    replaceFragment(new frgQuanLySanPham());
+            } else if (item.getItemId() == R.id.nav_bot_giohang) {
+                replaceFragment(new frgGioHang());
 
-                } else if (item.getItemId() == R.id.nav_bot_giohang) {
-                    replaceFragment(new frgQuanLyLoaiSanPham());
+            } else if (item.getItemId() == R.id.nav_bot_naptien) {
+                replaceFragment(new frgNapTien());
 
-                } else if (item.getItemId() == R.id.nav_bot_naptien) {
-                    replaceFragment(new frgQuanLyDonHang());
-
-                }
-                getSupportActionBar().setTitle(item.getTitle());
-                return true;
             }
+            getSupportActionBar().setTitle(item.getTitle());
+            return true;
         });
     }
 
@@ -130,23 +107,14 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.action_qlVeChungToi) {
             replaceFragment(new frg_Ve_Chung_Toi());
         } else if (item.getItemId() == R.id.action_qlDangXuat) {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
                     Intent intent = new Intent(MainActivity.this, man_hinh_dang_nhap.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     startActivity(intent);
-                }
-            }, 2000);
 
         }
         getSupportActionBar().setTitle(item.getTitle());
         binding.drawerLayoutMain.closeDrawer(GravityCompat.START);
     }
     private void replaceFragment(Fragment fragment) {
-//        FragmentManager fragmentManager =
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutMain, fragment).commit();
     }
 

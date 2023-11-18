@@ -93,9 +93,10 @@ public class frgQuanLySanPham extends Fragment {
             public void onClick(View view) {
                 String tensp = themspbiding.edtenSanPham.getText().toString();
                 String giasp = themspbiding.edgiaSanPham.getText().toString();
+                String mota = themspbiding.edmoTa.getText().toString();
                 HashMap<String, Object> hs = (HashMap<String, Object>) themspbiding.spnmaLoaiSanPham.getSelectedItem();
                 int maloaisp = (int) hs.get("maloaisanpham");
-                if (tensp.isEmpty() || giasp.isEmpty()) {
+                if (tensp.isEmpty() || giasp.isEmpty()||mota.isEmpty()) {
                     if (tensp.equals("")) {
                         themspbiding.edtenSanPham.setError("Vui lòng không để trống tên sản phẩm");
                     } else {
@@ -106,6 +107,11 @@ public class frgQuanLySanPham extends Fragment {
                     } else {
                         themspbiding.edgiaSanPham.setError(null);
                     }
+                    if (mota.equals("")) {
+                        themspbiding.edmoTa.setError("Vui lòng không để trống mô tả");
+                    } else {
+                        themspbiding.edmoTa.setError(null);
+                    }
                 } else {
                     try {
                         int checkgia = Integer.parseInt(giasp);
@@ -113,7 +119,7 @@ public class frgQuanLySanPham extends Fragment {
                             themspbiding.edgiaSanPham.setError("Giá sản phẩm phải lớn hơn 0");
                         } else {
                             themspbiding.edgiaSanPham.setError(null);
-                            boolean check = dao.insert(tensp, checkgia, maloaisp);
+                            boolean check = dao.insert(tensp, checkgia, maloaisp,mota);
                             if (check) {
                                 loadData();
                                 adapter.notifyDataSetChanged();

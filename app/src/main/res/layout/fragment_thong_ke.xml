@@ -142,8 +142,8 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="250sp"
-        android:layout_height="250sp"
+        android:layout_width="200sp"
+        android:layout_height="200sp"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="45sp"
         android:background="@drawable/logo_petfood" />

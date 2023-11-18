@@ -8,7 +8,6 @@
     <style name="Theme.PetShop" parent="Base.Theme.PetShop" />
     <style name="PesShop2">
         <item name="android:fontFamily">@font/baloothambi2regular</item>
-        <item name="android:color">@color/mau_chu</item>
         <item name="android:textColor">@color/mau_chu</item>
 
     </style>
