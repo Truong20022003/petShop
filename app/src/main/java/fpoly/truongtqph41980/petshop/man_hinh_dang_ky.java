@@ -89,7 +89,7 @@ public class man_hinh_dang_ky extends AppCompatActivity {
         if (nhapLaiMatKhau.isEmpty()) {
             binding.tiLNhapLaiPassDangKy.setError("Vui lòng nhập lại mật khẩu");
             isValid = false;
-        } else if (nhapLaiMatKhau.equals(matKhau) ) {
+        } else if (!nhapLaiMatKhau.equals(matKhau) ) {
             binding.tiLNhapLaiPassDangKy.setError("Mật khẩu không trùng nhau");
             isValid = false;
         } else {

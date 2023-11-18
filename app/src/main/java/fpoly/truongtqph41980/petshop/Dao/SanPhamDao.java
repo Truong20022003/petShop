@@ -69,4 +69,12 @@ public class SanPhamDao {
             return 1;
         }
     }
+    public SanPham getSanPhamById(int masanpham) {
+        SQLiteDatabase database = dbs.getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham, lsp.tenloaisanpham, sp.mota FROM SANPHAM sp, LOAISANPHAM lsp WHERE sp.maloaisanpham = lsp.maLoaisanpham AND sp.masanpham = ?", new String[]{String.valueOf(masanpham)});
+        if (cursor.moveToFirst()) {
+            return new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5));
+        }
+        return null;
+    }
 }

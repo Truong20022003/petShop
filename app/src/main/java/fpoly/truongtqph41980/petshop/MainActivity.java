@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 startActivity(intent);
-
             } else if (item.getItemId() == R.id.nav_bot_sanpham) {
                 replaceFragment(new frgGianHang());
 
@@ -108,16 +107,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.action_qlVeChungToi) {
             replaceFragment(new frg_Ve_Chung_Toi());
         } else if (item.getItemId() == R.id.action_qlDangXuat) {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
                     Intent intent = new Intent(MainActivity.this, man_hinh_dang_nhap.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     startActivity(intent);
-                }
-            }, 2000);
 
         }
         getSupportActionBar().setTitle(item.getTitle());
