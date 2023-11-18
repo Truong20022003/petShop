@@ -3,15 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_margin="10sp"
     android:background="@drawable/khung_item"
     >
-    <TextView
-        android:id="@+id/txt_Ma_Nguoi_dung"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10sp"
-        android:text="Mã người dùng: "
-        android:textSize="20sp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtma_nguoi_dung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:fontFamily="@font/baloothambi2regular"
+            android:text="Mã người dùng "
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/btnxoa_ND"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="7sp"
+            android:layout_marginRight="10sp"
+            android:background="@drawable/khung_item"
+            android:src="@drawable/ic_xoa" />
+    </FrameLayout>
     <TextView
         android:id="@+id/txt_Ten_Nguoi_Dung"
         android:layout_width="wrap_content"
@@ -46,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
         android:text="Coins: "
+
         android:textSize="20sp" />
 
 
