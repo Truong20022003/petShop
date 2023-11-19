@@ -23,7 +23,14 @@ android:background="@color/mau_hong">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/vang_nhat"
-            app:navigationIcon="@drawable/ic_menu" />
+            app:navigationIcon="@drawable/ic_menu" >
+            <ImageView
+                android:id="@+id/btn_proFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_profile"
+                android:layout_gravity="right"/>
+        </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
             android:id="@+id/frameLayoutMain"

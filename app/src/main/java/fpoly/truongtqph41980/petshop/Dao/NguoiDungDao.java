@@ -17,6 +17,7 @@ import fpoly.truongtqph41980.petshop.Model.NguoiDung;
 public class NguoiDungDao {
     private final dbHelper dbHelper;
     SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     public NguoiDungDao(Context context) {
         this.dbHelper = new dbHelper(context);
@@ -28,15 +29,16 @@ public class NguoiDungDao {
         }
 
     }
-    public ArrayList<NguoiDung> getAllNguoiDung(){
+
+    public ArrayList<NguoiDung> getAllNguoiDung() {
 
         ArrayList<NguoiDung> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         try {
-            Cursor cursor = db.rawQuery("SELECT * FROM TAIKHOAN",null);
-            if (cursor.getCount() > 0){
+            Cursor cursor = db.rawQuery("SELECT * FROM TAIKHOAN", null);
+            if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                while (!cursor.isAfterLast()){
+                while (!cursor.isAfterLast()) {
                     NguoiDung nguoiDung = new NguoiDung();
                     nguoiDung.setMaTaiKhoan(cursor.getInt(0));
                     nguoiDung.setTenDangNhap(cursor.getString(1));
@@ -52,25 +54,34 @@ public class NguoiDungDao {
                 }
 
             }
-        }catch (Exception e){
-            Log.i(TAG,"Lỗi",e);
+        } catch (Exception e) {
+            Log.i(TAG, "Lỗi", e);
         }
 
         return list;
     }
-    public boolean checkDangNhap(String tenDangNhap, String matKhau){
+
+    public boolean checkDangNhap(String tenDangNhap, String matKhau) {
         Log.d(TAG, "CheckDangNhap: " + tenDangNhap + " - " + matKhau);
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         try {
             Cursor cursor = database.rawQuery("SELECT * FROM TAIKHOAN WHERE tendangnhap = ? AND matkhau = ?", new String[]{tenDangNhap, matKhau});
-
+//            "mataikhoan integer primary key autoincrement," +
+//                    " tendangnhap text not null," +
+//                    " matkhau text not null," +
+//                    " hoten text not null," +
+//                    " email text not null," +
+//                    " sodienthoai text not null," +
+//                    " diachi text not null," +
+//                    " sotien integer not null," +
+//                    "loaitaikhoan text not null)";
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor = sharedPreferences.edit();
                 editor.putString("mataikhoan", cursor.getString(0));
                 editor.putString("tendangnhap", cursor.getString(1));
                 editor.putString("matkhau", cursor.getString(2));
-                editor.putString("loaitaikhoan", cursor.getString(3));
+                editor.putString("loaitaikhoan", cursor.getString(8));
                 editor.apply();
                 return true;
             } else {
@@ -81,6 +92,7 @@ public class NguoiDungDao {
             return false;
         }
     }
+
     public boolean checkDangKy(NguoiDung nguoiDung) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -96,6 +108,7 @@ public class NguoiDungDao {
         long result = db.insert("TAIKHOAN", null, values);
         return result != -1;
     }
+
     public boolean tenDangNhapDaTonTai(String tenDangNhap) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String query = "SELECT * FROM TAIKHOAN WHERE tendangnhap =?";
