@@ -70,7 +70,7 @@
                 android:text="lượt bán "
                 android:textSize="20sp" />
             <Button
-                android:id="@+id/txtgia_san_pham"
+                android:id="@+id/btn_themvaogio"
                 android:layout_width="wrap_content"
                 android:padding="5sp"
                 android:layout_height="45sp"

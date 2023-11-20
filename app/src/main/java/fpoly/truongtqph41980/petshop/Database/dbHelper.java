@@ -56,10 +56,10 @@ public class dbHelper extends SQLiteOpenHelper {
                 " mota text)";
         sqLiteDatabase.execSQL(sanPham);
         sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(1,'Xúc xích cho mèo',10,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(2,'Xúc xích cho chó',10,1,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(3,'Hạt cho mèo',10,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(4,'Pate cho mèo',10,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(5,'Túi đựng mèo',10,4,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(2,'Xúc xích cho chó',50,1,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(3,'Hạt cho mèo',20,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(4,'Pate cho mèo',30,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(5,'Túi đựng mèo',40,4,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.')");
         //4. Bảng giỏ hàng
         String gioHang = "CREATE TABLE GIOHANG(" +
                 "magiohang integer primary key autoincrement, " +
@@ -67,11 +67,11 @@ public class dbHelper extends SQLiteOpenHelper {
                 " masanpham integer REFERENCES SANPHAM(masanpham)," +
                 " soluong integer not null)";
         sqLiteDatabase.execSQL(gioHang);
-        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(1,2,1,3)");
-        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(2,4,2,4)");
-        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(3,1,1,1)");
-        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(4,3,4,10)");
-        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(5,5,3,7)");
+//        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(1,2,1,3)");
+//        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(2,4,2,4)");
+//        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(3,1,1,1)");
+//        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(4,3,4,10)");
+//        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(5,5,3,7)");
 
         //5. Bảng đơn hảng
         String donHang = "CREATE TABLE DONHANG(" +

@@ -30,6 +30,7 @@ ActivitySanPhamCtBinding binding;
                 binding.txtMotaChiTiet.setText("Mô tả: " + selectedSanPham.getMota());
             }
         }
+
         binding.btnThemCtVaoGio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

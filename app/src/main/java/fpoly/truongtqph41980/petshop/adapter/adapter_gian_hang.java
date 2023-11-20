@@ -1,19 +1,24 @@
 package fpoly.truongtqph41980.petshop.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
-import fpoly.truongtqph41980.petshop.Utlis.Utils;
+
+import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.databinding.ItemGianHangBinding;
 import fpoly.truongtqph41980.petshop.databinding.ItemSanphamBinding;
 
@@ -21,11 +26,14 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
     private final Context context;
     private final ArrayList<SanPham> list;
     SanPhamDao dao;
+    private ArrayList<Boolean> isClickThemVaoGio;
 
     public adapter_gian_hang(Context context, ArrayList<SanPham> list) {
         this.context = context;
         this.list = list;
+
         dao = new SanPhamDao(context);
+
     }
 
     public interface OnItemClickListener {
@@ -40,16 +48,17 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
         mListener = listener;
     }
 
+    private OnAddToCartClickListener mAddToCartClickListener;
+
     //nút thêm vào giỏ hàng
     public interface OnAddToCartClickListener {
         void onAddToCartClick(SanPham sanPham);
     }
 
-    private OnAddToCartClickListener mAddToCartClickListener;
-
     public void setOnAddToCartClickListener(OnAddToCartClickListener listener) {
         mAddToCartClickListener = listener;
     }
+
 
     @NonNull
     @Override
@@ -60,15 +69,16 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        SanPham sanPham = list.get(position);
         holder.binding.txttenHat.setText("Tên sp:" + list.get(position).getTensanpham());
         holder.binding.txtgiaHat.setText("Giá sp:" + String.valueOf(list.get(position).getGia()));
         holder.binding.txttrangThaiSanPham.setText("Số lượt bán: 200");
-        holder.binding.txtgiaSanPham.setOnClickListener(new View.OnClickListener() {
+
+        holder.binding.btnThemvaogio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mAddToCartClickListener != null) {
                     mAddToCartClickListener.onAddToCartClick(list.get(holder.getAdapterPosition()));
-
                 }
             }
         });

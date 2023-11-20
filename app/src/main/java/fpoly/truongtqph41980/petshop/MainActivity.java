@@ -6,8 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +22,7 @@ import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
 
+import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.databinding.ActivityMainBinding;
 import fpoly.truongtqph41980.petshop.fragment.ThongKe;
 import fpoly.truongtqph41980.petshop.fragment.frgGianHang;
@@ -27,12 +33,14 @@ import fpoly.truongtqph41980.petshop.fragment.frgQuanLyLoaiSanPham;
 import fpoly.truongtqph41980.petshop.fragment.frgQuanLyNapTien;
 import fpoly.truongtqph41980.petshop.fragment.frgQuanLyNguoiDung;
 import fpoly.truongtqph41980.petshop.fragment.frgQuanLySanPham;
+import fpoly.truongtqph41980.petshop.fragment.frgTrangChu;
 import fpoly.truongtqph41980.petshop.fragment.frg_Ve_Chung_Toi;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     //    Menu mMenu;
     NavigationView navigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         navigationView = binding.navigationViewMain;
-        View headerLayout = binding.navigationViewMain.getHeaderView(0);
+        binding.navigationViewMain.getHeaderView(0);
         Toolbar toolbar = binding.toolbarMain;
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -110,9 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.navBottomMain.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_bot_home) {
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                startActivity(intent);
+                replaceFragment(new frgTrangChu());
             } else if (item.getItemId() == R.id.nav_bot_sanpham) {
                 replaceFragment(new frgGianHang());
 
@@ -121,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (item.getItemId() == R.id.nav_bot_naptien) {
                 replaceFragment(new frgNapTien());
-
             }
             getSupportActionBar().setTitle(item.getTitle());
             return true;
@@ -132,5 +137,8 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutMain, fragment).commit();
     }
+
+
+
 
 }

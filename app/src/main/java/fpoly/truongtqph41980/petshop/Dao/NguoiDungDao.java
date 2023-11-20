@@ -78,7 +78,7 @@ public class NguoiDungDao {
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 editor = sharedPreferences.edit();
-                editor.putString("mataikhoan", cursor.getString(0));
+                editor.putInt("mataikhoan", cursor.getInt(0));
                 editor.putString("tendangnhap", cursor.getString(1));
                 editor.putString("matkhau", cursor.getString(2));
                 editor.putString("loaitaikhoan", cursor.getString(8));
