@@ -81,6 +81,11 @@ public class NguoiDungDao {
                 editor.putInt("mataikhoan", cursor.getInt(0));
                 editor.putString("tendangnhap", cursor.getString(1));
                 editor.putString("matkhau", cursor.getString(2));
+                editor.putString("hoten", cursor.getString(3));
+                editor.putString("email", cursor.getString(4));
+                editor.putString("sodienthoai", cursor.getString(5));
+                editor.putString("diachi", cursor.getString(6));
+                editor.putInt("sotien", cursor.getInt(7));
                 editor.putString("loaitaikhoan", cursor.getString(8));
                 editor.apply();
                 return true;
