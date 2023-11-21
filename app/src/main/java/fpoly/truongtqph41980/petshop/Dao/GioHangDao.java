@@ -56,7 +56,6 @@ public class GioHangDao {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("soluong", gioHang.getSoLuongMua());
-
         int rowsAffected = database.update("GIOHANG", values, "magiohang = ?", new String[]{String.valueOf(gioHang.getMaGioHang())});
         return rowsAffected > 0;
     }

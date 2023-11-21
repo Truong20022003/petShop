@@ -71,7 +71,6 @@ public class frgGianHang extends Fragment {
             public void onAddToCartClick(SanPham sanPham) {
 
                 addToCart(sanPham);
-                Log.d("frgGianHang", "Masanpham: " + sanPham.getMasanpham());
 
             }
         });
@@ -89,6 +88,7 @@ public class frgGianHang extends Fragment {
     private void addToCart(SanPham sanPham) {
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
+
         int mand = sharedPreferences.getInt("mataikhoan", 0);
         if (!sharedViewModel.isProductInCart(sanPham.getMasanpham())) {
             sharedViewModel.setMasp(sanPham.getMasanpham());
@@ -99,13 +99,17 @@ public class frgGianHang extends Fragment {
             gioHangDao.insertGioHang(new GioHang(sanPham.getMasanpham(), mand, 1));
 
         } else {
-            // Cập nhật dữ liệu trong giỏ hàng và adapter
-            int currentQuantity = sharedViewModel.getQuantityToAddLiveData().getValue() != null
-                    ? sharedViewModel.getQuantityToAddLiveData().getValue()
-                    : 0;
-            sharedViewModel.setQuantityToAdd(currentQuantity + 1);
-            gioHangDao.updateGioHang(new GioHang(sanPham.getMasanpham(), mand, currentQuantity + 1));
 
+            GioHang hang = gioHangDao.getGioHangByMasp(sanPham.getMasanpham(),mand);
+            if (hang != null) {
+                hang.setSoLuongMua(hang.getSoLuongMua() + 1);
+                gioHangDao.updateGioHang(hang);
+            } else {
+                GioHang newCartItem = new GioHang(sanPham.getMasanpham(), mand, 1);
+                gioHangDao.insertGioHang(newCartItem);
+            }
+
+            gioHangAdapter.notifyDataSetChanged();
 
         }
         ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();

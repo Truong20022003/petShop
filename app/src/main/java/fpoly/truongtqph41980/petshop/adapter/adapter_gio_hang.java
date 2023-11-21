@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,16 +42,42 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
         GioHang gioHang = list.get(position);
 
 
-
         // Hiển thị thông tin sản phẩm
         holder.binding.txtgia.setText(String.valueOf(gioHang.getGiaSanPham()));
         holder.binding.txtsoluong.setText(String.valueOf(gioHang.getSoLuongMua()));
         holder.binding.txttensp.setText(gioHang.getTenSanPham());
 
+        holder.binding.btncong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (gioHang.getSoLuongMua() >= 1) {
+                    gioHang.setSoLuongMua(gioHang.getSoLuongMua() + 1);
+                    dao.updateGioHang(gioHang);
+                    notifyDataSetChanged();
+                }
+            }
+        });
+        holder.binding.btntru.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (gioHang.getSoLuongMua() >= 1) {
+                    gioHang.setSoLuongMua(gioHang.getSoLuongMua() - 1);
+                    dao.updateGioHang(gioHang);
+                    notifyDataSetChanged();
+                }else {
+                    if (dao.deleteGioHang(gioHang)){
+                        list.clear();
+                        list.addAll(dao.getDSGioHang());
+                        notifyDataSetChanged();
+                    }else {
+                        Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     public void updateCartList(ArrayList<GioHang> updatedList) {
-//        this.list = updatedList;
         list.clear();
         list.addAll(updatedList);
         notifyDataSetChanged();

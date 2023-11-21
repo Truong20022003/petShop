@@ -58,7 +58,7 @@ public class frgGioHang extends Fragment {
 
         } else {
             gioHangAdapter.updateCartList(cartList);
-
+            gioHangAdapter.notifyDataSetChanged();
         }
     }
 
@@ -79,18 +79,17 @@ public class frgGioHang extends Fragment {
         sharedViewModel.getMasp().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer masp) {
-                Log.d("frgGioHanggggggggg", "masppppppp: " + masp);
+
                 if (isAdded() && isVisible()) {
                     if (sharedViewModel.getAddToCartClicked().getValue() != null && sharedViewModel.getAddToCartClicked().getValue()) {
                         Boolean addToCartClicked = sharedViewModel.getAddToCartClicked().getValue();
-                        Log.d("frgGioHanggggggggg", "addToCartClicked: " + addToCartClicked);
                         updateGioHangByMaSp(masp);
                         sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
                     }
-                    Log.d("frgGioHanggggggggg", "masppppppp: " + masp);
                 }
             }
         });
+
         list = gioHangDao.getDSGioHang();
         displayCart(list);
         return gView;
@@ -101,13 +100,14 @@ public class frgGioHang extends Fragment {
             // Lấy thông tin người dùng từ SharedPreferences
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
             int mand = sharedPreferences.getInt("mataikhoan", 0);
+
             // Kiểm tra nếu mã sản phẩm đã tồn tại trong giỏ hàng
             GioHang hang = gioHangDao.getGioHangByMasp(masp, mand);
+
                 // Hiển thị giỏ hàng sau khi đã cập nhật
                 ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
                 displayCart(updatedCartList);
         } else {
-            Log.e("frgGioHang", "Invalid masp value");
         }
     }
 }
