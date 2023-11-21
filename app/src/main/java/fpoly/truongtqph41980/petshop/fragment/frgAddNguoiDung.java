@@ -37,7 +37,7 @@ public class frgAddNguoiDung extends Fragment {
         binding.inTenTaiKhoan.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (!b){
+                if (!b) {
                     validTenDangNhap();
                 }
             }
@@ -45,7 +45,7 @@ public class frgAddNguoiDung extends Fragment {
         binding.inMatKhau.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (!b){
+                if (!b) {
                     validMatKhau();
                 }
             }
@@ -53,7 +53,7 @@ public class frgAddNguoiDung extends Fragment {
         binding.inEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (!b){
+                if (!b) {
                     validEmail();
                 }
             }
@@ -61,7 +61,7 @@ public class frgAddNguoiDung extends Fragment {
         binding.inDiaChi.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (!b){
+                if (!b) {
                     validDiaChi();
                 }
             }
@@ -69,7 +69,7 @@ public class frgAddNguoiDung extends Fragment {
         binding.inHoTen.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (!b){
+                if (!b) {
                     validHoTen();
                 }
             }
@@ -77,7 +77,7 @@ public class frgAddNguoiDung extends Fragment {
         binding.inSoDienThoai.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (!b){
+                if (!b) {
                     validSoDienThoai();
                 }
             }
@@ -85,7 +85,7 @@ public class frgAddNguoiDung extends Fragment {
         binding.inTien.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (!b){
+                if (!b) {
                     validSoTien();
                 }
             }
@@ -93,7 +93,7 @@ public class frgAddNguoiDung extends Fragment {
         binding.inLoaiTaiKhoan.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (!b){
+                if (!b) {
                     validLoaiTaiKhoan();
                 }
             }
@@ -142,14 +142,6 @@ public class frgAddNguoiDung extends Fragment {
             bundle.putString("diaChi", diaChi);
             bundle.putInt("soTien", soTien);
             bundle.putString("loaiTaiKhoan", loaiTaiKhoan);
-//            Member_Fragment memberFragment = new Member_Fragment();
-//            memberFragment.setArguments(bundle);
-//
-//            FragmentManager fragmentManager = getParentFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.frag_container_main, memberFragment);
-//            fragmentTransaction.addToBackStack(null);
-//            fragmentTransaction.commit();
             frgQuanLyNguoiDung frgQuanLyNguoiDung = new frgQuanLyNguoiDung();
             frgQuanLyNguoiDung.setArguments(bundle);
             FragmentManager fragmentManager = getParentFragmentManager();
@@ -204,7 +196,7 @@ public class frgAddNguoiDung extends Fragment {
         soDienThoai = binding.edtSoDienThoai.getText().toString().trim();
         if (soDienThoai.isEmpty()) {
             binding.inSoDienThoai.setError("Không được để trống");
-        } else if (!soDienThoai.matches("\\d{9}")) {
+        } else if (!soDienThoai.matches("0\\d{9}")) {
             binding.inSoDienThoai.setError("Số điện thoại phải là 10 số");
         } else {
             binding.inSoDienThoai.setError(null);
