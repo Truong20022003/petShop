@@ -23,6 +23,17 @@ public class NguoiDung {
         this.loaiTaiKhoan = loaiTaiKhoan;
     }
 
+    public NguoiDung(String tenDangNhap, String matKhau, String hoTen, String email, String soDienThoai, String diaChi, int soTien, String loaiTaiKhoan) {
+        this.tenDangNhap = tenDangNhap;
+        this.matKhau = matKhau;
+        this.hoTen = hoTen;
+        this.email = email;
+        this.soDienThoai = soDienThoai;
+        this.diaChi = diaChi;
+        this.soTien = soTien;
+        this.loaiTaiKhoan = loaiTaiKhoan;
+    }
+
     public NguoiDung() {
     }
 
