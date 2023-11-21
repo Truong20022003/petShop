@@ -117,4 +117,9 @@ public class NguoiDungDao {
         cursor.close();
         return tonTai;
     }
+    public boolean xoaNguoiDung(NguoiDung nd){
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        long check = database.delete("TAIKHOAN","mataikhoan = ?",new String[]{String.valueOf(nd.getMaTaiKhoan())});
+        return check>0;
+    }
 }
