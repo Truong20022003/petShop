@@ -24,6 +24,11 @@ private String mota;
         this.mota=mota;
     }
 
+    public SanPham(String tensanpham, int gia) {
+        this.tensanpham = tensanpham;
+        this.gia = gia;
+    }
+
     public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String mota) {
         this.masanpham = masanpham;
         this.tensanpham = tensanpham;

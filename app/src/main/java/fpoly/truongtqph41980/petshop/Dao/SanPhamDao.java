@@ -77,4 +77,16 @@ public class SanPhamDao {
         }
         return null;
     }
+    public ArrayList<SanPham> trangchugetall(){
+        ArrayList<SanPham> list = new ArrayList();
+        SQLiteDatabase database = dbs.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select sp.tensanpham,sp.gia FROM SANPHAM sp ",null);
+        if (cursor.getCount()!=0){
+            cursor.moveToFirst();
+            do {
+                list.add(new SanPham(cursor.getString(0),cursor.getInt(1)));
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
 }
