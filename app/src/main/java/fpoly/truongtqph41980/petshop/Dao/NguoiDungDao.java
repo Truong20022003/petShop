@@ -49,7 +49,7 @@ public class NguoiDungDao {
                     nguoiDung.setDiaChi(cursor.getString(6));
                     nguoiDung.setSoTien(cursor.getInt(7));
                     nguoiDung.setLoaiTaiKhoan(cursor.getString(8));
-
+                    nguoiDung.setAnhnguoidung(cursor.getString(9));
                     list.add(nguoiDung);
                     cursor.moveToNext();
                 }
