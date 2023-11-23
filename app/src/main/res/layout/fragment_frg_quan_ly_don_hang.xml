@@ -6,20 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.frgQuanLyDonHang">
 
-    <ListView
-        android:id="@+id/lv_Don_Hang"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_don_hang"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_ql_don_hang"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fl_Don_Hang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="80sp"
-        app:srcCompat="@drawable/add_doan"
-        app:fabSize="auto"
-        app:maxImageSize="60dp" />
-
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fl_don_hang"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        android:layout_marginBottom="10sp"-->
+<!--        app:srcCompat="@drawable/add_doan"-->
+<!--        app:fabSize="auto"-->
+<!--        app:maxImageSize="60dp"/>-->
 </FrameLayout>
