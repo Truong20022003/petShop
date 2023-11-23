@@ -129,4 +129,16 @@ public class NguoiDungDao {
         long check = database.delete("TAIKHOAN","mataikhoan = ?",new String[]{String.valueOf(nd.getMaTaiKhoan())});
         return check>0;
     }
+    public boolean update(int manguoidung,String tennguoidung, int sotien){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("hoten",tennguoidung);
+        values.put("sotien",sotien);
+        long check = db.update("TAIKHOAN",values,"mataikhoan = ?", new String[]{String.valueOf(manguoidung)});
+        if(check == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

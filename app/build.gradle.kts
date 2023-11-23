@@ -48,4 +48,5 @@ dependencies {
     implementation ("me.relex:circleindicator:2.1.6")
     //picaso
     implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation ("com.squareup.picasso:picasso:2.8")
 }
