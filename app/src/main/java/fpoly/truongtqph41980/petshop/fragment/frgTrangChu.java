@@ -1,5 +1,7 @@
 package fpoly.truongtqph41980.petshop.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,19 +15,26 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
+import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Model.Slideiten;
 import fpoly.truongtqph41980.petshop.R;
+import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
+import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_slide;
 import fpoly.truongtqph41980.petshop.adapter.adapter_trangchu;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgTrangChuBinding;
@@ -40,6 +49,9 @@ public class frgTrangChu extends Fragment {
     ArrayList<SanPham> listdem;
     private List<Slideiten> slidelist;
     private Handler slideHanlder = new Handler(Looper.getMainLooper());
+    private SharedViewModel sharedViewModel;
+    private adapter_gio_hang gioHangAdapter;
+    private GioHangDao gioHangDao;
 
     public frgTrangChu() {
         // Required empty public constructor
@@ -143,7 +155,16 @@ public class frgTrangChu extends Fragment {
             }
         });
         adapter.notifyDataSetChanged();
+        gioHangDao = new GioHangDao(getContext());
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
+        gioHangAdapter = new adapter_gio_hang(getContext(), new ArrayList<>());
+        adapter.setOnAddToCartClickListenerTrangChu(new adapter_trangchu.OnAddToCartClickListenerTrangChu() {
+            @Override
+            public void onAddToCartClick(SanPham sanPham) {
+                addToCart(sanPham);
+            }
+        });
         return view;
     }
 
@@ -172,5 +193,37 @@ public class frgTrangChu extends Fragment {
         //khi quay tro lai man home
         super.onResume();
         slideHanlder.postDelayed(sildeRunnable, 3000);
+    }
+    private void addToCart(SanPham sanPham) {
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
+
+        int mand = sharedPreferences.getInt("mataikhoan", 0);
+        if (!sharedViewModel.isProductInCart(sanPham.getMasanpham())) {
+            sharedViewModel.setMasp(sanPham.getMasanpham());
+            sharedViewModel.setAddToCartClicked(true);
+            sharedViewModel.addProductToCart(sanPham.getMasanpham());
+            sharedViewModel.setQuantityToAdd(1);
+
+            gioHangDao.insertGioHang(new GioHang(sanPham.getMasanpham(), mand, 1));
+
+        } else {
+
+            GioHang hang = gioHangDao.getGioHangByMasp(sanPham.getMasanpham(),mand);
+            if (hang != null) {
+                hang.setSoLuongMua(hang.getSoLuongMua() + 1);
+                gioHangDao.updateGioHang(hang);
+            } else {
+                GioHang newCartItem = new GioHang(sanPham.getMasanpham(), mand, 1);
+                gioHangDao.insertGioHang(newCartItem);
+            }
+
+            gioHangAdapter.notifyDataSetChanged();
+
+        }
+        ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
+        gioHangAdapter.updateCartList(updatedCartList);
+        gioHangAdapter.notifyDataSetChanged();
+        Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
     }
 }

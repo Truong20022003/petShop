@@ -118,7 +118,6 @@ public class frgGianHang extends Fragment {
         gioHangAdapter.updateCartList(updatedCartList);
         gioHangAdapter.notifyDataSetChanged();
         Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
-//        Toast.makeText(getContext(), "Đã cập nhật giỏ hàng thành công", Toast.LENGTH_SHORT).show();
     }
 
 }
