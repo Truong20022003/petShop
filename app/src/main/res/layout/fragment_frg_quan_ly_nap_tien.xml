@@ -10,17 +10,6 @@
         android:id="@+id/rcv_nap_tien"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_ql_don_hang"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fl_nap_tien"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="10sp"
-        app:srcCompat="@drawable/add_doan"
-        app:fabSize="auto"
-        app:maxImageSize="60dp"/>
-
+        tools:listitem="@layout/item_quanlynaptien"
+        />
 </FrameLayout>
