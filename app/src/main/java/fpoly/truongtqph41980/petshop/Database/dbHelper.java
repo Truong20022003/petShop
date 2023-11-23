@@ -1,8 +1,10 @@
 package fpoly.truongtqph41980.petshop.Database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 public class dbHelper extends SQLiteOpenHelper {
@@ -165,4 +167,5 @@ public class dbHelper extends SQLiteOpenHelper {
 
         }
     }
+
 }
