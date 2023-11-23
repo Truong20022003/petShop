@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.databinding.ItemGioHangBinding;
+import fpoly.truongtqph41980.petshop.fragment.frgGioHang;
 
 public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.ViewHolder> {
 
@@ -24,10 +26,13 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
     Context context;
     GioHangDao dao;
 
+    private TotalPriceListener listener;
+
     public adapter_gio_hang(Context context, ArrayList<GioHang> list) {
         this.context = context;
         this.list = list;
         dao = new GioHangDao(context);
+
     }
 
     @NonNull
@@ -43,36 +48,44 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
 
 
         // Hiển thị thông tin sản phẩm
-        holder.binding.txtgia.setText(String.valueOf(gioHang.getGiaSanPham()));
+        holder.binding.txtgia.setText(String.valueOf(gioHang.getSoLuongMua() * gioHang.getGiaSanPham()));
         holder.binding.txtsoluong.setText(String.valueOf(gioHang.getSoLuongMua()));
         holder.binding.txttensp.setText(gioHang.getTenSanPham());
+//        gioHang.set
+        holder.binding.chkChonSanPham.setOnCheckedChangeListener((compoundButton, b) -> {
+            gioHang.setSelected(b);
+            updateTotalPrice();
+        });
 
-        holder.binding.btncong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (gioHang.getSoLuongMua() >= 1) {
-                    gioHang.setSoLuongMua(gioHang.getSoLuongMua() + 1);
-                    dao.updateGioHang(gioHang);
-                    notifyDataSetChanged();
-                }
+
+        holder.binding.btncong.setOnClickListener(view -> {
+            if (gioHang.getSoLuongMua() >= 1) {
+                gioHang.setSoLuongMua(gioHang.getSoLuongMua() + 1);
+
+                dao.updateGioHang(gioHang);
+                notifyDataSetChanged();
+                updateTotalPrice();
             }
         });
-        holder.binding.btntru.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (gioHang.getSoLuongMua() >= 1) {
-                    gioHang.setSoLuongMua(gioHang.getSoLuongMua() - 1);
-                    dao.updateGioHang(gioHang);
-                    notifyDataSetChanged();
-                }else {
-                    if (dao.deleteGioHang(gioHang)){
-                        list.clear();
-                        list.addAll(dao.getDSGioHang());
-                        notifyDataSetChanged();
-                    }else {
-                        Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                }
+        holder.binding.btntru.setOnClickListener(view -> {
+            if (gioHang.getSoLuongMua() > 1) {
+                gioHang.setSoLuongMua(gioHang.getSoLuongMua() - 1);
+
+                dao.updateGioHang(gioHang);
+                notifyDataSetChanged();
+                updateTotalPrice();
+            } else {
+                removeItem(gioHang);
+//                    gioHang.setSoLuongMua(gioHang.getSoLuongMua() - 1);
+//                    if (dao.deleteGioHang(gioHang)) {
+//                        list.clear();
+//                        list.addAll(dao.getDSGioHang());
+//
+//                        notifyDataSetChanged();
+//                        updateTotalPrice();
+//                    } else {
+//                        Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+//                    }
             }
         });
     }
@@ -81,6 +94,37 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
         list.clear();
         list.addAll(updatedList);
         notifyDataSetChanged();
+
+    }
+
+    private void removeItem(GioHang gioHang) {
+        if (dao.deleteGioHang(gioHang)) {
+            list.remove(gioHang);
+            notifyDataSetChanged();
+            updateTotalPrice();
+        } else {
+            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateTotalPrice() {
+        if (listener != null) {
+            int totalAmount = 0;
+            for (GioHang gioHang : list) {
+                if (gioHang.isSelected()) {
+                    totalAmount += gioHang.getSoLuongMua() * gioHang.getGiaSanPham();
+                }
+            }
+            listener.onTotalPriceUpdated(totalAmount);
+        }
+    }
+
+    public void setTotalPriceListener(TotalPriceListener listener) {
+        this.listener = listener;
+    }
+
+    public interface TotalPriceListener {
+        void onTotalPriceUpdated(int totalAmount);
     }
 
     @Override

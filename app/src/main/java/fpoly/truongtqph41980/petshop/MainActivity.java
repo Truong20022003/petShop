@@ -56,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         handleBottomNavigationItemSelected();
+        if (savedInstanceState == null) {
+            // Nếu chưa có fragment được đặt, thì đặt một fragment mặc định ở đây
+            replaceFragment(new frgTrangChu());
+            getSupportActionBar().setTitle("Trang Chủ"); // Set tiêu đề cho fragment mặc định
+        }
         binding.btnProFile.setOnClickListener(view ->
                 startActivity(new Intent(MainActivity.this, Profile.class)));
 

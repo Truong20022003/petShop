@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -115,8 +117,8 @@ public class frgGianHang extends Fragment {
         ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
         gioHangAdapter.updateCartList(updatedCartList);
         gioHangAdapter.notifyDataSetChanged();
-
-        Toast.makeText(getContext(), "Đã cập nhật giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+        Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Đã cập nhật giỏ hàng thành công", Toast.LENGTH_SHORT).show();
     }
 
 }

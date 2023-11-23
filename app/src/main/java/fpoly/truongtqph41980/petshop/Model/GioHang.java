@@ -8,6 +8,15 @@ public class GioHang {
     private int soLuongMua;
     private String tenSanPham;
     private int giaSanPham;
+    private boolean isSelected;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public GioHang() {
     }

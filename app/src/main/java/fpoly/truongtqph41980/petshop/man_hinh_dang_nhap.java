@@ -20,7 +20,6 @@ public class man_hinh_dang_nhap extends AppCompatActivity {
     private SharedPreferences.Editor editor;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,25 +42,25 @@ public class man_hinh_dang_nhap extends AppCompatActivity {
                 binding.tipLMatKhau.setError("Không được để trống");
                 return;
             }
-                if (nguoiDungDao.checkDangNhap(userName, passWord)) {
-                    if (binding.chkNhoMatKhau.isChecked()) {
-                        editor.putString("username", userName);
-                        editor.putString("password", passWord);
-                        editor.putBoolean("isChecked", binding.chkNhoMatKhau.isChecked());
-                        editor.apply();
-                    } else {
-                        editor.clear();
-                        editor.apply();
-                    }
-                    binding.tiedtTenDangNhap.setText("");
-                    binding.tiedtNhapMatKhau.setText("");
-                    Intent intent = new Intent(man_hinh_dang_nhap.this, MainActivity.class);
-                    man_hinh_dang_nhap.this.startActivity(intent);
-                    this.finish();
+            if (nguoiDungDao.checkDangNhap(userName, passWord)) {
+                if (binding.chkNhoMatKhau.isChecked()) {
+                    editor.putString("username", userName);
+                    editor.putString("password", passWord);
+                    editor.putBoolean("isChecked", binding.chkNhoMatKhau.isChecked());
+                    editor.apply();
                 } else {
-                    binding.tinLTenDangNhap.setError("Tên đăng nhập không đúng");
-                    binding.tipLMatKhau.setError("Mật khẩu không đúng");
+                    editor.clear();
+                    editor.apply();
                 }
+                binding.tiedtTenDangNhap.setText("");
+                binding.tiedtNhapMatKhau.setText("");
+                Intent intent = new Intent(man_hinh_dang_nhap.this, MainActivity.class);
+                man_hinh_dang_nhap.this.startActivity(intent);
+                this.finish();
+            } else {
+                binding.tinLTenDangNhap.setError("Tên đăng nhập không đúng");
+                binding.tipLMatKhau.setError("Mật khẩu không đúng");
+            }
 
         });
         binding.txtChuyenQuaDangKy.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +71,7 @@ public class man_hinh_dang_nhap extends AppCompatActivity {
             }
         });
     }
+
     private void checkRemember() {
         preferences = this.getSharedPreferences("ACCOUNT", MODE_PRIVATE);
         editor = preferences.edit(); // gọi dòng trên và edit vào nó

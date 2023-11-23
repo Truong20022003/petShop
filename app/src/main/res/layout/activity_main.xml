@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/mau_hong">
-
-<androidx.drawerlayout.widget.DrawerLayout
-    android:id="@+id/drawer_Layout_Main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/mau_hong">
 
-    <LinearLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_Layout_Main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_Main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/vang_nhat"
-            app:navigationIcon="@drawable/ic_menu" >
-            <ImageView
-                android:id="@+id/btn_proFile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_profile"
-                android:layout_gravity="right"/>
-        </androidx.appcompat.widget.Toolbar>
+        tools:context=".MainActivity">
 
-        <FrameLayout
-            android:id="@+id/frameLayoutMain"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="60sp"
-            />
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_Main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/vang_nhat"
+                app:navigationIcon="@drawable/ic_menu">
+
+                <ImageView
+                    android:id="@+id/btn_proFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:src="@drawable/ic_profile" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <FrameLayout
+                android:id="@+id/frameLayoutMain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="60sp" />
 
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView_Main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:menu="@menu/menu_quan_ly"
-        app:headerLayout="@layout/header_menu"
-        android:layout_gravity="start"
-         />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView_Main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/header_menu"
+            app:menu="@menu/menu_quan_ly" />
 
-</androidx.drawerlayout.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_bottom_Main"
@@ -58,8 +58,8 @@ android:background="@color/mau_hong">
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/vang_nhat"
-        app:menu="@menu/menu_nav_bottom"
         android:theme="@style/bottom_style"
+        app:menu="@menu/menu_nav_bottom"
 
         />
 

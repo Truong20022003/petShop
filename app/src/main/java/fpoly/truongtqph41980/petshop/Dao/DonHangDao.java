@@ -49,14 +49,23 @@ public class DonHangDao {
         return check >0;
 
     }
+    public boolean updateDonHang(DonHang donHang) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("mataikhoan", donHang.getMaTaiKhoan());
+        values.put("ngaydathang", donHang.getNgayDatHang());
+        values.put("tongtien", donHang.getTongTien());
 
+        long check = sqLiteDatabase.update("DONHANG", values, "madonhang = ?", new String[]{String.valueOf(donHang.getMaDonHang())});
+        return check > 0;
+    }
     public boolean insertDonHang(DonHang donHang){
         SQLiteDatabase da = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("mataikhoan",donHang.getMaTaiKhoan());
         values.put("ngaydathang",donHang.getNgayDatHang());
         values.put("tongtien",donHang.getTongTien());
-        long check = da.insert("GIOHANG",null,values);
+        long check = da.insert("DONHANG",null,values);
         return check>0;
     }
 }

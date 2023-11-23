@@ -34,7 +34,7 @@ import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgGioHangBinding;
 
 
-public class frgGioHang extends Fragment {
+public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceListener {
 
     private ArrayList<GioHang> list = new ArrayList<>();
     private adapter_gio_hang gioHangAdapter;
@@ -75,6 +75,9 @@ public class frgGioHang extends Fragment {
         gioHangAdapter = new adapter_gio_hang(getContext(), list);
         rcv.setAdapter(gioHangAdapter);
         gioHangDao = new GioHangDao(getContext());
+        gioHangAdapter.setTotalPriceListener(this);
+
+
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getMasp().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -92,8 +95,19 @@ public class frgGioHang extends Fragment {
 
         list = gioHangDao.getDSGioHang();
         displayCart(list);
+        binding.btnThanhToan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return gView;
     }
+
+
+
+
+
 
     public void updateGioHangByMaSp(int masp) {
         if (masp > 0) {
@@ -104,10 +118,17 @@ public class frgGioHang extends Fragment {
             // Kiểm tra nếu mã sản phẩm đã tồn tại trong giỏ hàng
             GioHang hang = gioHangDao.getGioHangByMasp(masp, mand);
 
-                // Hiển thị giỏ hàng sau khi đã cập nhật
-                ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
-                displayCart(updatedCartList);
+            // Hiển thị giỏ hàng sau khi đã cập nhật
+            ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
+            displayCart(updatedCartList);
         } else {
+        }
+    }
+
+    @Override
+    public void onTotalPriceUpdated(int totalAmount) {
+        if (binding != null && binding.txtTongTienThanhToan != null) {
+            binding.txtTongTienThanhToan.setText(String.valueOf(totalAmount));
         }
     }
 }
