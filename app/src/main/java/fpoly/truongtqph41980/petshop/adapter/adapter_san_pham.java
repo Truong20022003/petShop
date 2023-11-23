@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,6 +54,7 @@ public class adapter_san_pham extends RecyclerView.Adapter<adapter_san_pham.view
         holder.txt.txtmaLoaiSanPham2.setText("MÃ loại sản phẩm: " + String.valueOf(list.get(position).getMaloaisanpham()));
         holder.txt.txttenLoaiSanPham2.setText("Tên loại sản phẩm: " + list.get(position).getTenloaisanpham());
         holder.txt.txtmoTa.setText("Mô tả: "+list.get(position).getMota());
+        Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.txt.imgItemAnhSanPham);
         SanPham sp = list.get(position);
         holder.txt.btnxoa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +184,7 @@ public class adapter_san_pham extends RecyclerView.Adapter<adapter_san_pham.view
                         String tensanpham = suaspbiding.edtenSanPham.getText().toString();
                         String gia = suaspbiding.edgiaSanPham.getText().toString();
                         String mota = suaspbiding.edmoTa.getText().toString();
-
+                        String anhsanpham = suaspbiding.edUpAnhSanPham.getText().toString();
                         HashMap<String, Object> hs = (HashMap<String, Object>) suaspbiding.spnmaLoaiSanPham.getSelectedItem();
                         int maloaisp = (int) hs.get("maloaisanpham");
 
@@ -201,6 +204,11 @@ public class adapter_san_pham extends RecyclerView.Adapter<adapter_san_pham.view
                             } else {
                                 suaspbiding.edmoTa.setError(null);
                             }
+                            if (anhsanpham.equals("")) {
+                                suaspbiding.edUpAnhSanPham.setError("Vui lòng không để trống giá sản phẩm");
+                            } else {
+                                suaspbiding.edUpAnhSanPham.setError(null);
+                            }
                         } else {
                             try {
                                 int tien = Integer.parseInt(gia);
@@ -208,7 +216,7 @@ public class adapter_san_pham extends RecyclerView.Adapter<adapter_san_pham.view
                                     suaspbiding.edgiaSanPham.setError("Giá sản phẩm phải lớn hơn 0");
                                 } else {
                                     suaspbiding.edgiaSanPham.setError(null);
-                                    boolean check = dao.update(sp.getMasanpham(), tensanpham, tien, maloaisp,mota);
+                                    boolean check = dao.update(sp.getMasanpham(), tensanpham, tien, maloaisp,mota,anhsanpham);
 
                                     if (check) {
                                         list.clear();

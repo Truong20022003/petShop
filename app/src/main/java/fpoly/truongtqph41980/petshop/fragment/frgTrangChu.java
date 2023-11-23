@@ -96,8 +96,8 @@ public class frgTrangChu extends Fragment {
             }
         });
         dao = new SanPhamDao(getContext());
-        list = dao.trangchugetall();
-        listdem = dao.trangchugetall();
+        list = dao.getsanphamall();
+        listdem = dao.getsanphamall();
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         binding.rcvtrangchu.setLayoutManager(gridLayoutManager);
         adapter = new adapter_trangchu(list, getContext());

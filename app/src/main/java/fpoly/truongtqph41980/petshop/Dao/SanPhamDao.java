@@ -19,22 +19,23 @@ public class SanPhamDao {
     public ArrayList<SanPham> getsanphamall(){
         ArrayList<SanPham> list = new ArrayList();
         SQLiteDatabase database = dbs.getReadableDatabase();
-        Cursor cursor = database.rawQuery("select sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham,lsp.tenloaisanpham,sp.mota from SANPHAM sp, LOAISANPHAM lsp where sp.maloaisanpham = lsp.maLoaisanpham",null);
+        Cursor cursor = database.rawQuery("select sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham,lsp.tenloaisanpham,sp.mota,sp.anhsanpham from SANPHAM sp, LOAISANPHAM lsp where sp.maloaisanpham = lsp.maLoaisanpham",null);
         if (cursor.getCount()!=0){
             cursor.moveToFirst();
             do {
-                list.add(new SanPham(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getString(4),cursor.getString(5)));
+                list.add(new SanPham(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getString(4),cursor.getString(5),cursor.getString(6)));
             }while (cursor.moveToNext());
         }
         return list;
     }
-    public boolean insert(String tensanpham, int gia, int maloaisanpham,String mota){
+    public boolean insert(String tensanpham, int gia, int maloaisanpham,String mota,String anhsanpham){
         SQLiteDatabase db = dbs.getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put("tensanpham",tensanpham);
         values.put("gia",gia);
         values.put("maloaisanpham",maloaisanpham);
         values.put("mota",mota);
+        values.put("anhsanpham",anhsanpham);
         long check = db.insert("SANPHAM",null,values);
         if(check == -1){
             return false;
@@ -42,13 +43,14 @@ public class SanPhamDao {
             return true;
         }
     }
-    public boolean update(int masanpham,String tensanpham, int gia, int maloaisanpham,String mota){
+    public boolean update(int masanpham,String tensanpham, int gia, int maloaisanpham,String mota,String anhsanpham){
         SQLiteDatabase db = dbs.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("tensanpham",tensanpham);
         values.put("gia",gia);
         values.put("maloaisanpham",maloaisanpham);
         values.put("mota",mota);
+        values.put("anhsanpham",anhsanpham);
         long check = db.update("SANPHAM",values,"masanpham = ?", new String[]{String.valueOf(masanpham)});
         if(check == -1){
             return false;
@@ -69,24 +71,24 @@ public class SanPhamDao {
             return 1;
         }
     }
-    public SanPham getSanPhamById(int masanpham) {
-        SQLiteDatabase database = dbs.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham, lsp.tenloaisanpham, sp.mota FROM SANPHAM sp, LOAISANPHAM lsp WHERE sp.maloaisanpham = lsp.maLoaisanpham AND sp.masanpham = ?", new String[]{String.valueOf(masanpham)});
-        if (cursor.moveToFirst()) {
-            return new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5));
-        }
-        return null;
-    }
-    public ArrayList<SanPham> trangchugetall(){
-        ArrayList<SanPham> list = new ArrayList();
-        SQLiteDatabase database = dbs.getReadableDatabase();
-        Cursor cursor = database.rawQuery("select sp.tensanpham,sp.gia FROM SANPHAM sp ",null);
-        if (cursor.getCount()!=0){
-            cursor.moveToFirst();
-            do {
-                list.add(new SanPham(cursor.getString(0),cursor.getInt(1)));
-            }while (cursor.moveToNext());
-        }
-        return list;
-    }
+//    public SanPham getSanPhamById(int masanpham) {
+//        SQLiteDatabase database = dbs.getReadableDatabase();
+//        Cursor cursor = database.rawQuery("SELECT sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham, lsp.tenloaisanpham, sp.mota FROM SANPHAM sp, LOAISANPHAM lsp WHERE sp.maloaisanpham = lsp.maLoaisanpham AND sp.masanpham = ?", new String[]{String.valueOf(masanpham)});
+//        if (cursor.moveToFirst()) {
+//            return new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5));
+//        }
+//        return null;
+//    }
+//    public ArrayList<SanPham> trangchugetall(){
+//        ArrayList<SanPham> list = new ArrayList();
+//        SQLiteDatabase database = dbs.getReadableDatabase();
+//        Cursor cursor = database.rawQuery("select sp.tensanpham,sp.gia FROM SANPHAM sp ",null);
+//        if (cursor.getCount()!=0){
+//            cursor.moveToFirst();
+//            do {
+//                list.add(new SanPham(cursor.getString(0),cursor.getInt(1)));
+//            }while (cursor.moveToNext());
+//        }
+//        return list;
+//    }
 }

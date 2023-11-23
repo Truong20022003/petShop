@@ -39,11 +39,12 @@ public class man_hinh_dang_ky extends AppCompatActivity {
         // Lấy thông tin từ các trường nhập liệu
         nguoiDung.setTenDangNhap(binding.edtTenDangNhapDangKy.getText().toString().trim());
         nguoiDung.setMatKhau(binding.edtNhapPassDangKy.getText().toString().trim());
-        nguoiDung.setHoTen(binding.edtNhapHoTenDangKy.getText().toString().trim());
+        nguoiDung.setHoTen(binding.edtNhapHoTenDangKy.getText().toString());
         nguoiDung.setSoDienThoai(binding.edtNhapSDTDangKy.getText().toString().trim());
-        nguoiDung.setDiaChi(binding.edtNhapDiaChiDangKy.getText().toString().trim());
+        nguoiDung.setDiaChi(binding.edtNhapDiaChiDangKy.getText().toString());
         nguoiDung.setEmail(binding.edtNhapEmailDangKy.getText().toString().trim());
         nguoiDung.setSoTien(0); // Đặt số tiền mặc định khi đăng ký
+        nguoiDung.setAnhnguoidung(binding.edtAnhDangKy.getText().toString());
         nguoiDung.setLoaiTaiKhoan("khachhang"); // Đặt loại tài khoản mặc định khi đăng ký
 
         // Thực hiện đăng ký bằng cách thêm người dùng vào cơ sở dữ liệu

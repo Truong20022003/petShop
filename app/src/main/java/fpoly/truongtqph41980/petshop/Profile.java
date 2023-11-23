@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import com.squareup.picasso.Picasso;
+
 import fpoly.truongtqph41980.petshop.databinding.ActivityProfileBinding;
 
 public class Profile extends AppCompatActivity {
@@ -29,6 +31,7 @@ public class Profile extends AppCompatActivity {
         String diachi = preferences.getString("diachi", "");
         int tien = preferences.getInt("sotien", 0);
         String loaitaikhoan = preferences.getString("loaitaikhoan", "");
+        String urlAnh = preferences.getString("anhtaikhoan","");
         binding.hiName.setText("Hi, " + hoten);
         binding.txtPMaNguoiDung.setText("Mã tài khoản: " + String.valueOf(mand));
         binding.txtPTenDangNhap.setText("Tên đăng nhập: " + tenDN);
@@ -38,6 +41,8 @@ public class Profile extends AppCompatActivity {
         binding.txtPDiaChi.setText("Địa chỉ: " + diachi);
         binding.txtPSoTien.setText("Số tiền hiện có: " + String.valueOf(tien));
         binding.txtPLoaiTaiKhoan.setText("Loại tài khoản: " + loaitaikhoan);
+//        load(list.get(position).getAnhnguoidung()).into(holder.binding.imgAnhQlNguoiDung);
+        Picasso.get().load(urlAnh).into(binding.imgAvatarProfile);
         binding.btnPDangXuat.setOnClickListener(view ->
                 startActivity(new Intent(Profile.this, man_hinh_dang_nhap.class))
         );

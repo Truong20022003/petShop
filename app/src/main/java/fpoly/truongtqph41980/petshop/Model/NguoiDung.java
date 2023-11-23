@@ -10,18 +10,19 @@ public class NguoiDung {
     private String diaChi;
     private int soTien;
     private String loaiTaiKhoan;
+    private String anhnguoidung;
 
-    public NguoiDung(int maTaiKhoan, String tenDangNhap, String matKhau, String hoTen, String email, String soDienThoai, String diaChi, int soTien, String loaiTaiKhoan) {
-        this.maTaiKhoan = maTaiKhoan;
-        this.tenDangNhap = tenDangNhap;
-        this.matKhau = matKhau;
-        this.hoTen = hoTen;
-        this.email = email;
-        this.soDienThoai = soDienThoai;
-        this.diaChi = diaChi;
-        this.soTien = soTien;
-        this.loaiTaiKhoan = loaiTaiKhoan;
-    }
+//    public NguoiDung(int maTaiKhoan, String tenDangNhap, String matKhau, String hoTen, String email, String soDienThoai, String diaChi, int soTien, String loaiTaiKhoan) {
+//        this.maTaiKhoan = maTaiKhoan;
+//        this.tenDangNhap = tenDangNhap;
+//        this.matKhau = matKhau;
+//        this.hoTen = hoTen;
+//        this.email = email;
+//        this.soDienThoai = soDienThoai;
+//        this.diaChi = diaChi;
+//        this.soTien = soTien;
+//        this.loaiTaiKhoan = loaiTaiKhoan;
+//    }
 
     public NguoiDung(String tenDangNhap, String matKhau, String hoTen, String email, String soDienThoai, String diaChi, int soTien, String loaiTaiKhoan) {
         this.tenDangNhap = tenDangNhap;
@@ -35,6 +36,14 @@ public class NguoiDung {
     }
 
     public NguoiDung() {
+    }
+
+    public String getAnhnguoidung() {
+        return anhnguoidung;
+    }
+
+    public void setAnhnguoidung(String anhnguoidung) {
+        this.anhnguoidung = anhnguoidung;
     }
 
     public int getMaTaiKhoan() {

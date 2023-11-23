@@ -13,10 +13,11 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="110sp"
-            android:layout_height="125sp"
+            android:id="@+id/img_Item_Anh_San_Pham"
+            android:layout_width="120sp"
+            android:layout_height="135sp"
             android:layout_marginLeft="1sp"
-            android:background="@drawable/anh_sanpham" />
+             />
 
         <LinearLayout
             android:layout_width="match_parent"

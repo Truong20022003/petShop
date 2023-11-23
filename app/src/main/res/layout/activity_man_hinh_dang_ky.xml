@@ -55,7 +55,24 @@
                     android:text="Tên đăng nhập"
                     android:textColor="@color/mau_chu"
                     android:textSize="18sp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tipL_Anh_DangKy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/mau_chu"
+                    android:theme="@style/PesShop2"
 
+                    >
+
+                    <EditText
+                        android:id="@+id/edt_Anh_DangKy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/baloothambi2regular"
+                        android:hint="Gán link ảnh hoặc thêm sau"
+                        android:textColorHint="@color/mau_chu"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tipL_Ten_Dang_Nhap_DangKy"
                     android:layout_width="match_parent"

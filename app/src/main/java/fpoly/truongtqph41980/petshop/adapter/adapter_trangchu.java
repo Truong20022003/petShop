@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class adapter_trangchu extends RecyclerView.Adapter<adapter_trangchu.View
     public void onBindViewHolder(@NonNull ViewHo holder, int position) {
         holder.biding.txttenSanPham.setText(list.get(position).getTensanpham());
         holder.biding.txtgiasp.setText(String.valueOf(list.get(position).getGia()));
-
+        Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.biding.imgAnhSpTrangChu);
 
     }
 

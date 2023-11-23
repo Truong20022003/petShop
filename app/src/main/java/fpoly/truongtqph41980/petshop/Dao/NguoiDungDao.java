@@ -49,6 +49,7 @@ public class NguoiDungDao {
                     nguoiDung.setDiaChi(cursor.getString(6));
                     nguoiDung.setSoTien(cursor.getInt(7));
                     nguoiDung.setLoaiTaiKhoan(cursor.getString(8));
+
                     list.add(nguoiDung);
                     cursor.moveToNext();
                 }
@@ -87,6 +88,7 @@ public class NguoiDungDao {
                 editor.putString("diachi", cursor.getString(6));
                 editor.putInt("sotien", cursor.getInt(7));
                 editor.putString("loaitaikhoan", cursor.getString(8));
+                editor.putString("anhtaikhoan",cursor.getString(9));
                 editor.apply();
                 return true;
             } else {
@@ -109,7 +111,7 @@ public class NguoiDungDao {
         values.put("diachi", nguoiDung.getDiaChi());
         values.put("sotien", nguoiDung.getSoTien());
         values.put("loaitaikhoan", nguoiDung.getLoaiTaiKhoan());
-
+        values.put("anhtaikhoan", nguoiDung.getAnhnguoidung());
         long result = db.insert("TAIKHOAN", null, values);
         return result != -1;
     }

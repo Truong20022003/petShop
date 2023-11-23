@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -73,7 +75,7 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
         holder.binding.txttenHat.setText("Tên sp:" + list.get(position).getTensanpham());
         holder.binding.txtgiaHat.setText("Giá sp:" + String.valueOf(list.get(position).getGia()));
         holder.binding.txttrangThaiSanPham.setText("Số lượt bán: 200");
-
+        Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.binding.imgAnhspGianHang);
         holder.binding.btnThemvaogio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

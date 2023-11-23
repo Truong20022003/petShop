@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.NguoiDungDao;
@@ -46,6 +48,7 @@ public class adapter_nguoi_dung extends RecyclerView.Adapter<adapter_nguoi_dung.
         holder.binding.txtDiaChiEmail.setText("Email: "+list.get(position).getEmail());
         holder.binding.txtDiaChi.setText("Địa chỉ: "+ list.get(position).getDiaChi());
         holder.binding.txtCoins.setText("Coins: "+String.valueOf(list.get(position).getSoTien()));
+        Picasso.get().load(list.get(position).getAnhnguoidung()).into(holder.binding.imgAnhQlNguoiDung);
         NguoiDung nguoiDung = list.get(position);
         holder.binding.btnxoaND.setOnClickListener(new View.OnClickListener() {
             @Override

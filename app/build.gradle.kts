@@ -46,4 +46,6 @@ dependencies {
 //slide
     implementation("com.makeramen:roundedimageview:2.3.0")
     implementation ("me.relex:circleindicator:2.1.6")
+    //picaso
+    implementation ("com.squareup.picasso:picasso:2.71828")
 }

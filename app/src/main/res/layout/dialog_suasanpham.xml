@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/nen_dialog_doan"
     android:orientation="vertical"
     android:padding="20sp">
+
 
     <TextView
         android:layout_width="match_parent"
@@ -14,6 +16,24 @@
         android:text="Sửa sản phẩm"
         android:textColor="@color/black"
         android:textSize="25sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:fontFamily="@font/baloothambi2semibold"
+        android:text="Thêm link ảnh: "
+        android:textColor="@color/black"
+        android:textSize="17sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ed_Up_Anh_San_Pham"
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:layout_marginTop="10sp"
+        android:background="@drawable/vien_input_doan"
+        android:fontFamily="@font/baloothambi2semibold"
+        android:hint="Nhập ở đây...."
+        android:padding="10sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -23,8 +43,6 @@
         android:text="Tên sản phẩm: "
         android:textColor="@color/black"
         android:textSize="17sp" />
-
-
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edten_san_pham"

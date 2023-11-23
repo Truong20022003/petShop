@@ -12,16 +12,26 @@ private int gia;
 private int maloaisanpham;
 private String tenloaisanpham;
 private String mota;
+private String anhSanPham;
     public SanPham() {
     }
 
-    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham,String mota) {
+    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham,String mota,String anhSanPham) {
         this.masanpham = masanpham;
         this.tensanpham = tensanpham;
         this.gia = gia;
         this.maloaisanpham = maloaisanpham;
         this.tenloaisanpham = tenloaisanpham;
         this.mota=mota;
+        this.anhSanPham = anhSanPham;
+    }
+
+    public String getAnhSanPham() {
+        return anhSanPham;
+    }
+
+    public void setAnhSanPham(String anhSanPham) {
+        this.anhSanPham = anhSanPham;
     }
 
     public SanPham(String tensanpham, int gia) {
