@@ -2,6 +2,7 @@ package fpoly.truongtqph41980.petshop.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,16 @@ public class adapter_trangchu extends RecyclerView.Adapter<adapter_trangchu.View
 
         dao = new SanPhamDao(context);
     }
+    private OnAddToCartClickListenerTrangChu mAddToCartClickListener;
 
+    //nút thêm vào giỏ hàng
+    public interface OnAddToCartClickListenerTrangChu {
+        void onAddToCartClick(SanPham sanPham);
+    }
+
+    public void setOnAddToCartClickListenerTrangChu(OnAddToCartClickListenerTrangChu listener) {
+        mAddToCartClickListener = listener;
+    }
     @NonNull
     @Override
     public ViewHo onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,7 +51,14 @@ public class adapter_trangchu extends RecyclerView.Adapter<adapter_trangchu.View
         holder.biding.txttenSanPham.setText(list.get(position).getTensanpham());
         holder.biding.txtgiasp.setText(String.valueOf(list.get(position).getGia()));
         Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.biding.imgAnhSpTrangChu);
-
+        holder.biding.btnmuahang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mAddToCartClickListener != null) {
+                    mAddToCartClickListener.onAddToCartClick(list.get(holder.getAdapterPosition()));
+                }
+            }
+        });
     }
 
     @Override
