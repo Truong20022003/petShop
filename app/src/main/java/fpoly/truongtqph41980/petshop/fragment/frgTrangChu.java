@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,7 +53,7 @@ public class frgTrangChu extends Fragment {
     private SharedViewModel sharedViewModel;
     private adapter_gio_hang gioHangAdapter;
     private GioHangDao gioHangDao;
-
+    private boolean hasMatchingProducts = true; // Thêm biến boolean
     public frgTrangChu() {
         // Required empty public constructor
     }
@@ -125,29 +126,35 @@ public class frgTrangChu extends Fragment {
                 String searchText = charSequence.toString().toLowerCase(); // Chuyển đổi sang chữ thường
 
                 if (searchText.isEmpty()) {
-                    // Nếu không có ký tự tìm kiếm, hiển thị lại slide và RecyclerView ban đầu
+                    hasMatchingProducts = true;
                     binding.viewpage.setVisibility(View.VISIBLE);
                     binding.rcvtrangchu.setVisibility(View.VISIBLE);
                     binding.chamduoi.setVisibility(View.VISIBLE);
-                    binding.tenkoquantrong.setVisibility(View.VISIBLE);
+                    binding.tenkoquantrong.setText("Sản phẩm ");
+                    binding.nen.setVisibility(View.VISIBLE);
                     list.clear();
                     list.addAll(listdem);
                     adapter.notifyDataSetChanged();
                 } else {
-                    // Nếu có ký tự tìm kiếm, ẩn slide và hiển thị RecyclerView với kết quả tìm kiếm
                     binding.viewpage.setVisibility(View.GONE);
                     binding.chamduoi.setVisibility(View.GONE);
                     binding.tenkoquantrong.setText("Sản phẩm không có trong giỏ hàng");
+                    binding.nen.setVisibility(View.VISIBLE);
                     binding.rcvtrangchu.setVisibility(View.VISIBLE);
                     list.clear();
                     for (SanPham sp : listdem) {
-                        // Chuyển đổi tên sản phẩm sang chữ thường và kiểm tra xem có chứa ký tự tìm kiếm không
                         if (sp.getTensanpham().toLowerCase().contains(searchText)) {
                             list.add(sp);
                         }
                     }
+                    if (list.isEmpty()) {
+                        hasMatchingProducts = false;
+                    } else {
+                        hasMatchingProducts = true;
+                    }
                     adapter.notifyDataSetChanged();
                 }
+                updateText();
             }
             @Override
             public void afterTextChanged(Editable editable) {
@@ -225,5 +232,16 @@ public class frgTrangChu extends Fragment {
         gioHangAdapter.updateCartList(updatedCartList);
         gioHangAdapter.notifyDataSetChanged();
         Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+    }
+    private void updateText() {
+        if (!hasMatchingProducts) {
+            binding.tenkoquantrong.setText("Sản phẩm không có trong giỏ hàng.");
+            binding.tenkoquantrong.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.vang_nhat));
+            binding.nen.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.vang_nhat));
+
+        } else {
+            binding.tenkoquantrong.setText("Sản phẩm ");
+
+        }
     }
 }
