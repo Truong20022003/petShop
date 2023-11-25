@@ -4,15 +4,15 @@
     android:layout_width="142sp"
     android:layout_height="wrap_content"
     android:layout_marginBottom="40sp"
-    android:background="@drawable/khung_item_trangcchu"
+    android:background="@color/hong_nhat"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/img_AnhSp_Trang_Chu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="-2sp"
-        android:src="@drawable/sanpham_trangchu_doan" />
+        android:layout_height="150sp"
+        android:scaleType="centerCrop"
+        />
 
     <TextView
         android:id="@+id/txtten_san_pham"
@@ -36,7 +36,7 @@
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnmuahang"
-            app:layout_constraintHorizontal_bias="0.21"
+            app:layout_constraintHorizontal_bias="0.041"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +44,7 @@
             android:id="@+id/btnmuahang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/khung_item_trangcchu"
+            android:background="@color/hong_nhat"
             android:src="@drawable/cart_doan"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

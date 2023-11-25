@@ -9,8 +9,10 @@
     <ImageView
         android:id="@+id/img_Anh_ql_Nguoi_Dung"
         android:layout_width="160sp"
-        android:layout_height="match_parent"
-
+        android:layout_height="180sp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         />
     <LinearLayout
         android:layout_width="match_parent"

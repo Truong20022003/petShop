@@ -14,11 +14,11 @@
 
         <ImageView
             android:id="@+id/img_Item_Anh_San_Pham"
-            android:layout_width="120sp"
-            android:layout_height="135sp"
-            android:layout_marginLeft="1sp"
-             />
-
+            android:layout_width="130dp"
+            android:layout_height="150sp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop" />
+        <!-- Điều chỉnh kích thước ở đây -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,6 +57,7 @@
                 android:fontFamily="@font/baloothambi2regular"
                 android:text="ten san pham "
                 android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/txttrang_thai_san_pham"
                 android:layout_width="wrap_content"
@@ -65,6 +66,7 @@
                 android:fontFamily="@font/baloothambi2regular"
                 android:text="Trang thai "
                 android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/txtgia_san_pham"
                 android:layout_width="wrap_content"
@@ -86,6 +88,7 @@
         android:fontFamily="@font/baloothambi2regular"
         android:text="Ma loai san pham: "
         android:textSize="20sp" />
+
     <TextView
         android:id="@+id/txtten_loai_san_pham2"
         android:layout_width="match_parent"
@@ -94,13 +97,14 @@
         android:fontFamily="@font/baloothambi2regular"
         android:text="ten loai san pham: "
         android:textSize="20sp" />
+
     <TextView
         android:id="@+id/txtmo_ta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20sp"
+        android:layout_marginBottom="10sp"
         android:fontFamily="@font/baloothambi2regular"
         android:text="mô tả "
-        android:layout_marginBottom="10sp"
         android:textSize="20sp" />
 </LinearLayout>
