@@ -14,13 +14,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.databinding.ActivityMainBinding;
@@ -55,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+
+
         handleBottomNavigationItemSelected();
         if (savedInstanceState == null) {
             // Nếu chưa có fragment được đặt, thì đặt một fragment mặc định ở đây
@@ -101,8 +109,22 @@ public class MainActivity extends AppCompatActivity {
             menu.findItem(R.id.action_qlNapTien).setVisible(false);
             menu.findItem(R.id.action_qlThongKe).setVisible(false);
         }
-
-
+        String urlAnh = sharedPreferences.getString("anhtaikhoan","");
+        Picasso.get().load(urlAnh).into(binding.btnProFile);
+//        binding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
+//                    // Toolbar đã hoàn toàn ẩn
+//                    toolbar.animate().translationY(-toolbar.getHeight()).setInterpolator(new AccelerateInterpolator()).start();
+//                } else if (verticalOffset == 0) {
+//                    // Toolbar hiện đang hiển thị hoàn toàn
+//                    toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+//                } else {
+//                    // Toolbar đang ẩn/hiện giữa đường trung bình
+//                }
+//            }
+//        });
     }
 
     @Override

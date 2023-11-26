@@ -15,6 +15,9 @@
         android:theme="@style/Theme.PetShop"
         tools:targetApi="31">
         <activity
+            android:name=".lich_su_don_hang"
+            android:exported="false" />
+        <activity
             android:name=".ActivityManHinhCho.Man_Hinh_Cho_3"
             android:exported="false" />
         <activity

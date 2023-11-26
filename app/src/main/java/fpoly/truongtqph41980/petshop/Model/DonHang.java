@@ -6,16 +6,26 @@ public class DonHang {
     private String tenTaiKhoan;
     private String ngayDatHang;
     private int tongTien;
+    private String trangthai;
 
     public DonHang() {
     }
 
-    public DonHang(int maDonHang, int maTaiKhoan, String tenTaiKhoan, String ngayDatHang, int tongTien) {
+    public DonHang(int maDonHang, int maTaiKhoan, String tenTaiKhoan, String ngayDatHang, int tongTien, String trangthai) {
         this.maDonHang = maDonHang;
         this.maTaiKhoan = maTaiKhoan;
         this.tenTaiKhoan = tenTaiKhoan;
         this.ngayDatHang = ngayDatHang;
         this.tongTien = tongTien;
+        this.trangthai = trangthai;
+    }
+
+    public String getTrangthai() {
+        return trangthai;
+    }
+
+    public void setTrangthai(String trangthai) {
+        this.trangthai = trangthai;
     }
 
     public int getMaDonHang() {

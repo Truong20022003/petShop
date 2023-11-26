@@ -25,7 +25,7 @@ public class DonHangDao {
         ArrayList<DonHang> list = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         try {
-            Cursor cursor = database.rawQuery("SELECT DONHANG.madonhang, TAIKHOAN.mataikhoan, TAIKHOAN.hoten, DONHANG.ngaydathang, DONHANG.tongtien FROM DONHANG,TAIKHOAN WHERE DONHANG.mataikhoan = TAIKHOAN.mataikhoan", null);
+            Cursor cursor = database.rawQuery("SELECT DONHANG.madonhang, TAIKHOAN.mataikhoan, TAIKHOAN.hoten, DONHANG.ngaydathang, DONHANG.tongtien,DONHANG.trangthai FROM DONHANG,TAIKHOAN WHERE DONHANG.mataikhoan = TAIKHOAN.mataikhoan", null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
@@ -35,6 +35,7 @@ public class DonHangDao {
                     donHang.setTenTaiKhoan(cursor.getString(2));
                     donHang.setNgayDatHang(cursor.getString(3));
                     donHang.setTongTien(cursor.getInt(4));
+                    donHang.setTrangthai(cursor.getString(5));
                     list.add(donHang);
                 } while (cursor.moveToNext());
             }
@@ -67,5 +68,33 @@ public class DonHangDao {
         values.put("tongtien",donHang.getTongTien());
         long check = da.insert("DONHANG",null,values);
         return check>0;
+    }
+    public ArrayList<DonHang> getDonHangByMaTaiKhoan(int maTaiKhoan) {
+        ArrayList<DonHang> list = new ArrayList<>();
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        try {
+            String query = "SELECT DONHANG.madonhang, TAIKHOAN.mataikhoan, TAIKHOAN.hoten, DONHANG.ngaydathang, DONHANG.tongtien, DONHANG.trangthai " +
+                    "FROM DONHANG, TAIKHOAN " +
+                    "WHERE DONHANG.mataikhoan = TAIKHOAN.mataikhoan AND TAIKHOAN.mataikhoan = ?";
+
+            Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(maTaiKhoan)});
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    DonHang donHang = new DonHang();
+                    donHang.setMaDonHang(cursor.getInt(0));
+                    donHang.setMaTaiKhoan(cursor.getInt(1));
+                    donHang.setTenTaiKhoan(cursor.getString(2));
+                    donHang.setNgayDatHang(cursor.getString(3));
+                    donHang.setTongTien(cursor.getInt(4));
+                    donHang.setTrangthai(cursor.getString(5));
+                    list.add(donHang);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Lỗi", e);
+        }
+        return list;
     }
 }

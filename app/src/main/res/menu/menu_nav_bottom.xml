@@ -3,7 +3,8 @@
     <item
         android:id="@+id/nav_bot_home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="Trang chủ"
+        />
 
     <item
         android:id="@+id/nav_bot_sanpham"

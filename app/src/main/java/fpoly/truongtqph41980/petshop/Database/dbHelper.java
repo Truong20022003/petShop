@@ -77,18 +77,19 @@ public class dbHelper extends SQLiteOpenHelper {
 //        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(4,3,4,10)");
 //        sqLiteDatabase.execSQL("INSERT INTO GIOHANG VALUES(5,5,3,7)");
 
-        //5. Bảng đơn hảng
+        //5. Bảng đơn hàng
         String donHang = "CREATE TABLE DONHANG(" +
-                "madonhang integer primary key autoincrement," +
+                " madonhang integer primary key autoincrement," +
                 " mataikhoan integer REFERENCES TAIKHOAN(mataikhoan)," +
                 " ngaydathang text not null," +
-                " tongtien integer not null)";
+                " tongtien integer not null," +
+                " trangthai text not null)";
         sqLiteDatabase.execSQL(donHang);
-        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(1,2,'16/11/2023',100)");
-        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(2,5,'16/12/2023',200)");
-        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(3,2,'17/09/2023',300)");
-        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(4,4,'18/01/2023',400)");
-        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(5,3,'19/11/2023',50)");
+        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(1,2,'16/11/2023',100,'Đã nhận hàng')");
+        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(2,5,'16/12/2023',200,'Đã nhận hàng')");
+        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(3,2,'17/09/2023',300,'Đã nhận hàng')");
+        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(4,4,'18/01/2023',400,'Đã nhận hàng')");
+        sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(5,3,'19/11/2023',50,'Đã nhận hàng')");
 
 
         //6. Bảng lịch sử mua
@@ -145,10 +146,10 @@ public class dbHelper extends SQLiteOpenHelper {
                 " ngaydanhgia text not null)";
         sqLiteDatabase.execSQL(danhGia);
         sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(1,1,2,'Tốt','Mèo rất thích','11/11/2023')");
-        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(2,5,2,'Tốt','Mèo rất thích','11/11/2023')");
-        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(3,4,2,'Tốt','Mèo rất thích','11/11/2023')");
-        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(4,3,2,'Tốt','Mèo rất thích','11/11/2023')");
-        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(5,2,2,'Tốt','Mèo rất thích','11/11/2023')");
+        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(2,5,3,'Khá tốt','Mèo rất thích','11/12/2023')");
+        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(3,4,4,'Khá tốt','Mèo rất thích','12/13/2023')");
+        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(4,3,3,'Tốt','Mèo rất thích','11/14/2023')");
+        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(5,2,2,'Tốt','Mèo rất thích','11/15/2023')");
     }
 
     @Override
