@@ -28,6 +28,7 @@ import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Model.viewmd;
 import fpoly.truongtqph41980.petshop.R;
+import fpoly.truongtqph41980.petshop.ViewActivity.Thanh_Toan_Hoa_Don;
 import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gian_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
@@ -79,26 +80,34 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
 
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        sharedViewModel.getMasp().observe(getViewLifecycleOwner(), new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer masp) {
+        sharedViewModel.getMasp().observe(getViewLifecycleOwner(), masp -> {
 
-                if (isAdded() && isVisible()) {
-                    if (sharedViewModel.getAddToCartClicked().getValue() != null && sharedViewModel.getAddToCartClicked().getValue()) {
-                        Boolean addToCartClicked = sharedViewModel.getAddToCartClicked().getValue();
-                        updateGioHangByMaSp(masp);
-                        sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
-                    }
+            if (isAdded() && isVisible()) {
+                if (sharedViewModel.getAddToCartClicked().getValue() != null && sharedViewModel.getAddToCartClicked().getValue()) {
+                    Boolean addToCartClicked = sharedViewModel.getAddToCartClicked().getValue();
+                    updateGioHangByMaSp(masp);
+                    sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
                 }
             }
         });
 
         list = gioHangDao.getDSGioHang();
         displayCart(list);
-        binding.btnThanhToan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.btnThanhToan.setOnClickListener(view -> {
+            int totalAmount = Integer.parseInt(binding.txtTongTienThanhToan.getText().toString());
+            if (!list.isEmpty()) {
+                // Tạo Intent để bắt đầu BillActivity
+                Intent intent = new Intent(getContext(), Thanh_Toan_Hoa_Don.class);
 
+                // Truyền thông tin cần thiết đến màn hóa đơn
+                intent.putExtra("listgiohang", list);
+                intent.putExtra("tongtien", totalAmount);
+
+                // Bắt đầu activity
+                startActivity(intent);
+            } else {
+                // Hiển thị một toast hoặc xử lý trường hợp giỏ hàng trống
+                Toast.makeText(getContext(), "Giỏ hàng trống", Toast.LENGTH_SHORT).show();
             }
         });
         return gView;

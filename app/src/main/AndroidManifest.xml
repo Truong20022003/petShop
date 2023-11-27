@@ -18,6 +18,9 @@
             android:name=".lich_su_don_hang"
             android:exported="false" />
         <activity
+            android:name=".ViewActivity.Thanh_Toan_Hoa_Don"
+            android:exported="false" />
+        <activity
             android:name=".ActivityManHinhCho.Man_Hinh_Cho_3"
             android:exported="false" />
         <activity
