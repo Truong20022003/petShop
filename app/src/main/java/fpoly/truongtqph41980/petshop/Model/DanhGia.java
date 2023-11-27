@@ -1,0 +1,71 @@
+package fpoly.truongtqph41980.petshop.Model;
+
+public class DanhGia {
+    private int maDanhGia;
+    private int maTaiKhoan;
+    private int maSanPham;
+    private String danhGia;
+    private String nhanXet;
+    private String ngayDanhGia;
+
+    public DanhGia() {
+    }
+
+    public DanhGia(int maDanhGia, int maTaiKhoan, int maSanPham, String danhGia, String nhanXet, String ngayDanhGia) {
+        this.maDanhGia = maDanhGia;
+        this.maTaiKhoan = maTaiKhoan;
+        this.maSanPham = maSanPham;
+        this.danhGia = danhGia;
+        this.nhanXet = nhanXet;
+        this.ngayDanhGia = ngayDanhGia;
+    }
+
+    public int getMaDanhGia() {
+        return maDanhGia;
+    }
+
+    public int getMaTaiKhoan() {
+        return maTaiKhoan;
+    }
+
+    public int getMaSanPham() {
+        return maSanPham;
+    }
+
+    public String getDanhGia() {
+        return danhGia;
+    }
+
+    public String getNhanXet() {
+        return nhanXet;
+    }
+
+    public void setMaDanhGia(int maDanhGia) {
+        this.maDanhGia = maDanhGia;
+    }
+
+    public void setMaTaiKhoan(int maTaiKhoan) {
+        this.maTaiKhoan = maTaiKhoan;
+    }
+
+    public void setMaSanPham(int maSanPham) {
+        this.maSanPham = maSanPham;
+    }
+
+    public void setDanhGia(String danhGia) {
+        this.danhGia = danhGia;
+    }
+
+    public void setNhanXet(String nhanXet) {
+        this.nhanXet = nhanXet;
+    }
+
+    public void setNgayDanhGia(String ngayDanhGia) {
+        this.ngayDanhGia = ngayDanhGia;
+    }
+
+    public String getNgayDanhGia() {
+        return ngayDanhGia;
+    }
+}
+
