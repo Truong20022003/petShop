@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.NguoiDungDao;
 import fpoly.truongtqph41980.petshop.Model.NguoiDung;
+import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.databinding.DialogXoaNguoiDungBinding;
 import fpoly.truongtqph41980.petshop.databinding.ItemQlNdBinding;
 
@@ -60,6 +61,7 @@ public class adapter_nguoi_dung extends RecyclerView.Adapter<adapter_nguoi_dung.
                 builder.setView(dialogXoaNguoiDungBinding.getRoot());
 
                 Dialog dialog = builder.create();
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.nen_dialog_doan);
                 dialog.show();
                 dialogXoaNguoiDungBinding.btnConfilmXoaNguoiDung.setOnClickListener(new View.OnClickListener() {
                     @Override

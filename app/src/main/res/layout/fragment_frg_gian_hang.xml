@@ -3,13 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="5sp"
     tools:context=".fragment.frgGianHang">
 
-    <!-- TODO: Update blank fragment layout -->
-    <!--    <Spinner-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        />-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_Gian_Hang"
         android:layout_width="match_parent"

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.DonHangDao;
 import fpoly.truongtqph41980.petshop.Model.DonHang;
+import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.databinding.DialogXoaDonHangBinding;
 import fpoly.truongtqph41980.petshop.databinding.DialogXoaNguoiDungBinding;
 import fpoly.truongtqph41980.petshop.databinding.ItemQlDonHangBinding;
@@ -60,6 +61,7 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
                 builder.setView(dialogXoaDonHangBinding.getRoot());
 
                 Dialog dialog = builder.create();
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.nen_dialog_doan);
                 dialog.show();
                 dialogXoaDonHangBinding.btnOutXoaDonHang.setOnClickListener(new View.OnClickListener() {
                     @Override

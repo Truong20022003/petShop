@@ -27,6 +27,7 @@
             android:layout_weight="1"
             android:background="@drawable/khung_button"
             android:text="Thoát"
+            android:layout_margin="10sp"
             android:textColor="#4696EB" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -34,6 +35,7 @@
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="10sp"
             android:background="@drawable/khung_button"
             android:text="Xóa"
             android:textColor="#de0b0b" />

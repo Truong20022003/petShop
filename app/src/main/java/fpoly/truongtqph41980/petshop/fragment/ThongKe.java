@@ -155,8 +155,8 @@ public class ThongKe extends Fragment {
 //            @Override
 //            public void onClick(View view) {
 //                ThongKeDao dao = new ThongKeDao(getContext());
-//                String ngaybd = binding.btnlichBatDau.toString();
-//                String ngaykt = binding.btnlichKetThuc.toString();
+//                String ngaybd = binding.btnlichBatDau.getText().toString();
+//                String ngaykt = binding.btnlichKetThuc.getText().toString();
 //                int tongtien = dao.tongDoanhThu(ngaybd, ngaykt);
 //                binding.txttongTien.setText(tongtien + " VND");
 //                int tongdon = dao.tongDonHang(ngaybd, ngaykt);

@@ -20,8 +20,10 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
@@ -62,6 +64,22 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setTitle("PetShop");
 
+        View rootView = findViewById(android.R.id.content);
+        rootView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                int rootViewHeight = rootView.getHeight();
+                int keypadHeight = rootViewHeight - rootView.getHeight();
+                if (keypadHeight > rootViewHeight * 0.15) {
+                    // Bàn phím hiển thị
+                    binding.navBottomMain.setVisibility(View.GONE);
+                } else {
+                    // Bàn phím ẩn đi
+                    binding.navBottomMain.setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+        });
 
         handleBottomNavigationItemSelected();
         if (savedInstanceState == null) {
@@ -92,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
+            getSupportActionBar().setTitle(item.getTitle());
             binding.drawerLayoutMain.closeDrawer(GravityCompat.START);
 
             return false;
@@ -135,7 +154,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+//    private void hideKeyboard(@NonNull View view) {
+//        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//        if (imm != null) {
+//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//        }
+//    }
     private void handleBottomNavigationItemSelected() {
 
         binding.navBottomMain.setOnItemSelectedListener(item -> {
@@ -150,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_bot_naptien) {
                 replaceFragment(new frgNapTien());
             }
-
+            getSupportActionBar().setTitle(item.getTitle());
             return true;
         });
     }
