@@ -14,9 +14,8 @@ public class ThongKeDao {
     public int tongDoanhThu(String ngayBatDau, String ngayKetThuc){
         ngayBatDau = ngayBatDau.replace("/","");
         ngayKetThuc = ngayKetThuc.replace("/","");
-
         SQLiteDatabase sqLiteDatabase = dbs.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(tongtien) FROM DONHANG WHERE substr(NGAY,7) || substr(NGAY,4,2) || substr(NGAY,1,2) BETWEEN ? AND ?", new String[]{ngayBatDau,ngayKetThuc});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(tongtien) FROM DONHANG WHERE substr(ngaydathang,7) || substr(ngaydathang,4,2) || substr(ngaydathang,1,2) BETWEEN ? AND ?", new String[]{ngayBatDau,ngayKetThuc});
         if (cursor.getCount() != 0){
             cursor.moveToFirst();
             return cursor.getInt(0);
@@ -29,7 +28,7 @@ public class ThongKeDao {
         ngayBatDau = ngayBatDau.replace("/","");
         ngayKetThuc = ngayKetThuc.replace("/","");
         SQLiteDatabase sqLiteDatabase = dbs.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT COUNT(madonhang) FROM DONHANG WHERE substr(NGAY,7) || substr(NGAY,4,2) || substr(NGAY,1,2) BETWEEN ? AND ?", new String[]{ngayBatDau,ngayKetThuc});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT COUNT(madonhang) FROM DONHANG WHERE substr(ngaydathang,7) || substr(ngaydathang,4,2) || substr(ngaydathang,1,2) BETWEEN ? AND ?", new String[]{ngayBatDau,ngayKetThuc});
         if (cursor.getCount() != 0){
             cursor.moveToFirst();
             return cursor.getInt(0);

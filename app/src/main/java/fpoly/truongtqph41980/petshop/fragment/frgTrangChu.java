@@ -123,15 +123,13 @@ public class frgTrangChu extends Fragment {
         binding.rcvtrangchu.setLayoutManager(gridLayoutManager);
         adapter = new adapter_trangchu(list, getContext());
         binding.rcvtrangchu.setAdapter(adapter);
-        binding.edtimKiem.setOnClickListener(new View.OnClickListener() {
+        binding.edtimKiem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View view) {
-                // Khi người dùng click vào edtimKiem
-
-                    // Nếu nội dung trong edtimKiem là trống, ẩn viewpage và bacham
+            public void onFocusChange(View view, boolean b) {
+                if (b){
                     binding.viewpage.setVisibility(View.GONE);
                     binding.chamduoi.setVisibility(View.GONE);
-
+                }
             }
         });
         binding.edtimKiem.addTextChangedListener(new TextWatcher() {
@@ -146,11 +144,11 @@ public class frgTrangChu extends Fragment {
 
                 if (searchText.isEmpty()) {
                     hasMatchingProducts = true;
-                    binding.viewpage.setVisibility(View.VISIBLE);
+                    binding.viewpage.setVisibility(View.GONE);
                     binding.rcvtrangchu.setVisibility(View.VISIBLE);
-                    binding.chamduoi.setVisibility(View.VISIBLE);
+                    binding.chamduoi.setVisibility(View.GONE);
                     binding.tenkoquantrong.setText("Sản phẩm ");
-                    binding.nen.setVisibility(View.VISIBLE);
+//                    binding.nen.setVisibility(View.VISIBLE);
                     list.clear();
                     list.addAll(listdem);
                     adapter.notifyDataSetChanged();
@@ -158,7 +156,7 @@ public class frgTrangChu extends Fragment {
                     binding.viewpage.setVisibility(View.GONE);
                     binding.chamduoi.setVisibility(View.GONE);
                     binding.tenkoquantrong.setText("Sản phẩm không có trong giỏ hàng");
-                    binding.nen.setVisibility(View.VISIBLE);
+//                    binding.nen.setVisibility(View.VISIBLE);
                     binding.rcvtrangchu.setVisibility(View.VISIBLE);
                     list.clear();
                     for (SanPham sp : listdem) {
@@ -180,6 +178,7 @@ public class frgTrangChu extends Fragment {
 
             }
         });
+
         adapter.notifyDataSetChanged();
         gioHangDao = new GioHangDao(getContext());
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
