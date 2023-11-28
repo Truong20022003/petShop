@@ -16,6 +16,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/imganhsp"
             android:layout_width="130sp"
             android:layout_height="150sp"
             android:adjustViewBounds="true"
@@ -82,7 +83,7 @@
                     android:drawableEnd="@drawable/ic_coin"
                     android:gravity="end"
                     android:text="44"
-                    android:textSize="17sp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 

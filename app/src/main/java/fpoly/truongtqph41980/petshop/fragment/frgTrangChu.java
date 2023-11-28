@@ -11,12 +11,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -121,6 +123,17 @@ public class frgTrangChu extends Fragment {
         binding.rcvtrangchu.setLayoutManager(gridLayoutManager);
         adapter = new adapter_trangchu(list, getContext());
         binding.rcvtrangchu.setAdapter(adapter);
+        binding.edtimKiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Khi người dùng click vào edtimKiem
+
+                    // Nếu nội dung trong edtimKiem là trống, ẩn viewpage và bacham
+                    binding.viewpage.setVisibility(View.GONE);
+                    binding.chamduoi.setVisibility(View.GONE);
+
+            }
+        });
         binding.edtimKiem.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -249,8 +262,8 @@ public class frgTrangChu extends Fragment {
     private void updateText() {
         if (!hasMatchingProducts) {
             binding.tenkoquantrong.setText("Sản phẩm không có trong giỏ hàng.");
-            binding.tenkoquantrong.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.vang_nhat));
-            binding.nen.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.vang_nhat));
+            binding.tenkoquantrong.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.mau_hong));
+            binding.nen.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.mau_hong));
 
         } else {
             binding.tenkoquantrong.setText("Sản phẩm ");
@@ -284,7 +297,8 @@ public class frgTrangChu extends Fragment {
             @Override
             public void onClick(View view) {
                 addToCart(sanPham);
-                Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+//                Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Đã cập nhật giỏ hàng thành công", Toast.LENGTH_SHORT).show();
             }
         });
         dialog.show();

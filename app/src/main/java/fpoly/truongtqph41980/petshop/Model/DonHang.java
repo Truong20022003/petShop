@@ -1,5 +1,6 @@
 package fpoly.truongtqph41980.petshop.Model;
 
+
 public class DonHang {
     private int maDonHang;
     private int maTaiKhoan;
@@ -8,6 +9,7 @@ public class DonHang {
     private String ngayDatHang;
     private int tongTien;
     private String trangthai;
+
 
     public DonHang() {
     }

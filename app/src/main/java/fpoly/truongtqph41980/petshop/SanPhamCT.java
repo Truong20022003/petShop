@@ -1,29 +1,24 @@
 package fpoly.truongtqph41980.petshop;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.DanhGiaDao;
 import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
-import fpoly.truongtqph41980.petshop.Dao.NguoiDungDao;
 import fpoly.truongtqph41980.petshop.Model.DanhGia;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
-import fpoly.truongtqph41980.petshop.Model.NguoiDung;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.adapter.adapter_danh_gia;
-import fpoly.truongtqph41980.petshop.adapter.adapter_nguoi_dung;
 import fpoly.truongtqph41980.petshop.databinding.ActivitySanPhamCtBinding;
-import fpoly.truongtqph41980.petshop.fragment.frgGioHang;
 
 public class SanPhamCT extends AppCompatActivity {
     ActivitySanPhamCtBinding binding;
@@ -32,12 +27,18 @@ public class SanPhamCT extends AppCompatActivity {
     private DanhGiaDao danhGiaDao;
     private adapter_danh_gia adapterDanhGia;
     private ArrayList<DanhGia> list = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySanPhamCtBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SanPhamCT.this,MainActivity.class));
+            }
+        });
         Intent intent = getIntent();
         if (intent != null) {
             SanPham selectedSanPham = intent.getParcelableExtra("sanPham");

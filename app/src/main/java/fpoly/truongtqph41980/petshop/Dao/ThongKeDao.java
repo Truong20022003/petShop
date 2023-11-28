@@ -16,7 +16,7 @@ public class ThongKeDao {
         ngayKetThuc = ngayKetThuc.replace("/","");
 
         SQLiteDatabase sqLiteDatabase = dbs.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(sotien) FROM THANHTOAN WHERE substr(NGAY,7) || substr(NGAY,4,2) || substr(NGAY,1,2) BETWEEN ? AND ?", new String[]{ngayBatDau,ngayKetThuc});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(tongtien) FROM DONHANG WHERE substr(NGAY,7) || substr(NGAY,4,2) || substr(NGAY,1,2) BETWEEN ? AND ?", new String[]{ngayBatDau,ngayKetThuc});
         if (cursor.getCount() != 0){
             cursor.moveToFirst();
             return cursor.getInt(0);
