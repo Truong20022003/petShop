@@ -3,7 +3,9 @@ package fpoly.truongtqph41980.petshop.Model;
 public class DanhGia {
     private int maDanhGia;
     private int maTaiKhoan;
+    private String tenTaiKhoan;
     private int maSanPham;
+    private String tenSanPham;
     private String danhGia;
     private String nhanXet;
     private String ngayDanhGia;
@@ -11,13 +13,41 @@ public class DanhGia {
     public DanhGia() {
     }
 
-    public DanhGia(int maDanhGia, int maTaiKhoan, int maSanPham, String danhGia, String nhanXet, String ngayDanhGia) {
+    public DanhGia(int maDanhGia, int maTaiKhoan, String tenTaiKhoan, int maSanPham, String tenSanPham, String danhGia, String nhanXet, String ngayDanhGia) {
         this.maDanhGia = maDanhGia;
         this.maTaiKhoan = maTaiKhoan;
+        this.tenTaiKhoan = tenTaiKhoan;
         this.maSanPham = maSanPham;
+        this.tenSanPham = tenSanPham;
         this.danhGia = danhGia;
         this.nhanXet = nhanXet;
         this.ngayDanhGia = ngayDanhGia;
+    }
+
+    public DanhGia(int maTaiKhoan, String tenTaiKhoan, int maSanPham, String tenSanPham, String danhGia, String nhanXet, String ngayDanhGia) {
+        this.maTaiKhoan = maTaiKhoan;
+        this.tenTaiKhoan = tenTaiKhoan;
+        this.maSanPham = maSanPham;
+        this.tenSanPham = tenSanPham;
+        this.danhGia = danhGia;
+        this.nhanXet = nhanXet;
+        this.ngayDanhGia = ngayDanhGia;
+    }
+
+    public String getTenTaiKhoan() {
+        return tenTaiKhoan;
+    }
+
+    public void setTenTaiKhoan(String tenTaiKhoan) {
+        this.tenTaiKhoan = tenTaiKhoan;
+    }
+
+    public String getTenSanPham() {
+        return tenSanPham;
+    }
+
+    public void setTenSanPham(String tenSanPham) {
+        this.tenSanPham = tenSanPham;
     }
 
     public int getMaDanhGia() {

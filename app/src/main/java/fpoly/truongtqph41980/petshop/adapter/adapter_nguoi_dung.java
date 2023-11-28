@@ -42,9 +42,9 @@ public class adapter_nguoi_dung extends RecyclerView.Adapter<adapter_nguoi_dung.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.txtmaNguoiDung.setText("Mã người dùng: "+String.valueOf(list.get(position).getMaTaiKhoan()));
-        holder.binding.txtTenNguoiDung.setText("Họ và tên: " + String.valueOf(list.get(position).getHoTen()));
-        holder.binding.txtSoDienThoai.setText("Số điện thọai: "+list.get(position).getSoDienThoai());
+        holder.binding.txtmaNguoiDung.setText("Mã: "+String.valueOf(list.get(position).getMaTaiKhoan()));
+        holder.binding.txtTenNguoiDung.setText("Tên: " + String.valueOf(list.get(position).getHoTen()));
+        holder.binding.txtSoDienThoai.setText("Số ĐT: "+list.get(position).getSoDienThoai());
         holder.binding.txtDiaChiEmail.setText("Email: "+list.get(position).getEmail());
         holder.binding.txtDiaChi.setText("Địa chỉ: "+ list.get(position).getDiaChi());
         holder.binding.txtCoins.setText("Coins: "+String.valueOf(list.get(position).getSoTien()));

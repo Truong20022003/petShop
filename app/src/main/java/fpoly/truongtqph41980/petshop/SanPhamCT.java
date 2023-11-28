@@ -2,16 +2,26 @@ package fpoly.truongtqph41980.petshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import fpoly.truongtqph41980.petshop.Dao.DanhGiaDao;
 import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
+import fpoly.truongtqph41980.petshop.Dao.NguoiDungDao;
+import fpoly.truongtqph41980.petshop.Model.DanhGia;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
+import fpoly.truongtqph41980.petshop.Model.NguoiDung;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
+import fpoly.truongtqph41980.petshop.adapter.adapter_danh_gia;
+import fpoly.truongtqph41980.petshop.adapter.adapter_nguoi_dung;
 import fpoly.truongtqph41980.petshop.databinding.ActivitySanPhamCtBinding;
 import fpoly.truongtqph41980.petshop.fragment.frgGioHang;
 
@@ -19,6 +29,9 @@ public class SanPhamCT extends AppCompatActivity {
     ActivitySanPhamCtBinding binding;
     private SharedViewModel sharedViewModel;
     private GioHangDao gioHangDao;
+    private DanhGiaDao danhGiaDao;
+    private adapter_danh_gia adapterDanhGia;
+    private ArrayList<DanhGia> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +48,12 @@ public class SanPhamCT extends AppCompatActivity {
                 binding.txtGiaSp.setText("Giá: " + selectedSanPham.getGia());
                 binding.txtLoaisp.setText("Loại sản phẩm: " + selectedSanPham.getTenloaisanpham());
                 binding.txtMotaChiTiet.setText("Mô tả: " + selectedSanPham.getMota());
+                danhGiaDao = new DanhGiaDao(this);
+                list = danhGiaDao.getDanhGiaByMaSanPham(selectedSanPham.getMasanpham());
+                LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+                binding.rcvDanhGia.setLayoutManager(layoutManager);
+                adapterDanhGia = new adapter_danh_gia(list, this);
+                binding.rcvDanhGia.setAdapter(adapterDanhGia);
             }
         }
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
@@ -69,6 +88,8 @@ public class SanPhamCT extends AppCompatActivity {
                 Toast.makeText(SanPhamCT.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
 }

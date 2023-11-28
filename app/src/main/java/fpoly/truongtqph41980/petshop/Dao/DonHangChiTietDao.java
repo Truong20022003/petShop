@@ -31,11 +31,10 @@ public class DonHangChiTietDao {
                     DonHangChiTiet donHangChiTiet = new DonHangChiTiet();
                     donHangChiTiet.setMaChiTietDonHang(cursor.getInt(0));
                     donHangChiTiet.setMaDonHang(cursor.getInt(1));
-                    donHangChiTiet.setMaSanPham(cursor.getInt(2));
-                    donHangChiTiet.setTenSanPham(cursor.getString(3));
-                    donHangChiTiet.setSoLuong(cursor.getInt(4));
-                    donHangChiTiet.setDonGia(cursor.getInt(5));
-                    donHangChiTiet.setThanhTien(cursor.getInt(6));
+
+                    donHangChiTiet.setSoLuong(cursor.getInt(3));
+                    donHangChiTiet.setDonGia(cursor.getInt(4));
+                    donHangChiTiet.setThanhTien(cursor.getInt(5));
                     list.add(donHangChiTiet);
                 } while (cursor.moveToNext());
             }

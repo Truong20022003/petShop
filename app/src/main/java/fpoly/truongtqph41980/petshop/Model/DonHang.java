@@ -4,11 +4,19 @@ public class DonHang {
     private int maDonHang;
     private int maTaiKhoan;
     private String tenTaiKhoan;
+
     private String ngayDatHang;
     private int tongTien;
     private String trangthai;
 
     public DonHang() {
+    }
+
+    public DonHang(int maTaiKhoan, String ngayDatHang, int tongTien, String trangthai) {
+        this.maTaiKhoan = maTaiKhoan;
+        this.ngayDatHang = ngayDatHang;
+        this.tongTien = tongTien;
+        this.trangthai = trangthai;
     }
 
     public DonHang(int maDonHang, int maTaiKhoan, String tenTaiKhoan, String ngayDatHang, int tongTien, String trangthai) {

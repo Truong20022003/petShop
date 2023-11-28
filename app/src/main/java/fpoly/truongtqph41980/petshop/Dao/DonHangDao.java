@@ -25,7 +25,8 @@ public class DonHangDao {
         ArrayList<DonHang> list = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         try {
-            Cursor cursor = database.rawQuery("SELECT DONHANG.madonhang, TAIKHOAN.mataikhoan, TAIKHOAN.hoten, DONHANG.ngaydathang, DONHANG.tongtien,DONHANG.trangthai FROM DONHANG,TAIKHOAN WHERE DONHANG.mataikhoan = TAIKHOAN.mataikhoan", null);
+            Cursor cursor = database.rawQuery("SELECT DONHANG.madonhang, TAIKHOAN.mataikhoan, TAIKHOAN.hoten, DONHANG.ngaydathang, DONHANG.tongtien, DONHANG.trangthai " +
+                    "FROM DONHANG,TAIKHOAN WHERE DONHANG.mataikhoan = TAIKHOAN.mataikhoan", null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
@@ -36,6 +37,7 @@ public class DonHangDao {
                     donHang.setNgayDatHang(cursor.getString(3));
                     donHang.setTongTien(cursor.getInt(4));
                     donHang.setTrangthai(cursor.getString(5));
+
                     list.add(donHang);
                 } while (cursor.moveToNext());
             }
@@ -66,6 +68,7 @@ public class DonHangDao {
         values.put("mataikhoan",donHang.getMaTaiKhoan());
         values.put("ngaydathang",donHang.getNgayDatHang());
         values.put("tongtien",donHang.getTongTien());
+        values.put("trangthai",donHang.getTrangthai());
         long check = da.insert("DONHANG",null,values);
         return check>0;
     }
@@ -73,9 +76,7 @@ public class DonHangDao {
         ArrayList<DonHang> list = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         try {
-            String query = "SELECT DONHANG.madonhang, TAIKHOAN.mataikhoan, TAIKHOAN.hoten, DONHANG.ngaydathang, DONHANG.tongtien, DONHANG.trangthai " +
-                    "FROM DONHANG, TAIKHOAN " +
-                    "WHERE DONHANG.mataikhoan = TAIKHOAN.mataikhoan AND TAIKHOAN.mataikhoan = ?";
+            String query = "SELECT DONHANG.madonhang, TAIKHOAN.mataikhoan, TAIKHOAN.hoten, DONHANG.ngaydathang, DONHANG.tongtien, DONHANG.trangthai FROM DONHANG JOIN TAIKHOAN ON DONHANG.mataikhoan = TAIKHOAN.mataikhoan WHERE TAIKHOAN.mataikhoan = ?";
 
             Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(maTaiKhoan)});
 

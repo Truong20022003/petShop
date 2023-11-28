@@ -48,6 +48,8 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
         holder.binding.txtNgayDat.setText("Ngày đặt hàng: " +donHang.getNgayDatHang());
         holder.binding.txtTrangThai.setText("Trạng thái: " + donHang.getTrangthai());
         holder.binding.txtTongTien.setText("Tổng tiền: " +String.valueOf(donHang.getTongTien()));
+//        holder.binding.txtMaSanPham.setText("Mã sản phẩm: "+String.valueOf(donHang.getMasanpham()));
+//        holder.binding.txtTenSanPham.setText("Tên sản phẩm: " + donHang.getTensanpham());
         holder.binding.btnXoaDonHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

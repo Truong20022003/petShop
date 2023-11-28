@@ -2,16 +2,21 @@ package fpoly.truongtqph41980.petshop.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -38,6 +43,7 @@ import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_slide;
 import fpoly.truongtqph41980.petshop.adapter.adapter_trangchu;
+import fpoly.truongtqph41980.petshop.databinding.DialogChiTietSanPhamBinding;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgTrangChuBinding;
 
 
@@ -170,6 +176,13 @@ public class frgTrangChu extends Fragment {
             @Override
             public void onAddToCartClick(SanPham sanPham) {
                 addToCart(sanPham);
+                Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+        adapter.setOnItemClick(new adapter_trangchu.OnItemClick() {
+            @Override
+            public void onItemClick(int position) {
+                showDialogChiTietSanPham(adapter.getViTriSp(position));
             }
         });
         return view;
@@ -231,7 +244,7 @@ public class frgTrangChu extends Fragment {
         ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
         gioHangAdapter.updateCartList(updatedCartList);
         gioHangAdapter.notifyDataSetChanged();
-        Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+
     }
     private void updateText() {
         if (!hasMatchingProducts) {
@@ -243,5 +256,41 @@ public class frgTrangChu extends Fragment {
             binding.tenkoquantrong.setText("Sản phẩm ");
 
         }
+    }
+
+    private void showDialogChiTietSanPham(SanPham sanPham){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DialogChiTietSanPhamBinding chiTietSanPhamBinding = DialogChiTietSanPhamBinding.inflate(getLayoutInflater());
+        dialog.setContentView(chiTietSanPhamBinding.getRoot());
+
+        if (sanPham != null) {
+            chiTietSanPhamBinding.txtMaSanPham.setText("Mã: " + String.valueOf(sanPham.getMasanpham()));
+            chiTietSanPhamBinding.txtTenSanPham.setText("Tên:" + sanPham.getTensanpham());
+            chiTietSanPhamBinding.txtGiaSanPham.setText("Giá: " + String.valueOf(sanPham.getGia()));
+            chiTietSanPhamBinding.txtLoaiSanPham.setText("Loại sản phẩm: "+ sanPham.getTenloaisanpham());
+            chiTietSanPhamBinding.txtSoLuotBan.setText("Số lượt bán: 200");
+            chiTietSanPhamBinding.txtMoTa.setText("Mô tả: " + sanPham.getMota());
+
+
+        }
+        chiTietSanPhamBinding.btnDongDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        chiTietSanPhamBinding.btnThemVaoGio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToCart(sanPham);
+                Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 }

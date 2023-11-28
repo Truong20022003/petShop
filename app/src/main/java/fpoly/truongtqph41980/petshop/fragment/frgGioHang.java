@@ -2,6 +2,8 @@ package fpoly.truongtqph41980.petshop.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,16 +22,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import fpoly.truongtqph41980.petshop.Dao.DonHangDao;
 import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
+import fpoly.truongtqph41980.petshop.Dao.NguoiDungDao;
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
+import fpoly.truongtqph41980.petshop.Model.DonHang;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Model.viewmd;
 import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.ViewActivity.Thanh_Toan_Hoa_Don;
 import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
+import fpoly.truongtqph41980.petshop.adapter.adapter_don_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gian_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgGioHangBinding;
@@ -43,6 +51,12 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
     View gView;
 
     GioHangDao gioHangDao;
+
+    private DonHangDao donHangDao;
+
+    private adapter_don_hang adapterDonHang;
+    private frgQuanLyDonHang frgQuanLyDonHang;
+    private ArrayList<DonHang> listDonHang = new ArrayList<>();
     private SharedViewModel sharedViewModel;
 
     public frgGioHang() {
@@ -78,38 +92,60 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         gioHangDao = new GioHangDao(getContext());
         gioHangAdapter.setTotalPriceListener(this);
 
+        donHangDao = new DonHangDao(getContext());
+
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getMasp().observe(getViewLifecycleOwner(), masp -> {
 
             if (isAdded() && isVisible()) {
                 if (sharedViewModel.getAddToCartClicked().getValue() != null && sharedViewModel.getAddToCartClicked().getValue()) {
-                    Boolean addToCartClicked = sharedViewModel.getAddToCartClicked().getValue();
                     updateGioHangByMaSp(masp);
                     sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
+
+
                 }
             }
         });
-
-        list = gioHangDao.getDSGioHang();
-        displayCart(list);
         binding.btnThanhToan.setOnClickListener(view -> {
             int totalAmount = Integer.parseInt(binding.txtTongTienThanhToan.getText().toString());
-            if (!list.isEmpty()) {
-                // Tạo Intent để bắt đầu BillActivity
-                Intent intent = new Intent(getContext(), Thanh_Toan_Hoa_Don.class);
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
+            int mand = sharedPreferences.getInt("mataikhoan", 0);
+            int tienHienCo = sharedPreferences.getInt("sotien",0);
 
-                // Truyền thông tin cần thiết đến màn hóa đơn
-                intent.putExtra("listgiohang", list);
-                intent.putExtra("tongtien", totalAmount);
+            LocalDate currentDate = LocalDate.now();
 
-                // Bắt đầu activity
-                startActivity(intent);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String ngayHienTai = currentDate.format(formatter);
+
+            if (tienHienCo >= totalAmount) {
+                int soTienConLai = tienHienCo - totalAmount;
+                NguoiDungDao nguoiDungDao = new NguoiDungDao(getContext());
+                if (nguoiDungDao.updateSoTien(mand,  soTienConLai)) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("sotien", soTienConLai);
+                    editor.apply();
+                    DonHang donHang = new DonHang(mand,ngayHienTai, totalAmount,"Đang giao hàng");
+                    if (donHangDao.insertDonHang(donHang)){
+                        listDonHang.clear();
+                        listDonHang.addAll(donHangDao.getDsDonHang());
+                    }else {
+                        Toast.makeText(getContext(), "Thất bại!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    Toast.makeText(getContext(), "Đã thanh toán thành công!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Thất bại khi cập nhật tài khoản!", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                // Hiển thị một toast hoặc xử lý trường hợp giỏ hàng trống
-                Toast.makeText(getContext(), "Giỏ hàng trống", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Số tiền trong tài khoản không đủ!", Toast.LENGTH_SHORT).show();
             }
+
+
         });
+        list = gioHangDao.getDSGioHang();
+        displayCart(list);
+
         return gView;
     }
 
@@ -120,14 +156,6 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
 
     public void updateGioHangByMaSp(int masp) {
         if (masp > 0) {
-            // Lấy thông tin người dùng từ SharedPreferences
-            SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
-            int mand = sharedPreferences.getInt("mataikhoan", 0);
-
-            // Kiểm tra nếu mã sản phẩm đã tồn tại trong giỏ hàng
-            GioHang hang = gioHangDao.getGioHangByMasp(masp, mand);
-
-            // Hiển thị giỏ hàng sau khi đã cập nhật
             ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
             displayCart(updatedCartList);
         } else {

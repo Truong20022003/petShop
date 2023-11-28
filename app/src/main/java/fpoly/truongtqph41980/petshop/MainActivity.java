@@ -60,14 +60,13 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-
+        actionBar.setTitle("PetShop");
 
 
         handleBottomNavigationItemSelected();
         if (savedInstanceState == null) {
-            // Nếu chưa có fragment được đặt, thì đặt một fragment mặc định ở đây
             replaceFragment(new frgTrangChu());
-            getSupportActionBar().setTitle("Trang Chủ"); // Set tiêu đề cho fragment mặc định
+
         }
         binding.btnProFile.setOnClickListener(view ->
                 startActivity(new Intent(MainActivity.this, Profile.class)));
@@ -93,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
-            getSupportActionBar().setTitle(item.getTitle());
             binding.drawerLayoutMain.closeDrawer(GravityCompat.START);
 
             return false;
         });
         SharedPreferences sharedPreferences = getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
         String loaiTaiKhoan = sharedPreferences.getString("loaitaikhoan", "");
+        int sotien = sharedPreferences.getInt("sotien",0);
         if (!loaiTaiKhoan.equals("admin")) {
             Menu menu = navigationView.getMenu();
             menu.findItem(R.id.action_qlnguoidung).setVisible(false);
@@ -111,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         }
         String urlAnh = sharedPreferences.getString("anhtaikhoan","");
         Picasso.get().load(urlAnh).into(binding.btnProFile);
+        binding.txtSoTien.setText(String.valueOf(sotien));
 //        binding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
 //            @Override
 //            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -135,12 +135,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
-//        mMenu = menu;
-//        return true;
-//    }
+
     private void handleBottomNavigationItemSelected() {
 
         binding.navBottomMain.setOnItemSelectedListener(item -> {
@@ -155,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_bot_naptien) {
                 replaceFragment(new frgNapTien());
             }
-            getSupportActionBar().setTitle(item.getTitle());
+
             return true;
         });
     }

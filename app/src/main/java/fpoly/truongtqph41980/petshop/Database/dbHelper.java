@@ -92,21 +92,6 @@ public class dbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("INSERT INTO DONHANG VALUES(5,3,'19/11/2023',50,'Đã nhận hàng')");
 
 
-        //6. Bảng lịch sử mua
-        String lichSuMua = "CREATE TABLE LICHSUMUA(" +
-                "malichsudonhang integer primary key autoincrement," +
-                " mataikhoan integer REFERENCES TAIKHOAN(mataikhoan)," +
-                " masanpham integer REFERENCES SANPHAM(masanpham)," +
-                "madonhang integer REFERENCES DONHANG(madonhang)," +
-                " ngaymua text not null," +
-                " trangthai text not null)";
-        sqLiteDatabase.execSQL(lichSuMua);
-        sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(1,1,1,1,'16/11/2023','Giao hàng thành công')");
-        sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(2,3,4,2,'16/11/2023','Giao hàng thành công')");
-        sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(3,3,3,3,'16/11/2023','Giao hàng thành công')");
-        sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(4,5,2,4,'16/11/2023','Giao hàng thành công')");
-        sqLiteDatabase.execSQL("INSERT INTO LICHSUMUA VALUES(5,2,1,5,'16/11/2023','Giao hàng thành công')");
-
 
         //7. Bảng chi tiết đơn hàng
         String chiTietDonHang = "CREATE TABLE CHITIETDONHANG(" +

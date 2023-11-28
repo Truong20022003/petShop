@@ -35,7 +35,19 @@ public class adapter_trangchu extends RecyclerView.Adapter<adapter_trangchu.View
     public interface OnAddToCartClickListenerTrangChu {
         void onAddToCartClick(SanPham sanPham);
     }
-
+    public interface OnItemClick{
+        void onItemClick(int position);
+    }
+    private OnItemClick mListener;
+    public void setOnItemClick(OnItemClick listener){
+        mListener = listener;
+    }
+    public SanPham getViTriSp(int position) {
+        if (position >= 0 && position < list.size()) {
+            return list.get(position);
+        }
+        return null;
+    }
     public void setOnAddToCartClickListenerTrangChu(OnAddToCartClickListenerTrangChu listener) {
         mAddToCartClickListener = listener;
     }
@@ -51,6 +63,15 @@ public class adapter_trangchu extends RecyclerView.Adapter<adapter_trangchu.View
         holder.biding.txttenSanPham.setText(list.get(position).getTensanpham());
         holder.biding.txtgiasp.setText(String.valueOf(list.get(position).getGia()));
         Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.biding.imgAnhSpTrangChu);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onItemClick(holder.getAdapterPosition());
+
+                }
+            }
+        });
         holder.biding.btnmuahang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
