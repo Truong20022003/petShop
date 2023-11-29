@@ -11,6 +11,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,15 +24,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import fpoly.truongtqph41980.petshop.Dao.DonHangChiTietDao;
 import fpoly.truongtqph41980.petshop.Dao.DonHangDao;
 import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
 import fpoly.truongtqph41980.petshop.Dao.NguoiDungDao;
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
 import fpoly.truongtqph41980.petshop.Model.DonHang;
+import fpoly.truongtqph41980.petshop.Model.DonHangChiTiet;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Model.viewmd;
@@ -58,6 +64,8 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
     private frgQuanLyDonHang frgQuanLyDonHang;
     private ArrayList<DonHang> listDonHang = new ArrayList<>();
     private SharedViewModel sharedViewModel;
+    private DonHangChiTietDao chiTietDao;
+
 
     public frgGioHang() {
     }
@@ -73,7 +81,7 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
 
         } else {
             gioHangAdapter.updateCartList(cartList);
-            gioHangAdapter.notifyDataSetChanged();
+
         }
     }
 
@@ -90,10 +98,11 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         gioHangAdapter = new adapter_gio_hang(getContext(), list);
         rcv.setAdapter(gioHangAdapter);
         gioHangDao = new GioHangDao(getContext());
+
         gioHangAdapter.setTotalPriceListener(this);
 
+        chiTietDao = new DonHangChiTietDao(getContext());
         donHangDao = new DonHangDao(getContext());
-
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getMasp().observe(getViewLifecycleOwner(), masp -> {
@@ -102,16 +111,16 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
                 if (sharedViewModel.getAddToCartClicked().getValue() != null && sharedViewModel.getAddToCartClicked().getValue()) {
                     updateGioHangByMaSp(masp);
                     sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
-
-
                 }
             }
         });
+        list = gioHangDao.getDSGioHang();
+        displayCart(list);
         binding.btnThanhToan.setOnClickListener(view -> {
             int totalAmount = Integer.parseInt(binding.txtTongTienThanhToan.getText().toString());
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
             int mand = sharedPreferences.getInt("mataikhoan", 0);
-            int tienHienCo = sharedPreferences.getInt("sotien",0);
+            int tienHienCo = sharedPreferences.getInt("sotien", 0);
 
             LocalDate currentDate = LocalDate.now();
 
@@ -121,43 +130,82 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
             if (tienHienCo >= totalAmount) {
                 int soTienConLai = tienHienCo - totalAmount;
                 NguoiDungDao nguoiDungDao = new NguoiDungDao(getContext());
-                if (nguoiDungDao.updateSoTien(mand,  soTienConLai)) {
+                if (nguoiDungDao.updateSoTien(mand, soTienConLai)) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("sotien", soTienConLai);
                     editor.apply();
-                    DonHang donHang = new DonHang(mand,ngayHienTai, totalAmount,"Đang giao hàng");
-                    if (donHangDao.insertDonHang(donHang)){
+                    DonHang donHang = new DonHang(mand, ngayHienTai, totalAmount, "Đang giao hàng");
+                    int orderId = donHangDao.insertDonHang(donHang);
+                    if (orderId != 0) {
                         listDonHang.clear();
                         listDonHang.addAll(donHangDao.getDsDonHang());
-                    }else {
-                        Toast.makeText(getContext(), "Thất bại!", Toast.LENGTH_SHORT).show();
-                    }
+                        if (totalAmount > 0) {
+                        for (GioHang gioHang : list) {
 
-                    Toast.makeText(getContext(), "Đã thanh toán thành công!", Toast.LENGTH_SHORT).show();
+                                if (gioHang.isSelected()) {
+                                    SanPhamDao sanPhamDao = new SanPhamDao(getContext());
+                                    SanPham sanPham = sanPhamDao.getSanPhamById(gioHang.getMaSanPham());
+                                    if (sanPham != null) {
+                                        DonHangChiTiet chiTietDonHan = new DonHangChiTiet(orderId, gioHang.getMaSanPham(), gioHang.getSoLuongMua(), sanPham.getGia(), gioHang.getSoLuongMua() * sanPham.getGia());
+                                        chiTietDao.insertDonHangChiTiet(chiTietDonHan);
+                                    } else {
+                                        Toast.makeText(getContext(), "Sản phẩm không tìm thấy trong cơ sở dữ liệu", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        }else {
+                            Toast.makeText(getContext(), "Vui lòng chọn sản phẩm để thanh toán", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        for (GioHang selected : list) {
+                            if (selected.isSelected()) {
+                                gioHangDao.deleteGioHang(selected);
+                            }
+                        }
+                        binding.txtTongTienThanhToan.setText(String.valueOf(0));
+                        list = gioHangDao.getDSGioHang();
+                        gioHangAdapter.updateCartList(list);
+                        displayCart(list);
+
+
+//                        Toast.makeText(getContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), "Thanh toán thành công", Snackbar.LENGTH_SHORT).show();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("maDonHang", orderId);
+
+                        frgConfilmThanhToan frgConfilmThanhToan = new frgConfilmThanhToan();
+                        frgConfilmThanhToan.setArguments(bundle);
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frameLayoutMain, frgConfilmThanhToan);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+                    } else {
+                        Toast.makeText(getContext(), "Thất bại khi thêm đơn hàng!", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getContext(), "Thất bại khi cập nhật tài khoản!", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(getContext(), "Số tiền trong tài khoản không đủ!", Toast.LENGTH_SHORT).show();
             }
-
-
         });
-        list = gioHangDao.getDSGioHang();
-        displayCart(list);
+
 
         return gView;
     }
 
 
-
-
-
-
     public void updateGioHangByMaSp(int masp) {
         if (masp > 0) {
             ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
+            list.clear();
+            list.addAll(updatedCartList);
+            gioHangAdapter.notifyDataSetChanged();
             displayCart(updatedCartList);
+
         } else {
         }
     }

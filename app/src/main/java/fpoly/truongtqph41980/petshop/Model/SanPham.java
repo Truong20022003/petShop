@@ -13,10 +13,20 @@ private int maloaisanpham;
 private String tenloaisanpham;
 private String mota;
 private String anhSanPham;
+//    maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham)
     public SanPham() {
     }
 
-    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham,String mota,String anhSanPham) {
+    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String mota, String anhSanPham) {
+        this.masanpham = masanpham;
+        this.tensanpham = tensanpham;
+        this.gia = gia;
+        this.maloaisanpham = maloaisanpham;
+        this.mota = mota;
+        this.anhSanPham = anhSanPham;
+    }
+
+    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham, String mota, String anhSanPham) {
         this.masanpham = masanpham;
         this.tensanpham = tensanpham;
         this.gia = gia;

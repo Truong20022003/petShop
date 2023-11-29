@@ -9,6 +9,15 @@ public class GioHang {
     private String tenSanPham;
     private int giaSanPham;
     private boolean isSelected;
+    private String anhSanPham;
+
+    public String getAnhSanPham() {
+        return anhSanPham;
+    }
+
+    public void setAnhSanPham(String anhSanPham) {
+        this.anhSanPham = anhSanPham;
+    }
 
     public boolean isSelected() {
         return isSelected;
@@ -19,6 +28,7 @@ public class GioHang {
     }
 
     public GioHang() {
+
     }
 
 

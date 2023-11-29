@@ -64,22 +64,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setTitle("PetShop");
 
-        View rootView = findViewById(android.R.id.content);
-        rootView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                int rootViewHeight = rootView.getHeight();
-                int keypadHeight = rootViewHeight - rootView.getHeight();
-                if (keypadHeight > rootViewHeight * 0.15) {
-                    // Bàn phím hiển thị
-                    binding.navBottomMain.setVisibility(View.GONE);
-                } else {
-                    // Bàn phím ẩn đi
-                    binding.navBottomMain.setVisibility(View.VISIBLE);
-                }
-                return true;
-            }
-        });
+
 
         handleBottomNavigationItemSelected();
         if (savedInstanceState == null) {
@@ -141,6 +126,37 @@ public class MainActivity extends AppCompatActivity {
 //                    toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
 //                } else {
 //                    // Toolbar đang ẩn/hiện giữa đường trung bình
+//                }
+//            }
+//        });
+//        View rootView = findViewById(android.R.id.content);
+//        rootView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            private int previousHeight = rootView.getHeight();
+//            @Override
+//            public boolean onPreDraw() {
+//                int currentHeight = rootView.getHeight();
+//
+//                if (currentHeight < previousHeight) {
+//                    // Keyboard is shown
+//                    binding.navBottomMain.setVisibility(View.GONE);
+//                } else if (currentHeight > previousHeight) {
+//                    // Keyboard is hidden
+//                    binding.navBottomMain.setVisibility(View.VISIBLE);
+//                }
+//
+//                previousHeight = currentHeight;
+//                return true;
+//            }
+//        });
+//        rootView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    // Keyboard is shown
+//                    binding.navBottomMain.setVisibility(View.GONE);
+//                } else {
+//                    // Keyboard is hidden
+//                    binding.navBottomMain.setVisibility(View.VISIBLE);
 //                }
 //            }
 //        });

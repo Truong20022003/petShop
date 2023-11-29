@@ -1,5 +1,6 @@
 package fpoly.truongtqph41980.petshop.Dao;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -71,24 +72,39 @@ public class SanPhamDao {
             return 1;
         }
     }
-//    public SanPham getSanPhamById(int masanpham) {
-//        SQLiteDatabase database = dbs.getReadableDatabase();
-//        Cursor cursor = database.rawQuery("SELECT sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham, lsp.tenloaisanpham, sp.mota FROM SANPHAM sp, LOAISANPHAM lsp WHERE sp.maloaisanpham = lsp.maLoaisanpham AND sp.masanpham = ?", new String[]{String.valueOf(masanpham)});
-//        if (cursor.moveToFirst()) {
-//            return new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5));
-//        }
-//        return null;
-//    }
-//    public ArrayList<SanPham> trangchugetall(){
-//        ArrayList<SanPham> list = new ArrayList();
-//        SQLiteDatabase database = dbs.getReadableDatabase();
-//        Cursor cursor = database.rawQuery("select sp.tensanpham,sp.gia FROM SANPHAM sp ",null);
-//        if (cursor.getCount()!=0){
-//            cursor.moveToFirst();
-//            do {
-//                list.add(new SanPham(cursor.getString(0),cursor.getInt(1)));
-//            }while (cursor.moveToNext());
-//        }
-//        return list;
-//    }
+
+    private static final String COL_MASP = "masanpham";
+    private static final String COL_TENSP = "tensanpham";
+    private static final String COL_GIA = "gia";
+    private static final String COL_MALOAI = "maloaisanpham";
+    private static final String COL_MOTA = "mota";
+    private static final String COL_ANHSP = "anhsanpham";
+
+    // ... các phương thức khác
+    @SuppressLint("Range")
+    public SanPham getSanPhamById(int masanpham) {
+        SQLiteDatabase database = dbs.getReadableDatabase();
+        SanPham sanPham = null;
+
+        String[] columns = {COL_MASP, COL_TENSP, COL_GIA, COL_MALOAI, COL_MOTA, COL_ANHSP};
+        String selection = COL_MASP + "=?";
+        String[] selectionArgs = {String.valueOf(masanpham)};
+
+        Cursor cursor = database.query("SANPHAM", columns, selection, selectionArgs, null, null, null);
+
+        if (cursor.moveToFirst()) {
+             int maSanPham = cursor.getInt(cursor.getColumnIndex(COL_MASP));
+            String tenSanPham = cursor.getString(cursor.getColumnIndex(COL_TENSP));
+            int gia = cursor.getInt(cursor.getColumnIndex(COL_GIA));
+            int maLoaiSanPham = cursor.getInt(cursor.getColumnIndex(COL_MALOAI));
+            String moTa = cursor.getString(cursor.getColumnIndex(COL_MOTA));
+            String anhSanPham = cursor.getString(cursor.getColumnIndex(COL_ANHSP));
+
+            sanPham = new SanPham(maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham);
+        }
+
+        cursor.close();
+        return sanPham;
+    }
+
 }

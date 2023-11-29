@@ -24,7 +24,7 @@ public class GioHangDao {
         ArrayList<GioHang> list = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         try {
-            Cursor c = database.rawQuery("SELECT GIOHANG.magiohang, SANPHAM.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia FROM GIOHANG, SANPHAM WHERE GIOHANG.masanpham = SANPHAM.masanpham", null);
+            Cursor c = database.rawQuery("SELECT GIOHANG.magiohang, SANPHAM.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia,SANPHAM.anhsanpham FROM GIOHANG, SANPHAM WHERE GIOHANG.masanpham = SANPHAM.masanpham", null);
             if (c.getCount() != 0) {
                 c.moveToFirst();
                 do {
@@ -35,6 +35,7 @@ public class GioHangDao {
                     gioHang.setSoLuongMua(c.getInt(3));
                     gioHang.setTenSanPham(c.getString(4));
                     gioHang.setGiaSanPham(c.getInt(5));
+                    gioHang.setAnhSanPham(c.getString(6));
                     list.add(gioHang);
                 } while (c.moveToNext());
             }
@@ -82,5 +83,33 @@ public class GioHangDao {
             Log.e(TAG, "Error", e);
         }
         return gioHang;
+    }
+    public void clearGioHang() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete("GIOHANG", null, null);
+        db.close();
+    }
+
+    public ArrayList<GioHang> getSelectedItems() {
+        ArrayList<GioHang> selectedItems = new ArrayList<>();
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        try {
+            Cursor c = database.rawQuery("SELECT * FROM GIOHANG WHERE selected = 1", null);
+            if (c.getCount() != 0) {
+                c.moveToFirst();
+                do {
+                    GioHang gioHang = new GioHang();
+                    gioHang.setMaGioHang(c.getInt(0));
+                    gioHang.setMaSanPham(c.getInt(1));
+                    gioHang.setMaNguoiDung(c.getInt(2));
+                    gioHang.setSoLuongMua(c.getInt(3));
+                    gioHang.setSelected(true);
+                    selectedItems.add(gioHang);
+                } while (c.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.i(TAG, "Lỗiiii", e);
+        }
+        return selectedItems;
     }
 }

@@ -11,6 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Database.dbHelper;
+import fpoly.truongtqph41980.petshop.Model.DonHang;
 import fpoly.truongtqph41980.petshop.Model.DonHangChiTiet;
 
 public class DonHangChiTietDao {
@@ -20,29 +21,39 @@ public class DonHangChiTietDao {
         this.dbHelper = new dbHelper(context);
     }
 
-    public ArrayList<DonHangChiTiet> getDsDonHangChiTiet() {
-        ArrayList<DonHangChiTiet> list = new ArrayList<>();
+
+
+    public ArrayList<DonHangChiTiet> getChiTietDonHangByMaDonHang(int maDonHang) {
+        ArrayList<DonHangChiTiet> listChiTiet = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         try {
-            Cursor cursor = database.rawQuery("SELECT ct.machitietdonhang, dh.madonhang,sp.masanpham,sp.tensanpham,ct.soluong,ct.dongia,ct.thanhtien FROM CHITIETDONHANG ct, DONHANG dh,SANPHAM sp WHERE ct.madonhang = dh.madonhang and ct.masanpham = sp.masanpham", null);
+            String query = "SELECT CHITIETDONHANG.machitietdonhang,CHITIETDONHANG.masanpham,SANPHAM.tensanpham,DONHANG.madonhang,CHITIETDONHANG.soluong,CHITIETDONHANG.dongia, CHITIETDONHANG.thanhtien,SANPHAM.anhsanpham FROM CHITIETDONHANG INNER JOIN DONHANG ON CHITIETDONHANG.madonhang = DONHANG.madonhang INNER JOIN SANPHAM ON CHITIETDONHANG.masanpham = SANPHAM.masanpham WHERE DONHANG.madonhang = ?";
+
+            Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(maDonHang)});
+
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
-                    DonHangChiTiet donHangChiTiet = new DonHangChiTiet();
-                    donHangChiTiet.setMaChiTietDonHang(cursor.getInt(0));
-                    donHangChiTiet.setMaDonHang(cursor.getInt(1));
-
-                    donHangChiTiet.setSoLuong(cursor.getInt(3));
-                    donHangChiTiet.setDonGia(cursor.getInt(4));
-                    donHangChiTiet.setThanhTien(cursor.getInt(5));
-                    list.add(donHangChiTiet);
+                    DonHangChiTiet chiTietDonHang = new DonHangChiTiet();
+                    chiTietDonHang.setMaChiTietDonHang(cursor.getInt(0));
+                    chiTietDonHang.setMaSanPham(cursor.getInt(1));
+                    chiTietDonHang.setTenSanPham(cursor.getString(2));
+                    chiTietDonHang.setMaDonHang(cursor.getInt(3));
+                    chiTietDonHang.setSoLuong(cursor.getInt(4));
+                    chiTietDonHang.setDonGia(cursor.getInt(5));
+                    chiTietDonHang.setThanhTien(cursor.getInt(6));
+                    chiTietDonHang.setAnhsanpham(cursor.getString(7));
+                    listChiTiet.add(chiTietDonHang);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "Lỗi", e);
+            Log.e(TAG, "Lỗi", e);
+        } finally {
+            database.close();
         }
-        return list;
+        return listChiTiet;
     }
+
 
     public boolean xoaDonHang(DonHangChiTiet donHang) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
@@ -76,4 +87,6 @@ public class DonHangChiTietDao {
         long check = sqLiteDatabase.update("CHITIETDONHANG", values, "machitietdonhang = ?", new String[]{String.valueOf(donHangChiTiet.getMaChiTietDonHang())});
         return check > 0;
     }
+
+
 }

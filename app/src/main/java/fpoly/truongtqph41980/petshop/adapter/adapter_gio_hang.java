@@ -1,7 +1,10 @@
 package fpoly.truongtqph41980.petshop.adapter;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -45,16 +50,22 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GioHang gioHang = list.get(position);
-
-
         // Hiển thị thông tin sản phẩm
         holder.binding.txtgia.setText(String.valueOf(gioHang.getSoLuongMua() * gioHang.getGiaSanPham()));
         holder.binding.txtsoluong.setText(String.valueOf(gioHang.getSoLuongMua()));
         holder.binding.txttensp.setText(gioHang.getTenSanPham());
-//        gioHang.set
-        holder.binding.chkChonSanPham.setOnCheckedChangeListener((compoundButton, b) -> {
-            gioHang.setSelected(b);
-            updateTotalPrice();
+        Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.binding.imganhsp);
+        holder.binding.chkChonSanPham.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                gioHang.setSelected(b);
+                holder.binding.chkChonSanPham.setChecked(b);
+
+                notifyDataSetChanged();
+
+                updateTotalPrice();
+
+            }
         });
 
 
@@ -88,14 +99,16 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
 //                    }
             }
         });
+
     }
 
-    public void updateCartList(ArrayList<GioHang> updatedList) {
+        public void updateCartList(ArrayList<GioHang> updatedList) {
         list.clear();
         list.addAll(updatedList);
         notifyDataSetChanged();
 
     }
+
 
     private void removeItem(GioHang gioHang) {
         if (dao.deleteGioHang(gioHang)) {
@@ -110,6 +123,7 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
     private void updateTotalPrice() {
         if (listener != null) {
             int totalAmount = 0;
+
             for (GioHang gioHang : list) {
                 if (gioHang.isSelected()) {
                     totalAmount += gioHang.getSoLuongMua() * gioHang.getGiaSanPham();

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/vang_dam"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imgAnhSp"
+        android:layout_width="140sp"
+        android:layout_height="140sp"
+        />
+    <TextView
+        android:id="@+id/txtMaSanPham"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:fontFamily="@font/baloothambi2regular"
+        android:text="Mã sản phẩm"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/txtTenSanPham"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:fontFamily="@font/baloothambi2regular"
+        android:text="Tên sản phẩm"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtMaDonHang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:fontFamily="@font/baloothambi2regular"
+        android:text="Mã đơn hàng"
+        android:textSize="18sp" />
+
+
+
+    <TextView
+        android:id="@+id/txtSoLuong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:fontFamily="@font/baloothambi2regular"
+        android:text="Số lượng"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtDonGia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:fontFamily="@font/baloothambi2regular"
+        android:text="Đơn giá"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtThanhTien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:fontFamily="@font/baloothambi2regular"
+        android:text="Thành tiền"
+        android:textSize="18sp" />
+
+</LinearLayout>

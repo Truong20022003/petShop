@@ -61,17 +61,30 @@ public class DonHangDao {
 
         long check = sqLiteDatabase.update("DONHANG", values, "madonhang = ?", new String[]{String.valueOf(donHang.getMaDonHang())});
         return check > 0;
+
     }
-    public boolean insertDonHang(DonHang donHang){
-        SQLiteDatabase da = dbHelper.getWritableDatabase();
+    public int insertDonHang(DonHang donHang) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("mataikhoan",donHang.getMaTaiKhoan());
-        values.put("ngaydathang",donHang.getNgayDatHang());
-        values.put("tongtien",donHang.getTongTien());
-        values.put("trangthai",donHang.getTrangthai());
-        long check = da.insert("DONHANG",null,values);
-        return check>0;
-    }
+        values.put("mataikhoan", donHang.getMaTaiKhoan());
+        values.put("ngaydathang", donHang.getNgayDatHang());
+        values.put("tongtien", donHang.getTongTien());
+        values.put("trangthai", donHang.getTrangthai());
+
+        try {
+            long insertedId = db.insert("DONHANG", null, values);
+            db.close();
+
+            // Kiểm tra xem đơn hàng đã được chèn thành công hay không
+            if (insertedId > 0) {
+                return (int) insertedId; // Trả về ID của đơn hàng nếu thành công
+            } else {
+                return -1; // Trả về -1 nếu có lỗi khi chèn đơn hàng
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Lỗi khi chèn đơn hàng", e);
+            return -1; // Trả về -1 nếu có lỗi khi chèn đơn hàng
+        }}
     public ArrayList<DonHang> getDonHangByMaTaiKhoan(int maTaiKhoan) {
         ArrayList<DonHang> list = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getWritableDatabase();

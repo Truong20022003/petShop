@@ -9,5 +9,7 @@
     <color name="mau_button">#E2BCB7</color>
     <color name="mau_chu">#4E352F</color>
     <color name="xanh_doan">#00CCFF</color>
+    <color name="mau_do">#FF0000</color>
+
 
 </resources>

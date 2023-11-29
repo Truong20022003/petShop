@@ -8,8 +8,26 @@ public class DonHangChiTiet {
     private int soLuong;
     private int donGia;
     private int thanhTien;
+    private String anhsanpham;
+
+    public String getAnhsanpham() {
+        return anhsanpham;
+    }
+
+    public void setAnhsanpham(String anhsanpham) {
+        this.anhsanpham = anhsanpham;
+    }
 
     public DonHangChiTiet() {
+    }
+//    orderId, gioHang.getMaSanPham(), gioHang.getSoLuongMua(), sanPham.getGia(), gioHang.getSoLuongMua() * sanPham.getGia()
+
+    public DonHangChiTiet(int maDonHang, int maSanPham, int soLuong, int donGia, int thanhTien) {
+        this.maDonHang = maDonHang;
+        this.maSanPham = maSanPham;
+        this.soLuong = soLuong;
+        this.donGia = donGia;
+        this.thanhTien = thanhTien;
     }
 
     public DonHangChiTiet(int maChiTietDonHang, int maDonHang, int maSanPham, String tenSanPham, int soLuong, int donGia, int thanhTien) {

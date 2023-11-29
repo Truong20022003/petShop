@@ -90,7 +90,6 @@
         android:layout_height="70sp"
         android:layout_gravity="bottom"
         android:background="@color/vang_nhat"
-
         app:menu="@menu/menu_nav_bottom"
         app:itemBackground="@drawable/nav_bottom"
         />

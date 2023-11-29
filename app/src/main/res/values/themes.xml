@@ -7,12 +7,16 @@
 
     <style name="Theme.PetShop" parent="Base.Theme.PetShop" />
     <style name="PesShop2">
-        <item name="android:fontFamily">@font/baloothambi2regular</item>
-        <item name="android:textColor">@color/mau_chu</item>
 
+        <item name="errorTextColor">@color/mau_do</item>
+        <item name="boxBackgroundColor">@color/hong_nhat</item>
     </style>
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom_sort_mem</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom_sort_mem</item>
+    </style>
+    <style name="TextInput">
+        <item name="colorError">@color/vang_dam</item>
+        <item name="editTextBackground">@color/vang_dam</item>
     </style>
 </resources>

@@ -59,10 +59,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtTen_Dang_Nhap"
         android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="10sp"
         android:layout_marginTop="8sp"
+        android:layout_marginHorizontal="25sp"
         android:textAppearance="@style/sign_up"
-        android:theme="@style/PesShop2"
+        android:textColorHint="@color/mau_chu"
+        style="@style/PesShop2"
 
         >
 
@@ -71,10 +72,11 @@
             android:id="@+id/tiedt_Ten_Dang_Nhap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15sp"
+            style="@style/PesShop2"
             android:background="@drawable/khungedittextlogin"
             android:drawableStart="@drawable/ic_userlogin"
             android:fontFamily="@font/baloothambi2regular"
+            android:textColorHint="@color/mau_chu"
             android:hint="Nhập tên đăng nhập" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,6 +90,7 @@
         android:layout_marginTop="10sp"
         android:fontFamily="@font/baloothambi2regular"
         android:text="@string/password"
+        android:textColorHint="@color/mau_chu"
         android:textAppearance="@style/user_name"
         android:textSize="20sp"
 
@@ -99,18 +102,22 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_Mat_Khau"
         android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="10sp"
-        android:theme="@style/PesShop2">
+        android:layout_marginHorizontal="25sp"
+        style="@style/PesShop2"
+        android:textColorHint="@color/mau_chu"
+>
 
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiedt_Nhap_Mat_Khau"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15sp"
             android:autofillHints="password"
+            android:textColorHint="@color/mau_chu"
             android:background="@drawable/khungedittextlogin"
             android:drawableStart="@drawable/ic_passwordlogin"
+
+            style="@style/PesShop2"
             android:hint="Nhập mật khẩu" />
 
     </com.google.android.material.textfield.TextInputLayout>
