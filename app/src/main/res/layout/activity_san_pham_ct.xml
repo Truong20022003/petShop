@@ -2,11 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
-    android:padding="5sp"
     android:background="@color/mau_hong"
+    android:padding="5sp"
     tools:context=".SanPhamCT">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -120,7 +120,7 @@
                 android:layout_below="@+id/txtLoaisp"
                 android:layout_marginLeft="5sp"
                 android:layout_marginTop="10sp"
-                android:text="Mô tả:Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết."
+                android:text="Mô tả: Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết."
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -140,7 +140,7 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/txtDanhGia"
 
-                />
+                tools:listitem="@layout/item_rcv_danh_gia" />
         </RelativeLayout>
 
         <Button
