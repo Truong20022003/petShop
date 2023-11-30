@@ -10,6 +10,10 @@ public class DonHang {
     private int tongTien;
     private String trangthai;
 
+    public DonHang(int maDonHang, String trangthai) {
+        this.maDonHang = maDonHang;
+        this.trangthai = trangthai;
+    }
 
     public DonHang() {
     }
