@@ -75,6 +75,14 @@
                 android:fontFamily="@font/baloothambi2regular"
                 android:text="Gia san pham "
                 android:textSize="20sp" />
+            <TextView
+                android:id="@+id/txtsoluong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:fontFamily="@font/baloothambi2regular"
+                android:text="so luong"
+                android:textSize="20sp" />
         </LinearLayout>
 
     </LinearLayout>

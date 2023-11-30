@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager2.widget.CompositePageTransformer;
@@ -63,9 +63,11 @@ public class frgTrangChu extends Fragment {
     private adapter_gio_hang gioHangAdapter;
     private GioHangDao gioHangDao;
     private boolean hasMatchingProducts = true; // Thêm biến boolean
+
     public frgTrangChu() {
         // Required empty public constructor
     }
+
     private adapter_sp_namngang adapteranh;
 
     @Override
@@ -122,9 +124,11 @@ public class frgTrangChu extends Fragment {
         list = dao.getsanphamall();
         listdem = dao.getsanphamall();
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        binding.rcvNamngang.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
         binding.rcvtrangchu.setLayoutManager(gridLayoutManager);
-        adapteranh = new adapter_sp_namngang(list,getContext());
+//        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        binding.rcvNamngang.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
+//        binding.rcvtrangchu.setLayoutManager(gridLayoutManager);
+        adapteranh = new adapter_sp_namngang(list, getContext());
         adapter = new adapter_trangchu(list, getContext());
         binding.rcvtrangchu.setAdapter(adapter);
         binding.rcvNamngang.setAdapter(adapteranh);
@@ -132,9 +136,13 @@ public class frgTrangChu extends Fragment {
         binding.edtimKiem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (b){
+                if (b) {
                     binding.viewpage.setVisibility(View.GONE);
                     binding.chamduoi.setVisibility(View.GONE);
+                    binding.ten.setVisibility(View.GONE);
+                    binding.rcvNamngang.setVisibility(View.GONE);
+                    binding.khoangcach2.setVisibility(View.GONE);
+                    binding.khoangcach1.setVisibility(View.GONE);
                 }
             }
         });
@@ -153,6 +161,10 @@ public class frgTrangChu extends Fragment {
                     binding.viewpage.setVisibility(View.GONE);
                     binding.rcvtrangchu.setVisibility(View.VISIBLE);
                     binding.chamduoi.setVisibility(View.GONE);
+                    binding.ten.setVisibility(View.GONE);
+                    binding.rcvNamngang.setVisibility(View.GONE);
+                    binding.khoangcach1.setVisibility(View.GONE);
+                    binding.khoangcach2.setVisibility(View.GONE);
                     binding.tenkoquantrong.setText("Sản phẩm ");
 //                    binding.nen.setVisibility(View.VISIBLE);
                     list.clear();
@@ -161,9 +173,9 @@ public class frgTrangChu extends Fragment {
                 } else {
                     binding.viewpage.setVisibility(View.GONE);
                     binding.chamduoi.setVisibility(View.GONE);
+                    binding.khoangcach1.setVisibility(View.GONE);
+                    binding.khoangcach2.setVisibility(View.GONE);
                     binding.tenkoquantrong.setText("Sản phẩm không có trong giỏ hàng");
-//                    binding.nen.setVisibility(View.VISIBLE);
-                    binding.rcvtrangchu.setVisibility(View.VISIBLE);
                     list.clear();
                     for (SanPham sp : listdem) {
                         if (sp.getTensanpham().toLowerCase().contains(searchText)) {
@@ -179,6 +191,7 @@ public class frgTrangChu extends Fragment {
                 }
                 updateText();
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -219,6 +232,7 @@ public class frgTrangChu extends Fragment {
         }
     };
 
+
     @Override
     public void onPause() {
         //khi thoat ra ngoai man home
@@ -232,6 +246,7 @@ public class frgTrangChu extends Fragment {
         super.onResume();
         slideHanlder.postDelayed(sildeRunnable, 3000);
     }
+
     private void addToCart(SanPham sanPham) {
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
@@ -247,7 +262,7 @@ public class frgTrangChu extends Fragment {
 
         } else {
 
-            GioHang hang = gioHangDao.getGioHangByMasp(sanPham.getMasanpham(),mand);
+            GioHang hang = gioHangDao.getGioHangByMasp(sanPham.getMasanpham(), mand);
             if (hang != null) {
                 hang.setSoLuongMua(hang.getSoLuongMua() + 1);
                 gioHangDao.updateGioHang(hang);
@@ -264,6 +279,7 @@ public class frgTrangChu extends Fragment {
         gioHangAdapter.notifyDataSetChanged();
 
     }
+
     private void updateText() {
         if (!hasMatchingProducts) {
             binding.tenkoquantrong.setText("Sản phẩm không có trong giỏ hàng.");
@@ -276,7 +292,7 @@ public class frgTrangChu extends Fragment {
         }
     }
 
-    private void showDialogChiTietSanPham(SanPham sanPham){
+    private void showDialogChiTietSanPham(SanPham sanPham) {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DialogChiTietSanPhamBinding chiTietSanPhamBinding = DialogChiTietSanPhamBinding.inflate(getLayoutInflater());
@@ -286,7 +302,7 @@ public class frgTrangChu extends Fragment {
             chiTietSanPhamBinding.txtMaSanPham.setText("Mã: " + String.valueOf(sanPham.getMasanpham()));
             chiTietSanPhamBinding.txtTenSanPham.setText("Tên:" + sanPham.getTensanpham());
             chiTietSanPhamBinding.txtGiaSanPham.setText("Giá: " + String.valueOf(sanPham.getGia()));
-            chiTietSanPhamBinding.txtLoaiSanPham.setText("Loại sản phẩm: "+ sanPham.getTenloaisanpham());
+            chiTietSanPhamBinding.txtLoaiSanPham.setText("Loại sản phẩm: " + sanPham.getTenloaisanpham());
             chiTietSanPhamBinding.txtSoLuotBan.setText("Số lượt bán: 200");
             chiTietSanPhamBinding.txtMoTa.setText("Mô tả: " + sanPham.getMota());
 

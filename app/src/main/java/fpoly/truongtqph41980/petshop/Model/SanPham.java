@@ -10,11 +10,33 @@ private int masanpham;
 private String tensanpham;
 private int gia;
 private int maloaisanpham;
+
 private String tenloaisanpham;
 private String mota;
 private String anhSanPham;
+private int soluong;
 //    maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham)
     public SanPham() {
+    }
+
+    public int getSoluong() {
+        return soluong;
+    }
+
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
+    }
+
+
+    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham, String mota, String anhSanPham, int soluong) {
+        this.masanpham = masanpham;
+        this.tensanpham = tensanpham;
+        this.gia = gia;
+        this.maloaisanpham = maloaisanpham;
+        this.tenloaisanpham = tenloaisanpham;
+        this.mota = mota;
+        this.anhSanPham = anhSanPham;
+        this.soluong = soluong;
     }
 
     public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String mota, String anhSanPham) {
