@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import fpoly.truongtqph41980.petshop.Dao.DonHangDao;
 import fpoly.truongtqph41980.petshop.Model.DonHang;
 import fpoly.truongtqph41980.petshop.R;
+import fpoly.truongtqph41980.petshop.databinding.DialogUpdateTrangThaiDonhangBinding;
 import fpoly.truongtqph41980.petshop.databinding.DialogXoaDonHangBinding;
 import fpoly.truongtqph41980.petshop.databinding.DialogXoaNguoiDungBinding;
 import fpoly.truongtqph41980.petshop.databinding.ItemQlDonHangBinding;
@@ -62,6 +63,48 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
                     mListener.onItemClick(holder.getAdapterPosition());
 
                 }
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+                DialogUpdateTrangThaiDonhangBinding dialogUpdateTrangThaiDonhangBinding = DialogUpdateTrangThaiDonhangBinding.inflate(inflater);
+                builder.setView(dialogUpdateTrangThaiDonhangBinding.getRoot());
+                Dialog dialog = builder.create();
+                dialog.show();
+
+                dialogUpdateTrangThaiDonhangBinding.btnxacnhanTrangthai.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                      String trangthai= dialogUpdateTrangThaiDonhangBinding.txtTrangThai.getText().toString();
+                        if (trangthai.equals("")) {
+                            dialogUpdateTrangThaiDonhangBinding.txtTrangThai.setError("Vui lòng không để trống trạng thái");
+
+                        }
+//                        DonHang donHang1= dao.getDsDonHang();
+//                        donHang1.setTrangthai(trangthai);
+//                        boolean check= dao.updateDonHang(donHang1);
+//                        if (check){
+//                            list.clear();
+//                            list.addAll(dao.getDsDonHang());
+//
+//                            notifyDataSetChanged();
+//                            dialog.dismiss();
+//                            Toast.makeText(context, "Thay đổi trang thái thành công", Toast.LENGTH_SHORT).show();
+//                        }else {
+//                            Toast.makeText(context, "Thay đổi trạng thái thất bại", Toast.LENGTH_SHORT).show();
+//                        }
+                    }
+                });
+
+                dialogUpdateTrangThaiDonhangBinding.btnhuyTrangthai.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
         holder.binding.btnXoaDonHang.setOnClickListener(new View.OnClickListener() {

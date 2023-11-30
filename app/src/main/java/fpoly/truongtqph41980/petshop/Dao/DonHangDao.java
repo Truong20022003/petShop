@@ -56,8 +56,7 @@ public class DonHangDao {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("mataikhoan", donHang.getMaTaiKhoan());
-        values.put("ngaydathang", donHang.getNgayDatHang());
-        values.put("tongtien", donHang.getTongTien());
+        values.put("trangthai", donHang.getTrangthai());
 
         long check = sqLiteDatabase.update("DONHANG", values, "madonhang = ?", new String[]{String.valueOf(donHang.getMaDonHang())});
         return check > 0;
