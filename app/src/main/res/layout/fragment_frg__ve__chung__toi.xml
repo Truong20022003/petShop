@@ -6,8 +6,7 @@
     tools:context=".fragment.frg_Ve_Chung_Toi"
     android:background="@drawable/khung_item"
     android:orientation="vertical"
-    android:layout_margin="10sp"
-    >
+    android:layout_margin="10sp">
 
 
     <TextView

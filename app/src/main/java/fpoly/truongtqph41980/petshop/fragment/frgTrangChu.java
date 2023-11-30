@@ -44,6 +44,7 @@ import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_slide;
+import fpoly.truongtqph41980.petshop.adapter.adapter_sp_namngang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_trangchu;
 import fpoly.truongtqph41980.petshop.databinding.DialogChiTietSanPhamBinding;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgTrangChuBinding;
@@ -65,6 +66,7 @@ public class frgTrangChu extends Fragment {
     public frgTrangChu() {
         // Required empty public constructor
     }
+    private adapter_sp_namngang adapteranh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,9 +122,13 @@ public class frgTrangChu extends Fragment {
         list = dao.getsanphamall();
         listdem = dao.getsanphamall();
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        binding.rcvNamngang.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
         binding.rcvtrangchu.setLayoutManager(gridLayoutManager);
+        adapteranh = new adapter_sp_namngang(list,getContext());
         adapter = new adapter_trangchu(list, getContext());
         binding.rcvtrangchu.setAdapter(adapter);
+        binding.rcvNamngang.setAdapter(adapteranh);
+
         binding.edtimKiem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {

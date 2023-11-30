@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="40sp"
     android:background="@color/hong_nhat"
+    android:layout_margin="10sp"
     android:orientation="vertical">
 
     <ImageView
