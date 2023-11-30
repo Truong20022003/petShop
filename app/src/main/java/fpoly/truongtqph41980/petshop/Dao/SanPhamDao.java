@@ -20,16 +20,16 @@ public class SanPhamDao {
     public ArrayList<SanPham> getsanphamall(){
         ArrayList<SanPham> list = new ArrayList();
         SQLiteDatabase database = dbs.getReadableDatabase();
-        Cursor cursor = database.rawQuery("select sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham,lsp.tenloaisanpham,sp.mota,sp.anhsanpham from SANPHAM sp, LOAISANPHAM lsp where sp.maloaisanpham = lsp.maLoaisanpham",null);
+        Cursor cursor = database.rawQuery("select sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham,lsp.tenloaisanpham,sp.mota,sp.anhsanpham,sp.soluong from SANPHAM sp, LOAISANPHAM lsp where sp.maloaisanpham = lsp.maLoaisanpham",null);
         if (cursor.getCount()!=0){
             cursor.moveToFirst();
             do {
-                list.add(new SanPham(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getString(4),cursor.getString(5),cursor.getString(6)));
+                list.add(new SanPham(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getInt(7)));
             }while (cursor.moveToNext());
         }
         return list;
     }
-    public boolean insert(String tensanpham, int gia, int maloaisanpham,String mota,String anhsanpham){
+    public boolean insert(String tensanpham, int gia, int maloaisanpham,String mota,String anhsanpham,int soluong){
         SQLiteDatabase db = dbs.getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put("tensanpham",tensanpham);
@@ -37,6 +37,7 @@ public class SanPhamDao {
         values.put("maloaisanpham",maloaisanpham);
         values.put("mota",mota);
         values.put("anhsanpham",anhsanpham);
+        values.put("soluong",soluong);
         long check = db.insert("SANPHAM",null,values);
         if(check == -1){
             return false;
@@ -44,7 +45,7 @@ public class SanPhamDao {
             return true;
         }
     }
-    public boolean update(int masanpham,String tensanpham, int gia, int maloaisanpham,String mota,String anhsanpham){
+    public boolean update(int masanpham,String tensanpham, int gia, int maloaisanpham,String mota,String anhsanpham,int soluong){
         SQLiteDatabase db = dbs.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("tensanpham",tensanpham);
@@ -52,6 +53,8 @@ public class SanPhamDao {
         values.put("maloaisanpham",maloaisanpham);
         values.put("mota",mota);
         values.put("anhsanpham",anhsanpham);
+        values.put("soluong",soluong);
+
         long check = db.update("SANPHAM",values,"masanpham = ?", new String[]{String.valueOf(masanpham)});
         if(check == -1){
             return false;

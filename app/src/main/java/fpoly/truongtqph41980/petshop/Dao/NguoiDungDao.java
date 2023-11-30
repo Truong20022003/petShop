@@ -88,7 +88,7 @@ public class NguoiDungDao {
                 editor.putString("diachi", cursor.getString(6));
                 editor.putInt("sotien", cursor.getInt(7));
                 editor.putString("loaitaikhoan", cursor.getString(8));
-                editor.putString("anhtaikhoan",cursor.getString(9));
+                editor.putString("anhtaikhoan", cursor.getString(9));
                 editor.apply();
                 return true;
             } else {
@@ -124,23 +124,44 @@ public class NguoiDungDao {
         cursor.close();
         return tonTai;
     }
-    public boolean xoaNguoiDung(NguoiDung nd){
+
+    public boolean xoaNguoiDung(NguoiDung nd) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        long check = database.delete("TAIKHOAN","mataikhoan = ?",new String[]{String.valueOf(nd.getMaTaiKhoan())});
-        return check>0;
+        long check = database.delete("TAIKHOAN", "mataikhoan = ?", new String[]{String.valueOf(nd.getMaTaiKhoan())});
+        return check > 0;
     }
-    public boolean update(int manguoidung,String tennguoidung, int sotien){
+
+    public boolean update(int manguoidung, String tennguoidung, int sotien) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("hoten",tennguoidung);
-        values.put("sotien",sotien);
-        long check = db.update("TAIKHOAN",values,"mataikhoan = ?", new String[]{String.valueOf(manguoidung)});
-        if(check == -1){
+        values.put("hoten", tennguoidung);
+        values.put("sotien", sotien);
+        long check = db.update("TAIKHOAN", values, "mataikhoan = ?", new String[]{String.valueOf(manguoidung)});
+        if (check == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
+
+    public boolean updatekhachhang(NguoiDung nguoiDung) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("anhtaikhoan", nguoiDung.getAnhnguoidung());
+        values.put("hoten", nguoiDung.getHoTen());
+        values.put("tendangnhap", nguoiDung.getTenDangNhap());
+        values.put("sodienthoai", nguoiDung.getSoDienThoai());
+        values.put("matkhau", nguoiDung.getMatKhau());
+        values.put("email", nguoiDung.getEmail());
+        values.put("diachi", nguoiDung.getDiaChi());
+        long check = db.update("TAIKHOAN", values, "mataikhoan = ?", new String[]{String.valueOf(nguoiDung.getMaTaiKhoan())});
+        if (check == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public boolean updateSoTien(int maTaiKhoan, int soTienMoi) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();

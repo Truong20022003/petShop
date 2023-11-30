@@ -62,28 +62,49 @@
                     app:ci_drawable="@drawable/bacham" />
 
                 <TextView
-                    android:id="@+id/tenkoquantrong"
+                    android:id="@+id/ten"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/chamduoi"
                     android:layout_marginLeft="25sp"
                     android:fontFamily="@font/baloothambi2medium"
-                    android:text="Sản phẩm"
+                    android:text="Sản phẩm nổi bật"
                     android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/khoangcach1"
+                    android:layout_width="match_parent"
+                    android:layout_height="15sp"
+                    android:layout_below="@id/ten"
+                    android:background="#20F3E5F5"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_namngang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_below="@+id/tenkoquantrong"
+                    android:layout_below="@+id/khoangcach1"
                     tools:listitem="@layout/item_list_sp_trang_chu"
 
                     />
+                <TextView
+                    android:id="@+id/khoangcach2"
+                    android:layout_width="match_parent"
+                    android:layout_height="15sp"
+                    android:layout_below="@id/rcv_namngang"
+                    android:background="#20F3E5F5"/>
+                <TextView
+                    android:id="@+id/tenkoquantrong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/khoangcach2"
+                    android:layout_marginLeft="25sp"
+                    android:fontFamily="@font/baloothambi2medium"
+                    android:text="Sản phẩm"
+                    android:textSize="20sp" />
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvtrangchu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rcv_namngang"
+                    android:layout_below="@+id/tenkoquantrong"
                     android:layout_marginLeft="25sp"
                     tools:listitem="@layout/item_trang_chu" />
 

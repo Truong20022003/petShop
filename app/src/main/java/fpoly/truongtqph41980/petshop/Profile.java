@@ -55,5 +55,12 @@ public class Profile extends AppCompatActivity {
                 startActivity(new Intent(Profile.this, lich_su_don_hang.class));
             }
         });
+        binding.btnhoso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Profile.this,sua_Thong_tin_nguoi_dung.class));
+            }
+        });
     }
+
 }

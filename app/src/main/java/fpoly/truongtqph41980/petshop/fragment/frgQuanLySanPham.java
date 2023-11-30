@@ -94,10 +94,11 @@ public class frgQuanLySanPham extends Fragment {
                 String tensp = themspbiding.edtenSanPham.getText().toString();
                 String giasp = themspbiding.edgiaSanPham.getText().toString();
                 String mota = themspbiding.edmoTa.getText().toString();
+                String soluong=themspbiding.edtsoluong.getText().toString();
                 String anhsanpham = themspbiding.edtInAnhSanPham.getText().toString();
                 HashMap<String, Object> hs = (HashMap<String, Object>) themspbiding.spnmaLoaiSanPham.getSelectedItem();
                 int maloaisp = (int) hs.get("maloaisanpham");
-                if (tensp.isEmpty() || giasp.isEmpty()||mota.isEmpty()) {
+                if (tensp.isEmpty() || giasp.isEmpty() || mota.isEmpty() || anhsanpham.isEmpty()||soluong.isEmpty()) {
                     if (tensp.equals("")) {
                         themspbiding.edtenSanPham.setError("Vui lòng không để trống tên sản phẩm");
                     } else {
@@ -118,14 +119,26 @@ public class frgQuanLySanPham extends Fragment {
                     } else {
                         themspbiding.tinLInAnhSanPham.setError(null);
                     }
+                    if (anhsanpham.equals("")) {
+                        themspbiding.edtInAnhSanPham.setError("Vui lòng không để trống tên sản phẩm");
+                    } else {
+                        themspbiding.edtInAnhSanPham.setError(null);
+                    }
+                    if (anhsanpham.equals("")) {
+                        themspbiding.edtsoluong.setError("Vui lòng không để trống tên sản phẩm");
+                    } else {
+                        themspbiding.edtsoluong.setError(null);
+                    }
                 } else {
                     try {
                         int checkgia = Integer.parseInt(giasp);
-                        if (checkgia <= 0) {
+                        int soluongcheck=Integer.parseInt(soluong);
+                        if (checkgia <= 0||soluongcheck<0) {
                             themspbiding.edgiaSanPham.setError("Giá sản phẩm phải lớn hơn 0");
+                            themspbiding.edtsoluong.setError("Số lượng sản phẩm phải lớn hơn 0");
                         } else {
                             themspbiding.edgiaSanPham.setError(null);
-                            boolean check = dao.insert(tensp, checkgia, maloaisp,mota,anhsanpham);
+                            boolean check = dao.insert(tensp, checkgia, maloaisp, mota, anhsanpham,soluongcheck);
                             if (check) {
                                 loadData();
                                 adapter.notifyDataSetChanged();
@@ -137,16 +150,17 @@ public class frgQuanLySanPham extends Fragment {
                         }
                     } catch (NumberFormatException e) {
                         themspbiding.edgiaSanPham.setError("Giá sản phẩm phải là số");
+                        themspbiding.edtsoluong.setError("So lượng sản phẩm phải là số");
                     }
                 }
             }
         });
-themspbiding.btnhuyThemlsp.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        dialog.dismiss();
-    }
-});
+        themspbiding.btnhuyThemlsp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
 
     }
 

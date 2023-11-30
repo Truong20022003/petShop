@@ -2,17 +2,16 @@ package fpoly.truongtqph41980.petshop.Dao;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fpoly.truongtqph41980.petshop.Database.dbHelper;
 import fpoly.truongtqph41980.petshop.Model.DanhGia;
-import fpoly.truongtqph41980.petshop.Model.DonHang;
 
 public class DanhGiaDao {
     private dbHelper dbHelper;
@@ -60,4 +59,30 @@ public class DanhGiaDao {
         return list;
     }
 
+    public boolean addDanhGia(int maSanPham, String danhGia, String nhanXet, String ngayDanhGia) {
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        try {
+            // Chuẩn bị dữ liệu để chèn vào bảng DANHGIA
+            ContentValues values = new ContentValues();
+            values.put("masanpham", maSanPham);
+            values.put("danhgia", danhGia);
+            values.put("nhanxet", nhanXet);
+            values.put("ngaydanhgia", ngayDanhGia);
+
+            // Thực hiện chèn dữ liệu vào bảng DANHGIA
+            long result = database.insert("DANHGIA", null, values);
+
+            // Kiểm tra kết quả và trả về true nếu thành công, false nếu thất bại
+            return result != -1;
+        } catch (Exception e) {
+            Log.d(TAG, "Lỗi khi thêm đánh giá", e);
+        } finally {
+            if (database != null && database.isOpen()) {
+                database.close();
+            }
+        }
+
+        // Trả về false nếu có lỗi xảy ra
+        return false;
+    }
 }
