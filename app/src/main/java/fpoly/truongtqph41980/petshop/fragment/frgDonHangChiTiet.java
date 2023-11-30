@@ -5,6 +5,8 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -55,7 +57,17 @@ public class frgDonHangChiTiet extends Fragment {
 
             }
         }
-
+        binding.btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                frgQuanLyDonHang frgQuanLyDonHang=new frgQuanLyDonHang();//fragment được chuyển đến sau khi ấn
+                FragmentManager fragmentManager=getParentFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayoutMain,frgQuanLyDonHang);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
         return binding.getRoot();
     }
 }
