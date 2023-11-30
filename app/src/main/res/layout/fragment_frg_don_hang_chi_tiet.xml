@@ -12,16 +12,24 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="vertical">
-      <ImageView
-          android:layout_width="40sp"
+      <TextView
+          android:id="@+id/btnback"
+          android:layout_width="match_parent"
           android:layout_height="40sp"
-          android:background="@drawable/ic_back"
+          android:layout_margin="10sp"
+          android:text="Quay về"
+          android:gravity="center_vertical"
+          android:textColor="@color/black"
+          android:padding="2sp"
+          android:textSize="20sp"
+          android:drawableStart="@drawable/ic_back"
           />
 
        <androidx.recyclerview.widget.RecyclerView
            android:id="@+id/rcv_don_hang_chiTiet"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
+           tools:listitem="@layout/item_don_hang_chi_tiet"
            />
   </LinearLayout>
 </FrameLayout>

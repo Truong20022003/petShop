@@ -42,6 +42,7 @@ private DonHangChiTietDao dao;
         holder.binding.txtMaSanPham.setText("Mã sản phẩm: "+String.valueOf(list.get(position).getMaSanPham()));
         holder.binding.txtThanhTien.setText("Thành tiền: "+ String.valueOf(list.get(position).getThanhTien()));
         holder.binding.txtSoLuong.setText("Số lượng: "+String.valueOf(list.get(position).getSoLuong()));
+        holder.binding.txttensanpham.setText("Tên sản phẩm: "+list.get(position).getTenSanPham());
         Picasso.get().load(list.get(position).getAnhsanpham()).into(holder.binding.imgAnhsp);
     }
 

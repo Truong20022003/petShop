@@ -3,6 +3,8 @@ package fpoly.truongtqph41980.petshop.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -50,7 +52,17 @@ public class frgConfilmThanhToan extends Fragment {
 
             }
         }
-
+        binding.btntieptucmua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                frgGioHang frgGioHang=new frgGioHang();
+                FragmentManager fragmentManager=getParentFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayoutMain,frgGioHang);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
         return binding.getRoot();
     }
 }
