@@ -39,13 +39,14 @@ private int soluong;
         this.soluong = soluong;
     }
 
-    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String mota, String anhSanPham) {
+    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String mota, String anhSanPham,int soluong) {
         this.masanpham = masanpham;
         this.tensanpham = tensanpham;
         this.gia = gia;
         this.maloaisanpham = maloaisanpham;
         this.mota = mota;
         this.anhSanPham = anhSanPham;
+        this.soluong = soluong;
     }
 
     public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham, String mota, String anhSanPham) {
@@ -69,6 +70,11 @@ private int soluong;
     public SanPham(String tensanpham, int gia) {
         this.tensanpham = tensanpham;
         this.gia = gia;
+    }
+
+    public SanPham(int masanpham, int soluong) {
+        this.masanpham = masanpham;
+        this.soluong = soluong;
     }
 
     public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String mota) {
@@ -142,6 +148,7 @@ private int soluong;
         maloaisanpham = in.readInt();
         tenloaisanpham = in.readString();
         mota = in.readString();
+        soluong = in.readInt();
     }
 
     @Override
@@ -157,6 +164,7 @@ private int soluong;
         parcel.writeInt(maloaisanpham);
         parcel.writeString(tenloaisanpham);
         parcel.writeString(mota);
+        parcel.writeInt(soluong);
     }
     public static final Creator<SanPham> CREATOR = new Creator<SanPham>(){
 

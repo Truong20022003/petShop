@@ -46,22 +46,24 @@ public class DonHangDao {
         }
         return list;
     }
-    public boolean xoaDonHang(DonHang donHang){
+
+    public boolean xoaDonHang(DonHang donHang) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        long check = sqLiteDatabase.delete("DONHANG","madonhang = ?",new String[]{String.valueOf(donHang.getMaDonHang())});
-        return check >0;
+        long check = sqLiteDatabase.delete("DONHANG", "madonhang = ?", new String[]{String.valueOf(donHang.getMaDonHang())});
+        return check > 0;
 
     }
+
     public boolean updateDonHang(DonHang donHang) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("mataikhoan", donHang.getMaTaiKhoan());
         values.put("trangthai", donHang.getTrangthai());
-
         long check = sqLiteDatabase.update("DONHANG", values, "madonhang = ?", new String[]{String.valueOf(donHang.getMaDonHang())});
         return check > 0;
 
     }
+
     public int insertDonHang(DonHang donHang) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -83,7 +85,9 @@ public class DonHangDao {
         } catch (Exception e) {
             Log.e(TAG, "Lỗi khi chèn đơn hàng", e);
             return -1; // Trả về -1 nếu có lỗi khi chèn đơn hàng
-        }}
+        }
+    }
+
     public ArrayList<DonHang> getDonHangByMaTaiKhoan(int maTaiKhoan) {
         ArrayList<DonHang> list = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getWritableDatabase();

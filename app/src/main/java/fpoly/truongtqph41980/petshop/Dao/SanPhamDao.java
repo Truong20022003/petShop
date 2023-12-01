@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Database.dbHelper;
+import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 
 public class SanPhamDao {
@@ -82,14 +83,14 @@ public class SanPhamDao {
     private static final String COL_MALOAI = "maloaisanpham";
     private static final String COL_MOTA = "mota";
     private static final String COL_ANHSP = "anhsanpham";
-
+    private static final String COL_SOLUONG = "soluong";
     // ... các phương thức khác
     @SuppressLint("Range")
     public SanPham getSanPhamById(int masanpham) {
         SQLiteDatabase database = dbs.getReadableDatabase();
         SanPham sanPham = null;
 
-        String[] columns = {COL_MASP, COL_TENSP, COL_GIA, COL_MALOAI, COL_MOTA, COL_ANHSP};
+        String[] columns = {COL_MASP, COL_TENSP, COL_GIA, COL_MALOAI, COL_MOTA, COL_ANHSP,COL_SOLUONG};
         String selection = COL_MASP + "=?";
         String[] selectionArgs = {String.valueOf(masanpham)};
 
@@ -102,12 +103,28 @@ public class SanPhamDao {
             int maLoaiSanPham = cursor.getInt(cursor.getColumnIndex(COL_MALOAI));
             String moTa = cursor.getString(cursor.getColumnIndex(COL_MOTA));
             String anhSanPham = cursor.getString(cursor.getColumnIndex(COL_ANHSP));
-
-            sanPham = new SanPham(maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham);
+            int sl = cursor.getInt(cursor.getColumnIndex(COL_SOLUONG));
+            sanPham = new SanPham(maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham,sl);
         }
 
         cursor.close();
         return sanPham;
     }
+    public boolean updateSlSanPham(int maSanPham, int newQuantity) {
+        SQLiteDatabase database = dbs.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("soluong", newQuantity);
+
+        // Đảm bảo rằng điều kiện WHERE sử dụng mã sản phẩm đúng
+        String whereClause = "masanpham = ?";
+        String[] whereArgs = {String.valueOf(maSanPham)};
+
+        // Thực hiện cập nhật
+        int rowsAffected = database.update("SANPHAM", values, whereClause, whereArgs);
+
+        // Trả về true nếu có ít nhất một hàng bị ảnh hưởng
+        return rowsAffected > 0;
+    }
+
 
 }

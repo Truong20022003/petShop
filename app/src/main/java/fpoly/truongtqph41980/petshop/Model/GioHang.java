@@ -10,9 +10,18 @@ public class GioHang {
     private int giaSanPham;
     private boolean isSelected;
     private String anhSanPham;
+    private int soLuong;
 
     public String getAnhSanPham() {
         return anhSanPham;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
     }
 
     public void setAnhSanPham(String anhSanPham) {

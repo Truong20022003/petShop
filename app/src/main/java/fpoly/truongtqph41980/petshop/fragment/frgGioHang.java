@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -46,6 +47,8 @@ import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.adapter.adapter_don_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gian_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
+import fpoly.truongtqph41980.petshop.databinding.DialogConfilmThanhToanBinding;
+import fpoly.truongtqph41980.petshop.databinding.DialogThemSanPhamBinding;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgGioHangBinding;
 
 
@@ -65,7 +68,8 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
     private ArrayList<DonHang> listDonHang = new ArrayList<>();
     private SharedViewModel sharedViewModel;
     private DonHangChiTietDao chiTietDao;
-
+    private ArrayList<SanPham> sanPhams = new ArrayList<>();
+    private SanPhamDao sanPhamDao;
 
     public frgGioHang() {
     }
@@ -104,6 +108,8 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         chiTietDao = new DonHangChiTietDao(getContext());
         donHangDao = new DonHangDao(getContext());
 
+        sanPhamDao = new SanPhamDao(getContext());
+
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getMasp().observe(getViewLifecycleOwner(), masp -> {
 
@@ -116,81 +122,10 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         });
         list = gioHangDao.getDSGioHang();
         displayCart(list);
+
         binding.btnThanhToan.setOnClickListener(view -> {
-            int totalAmount = Integer.parseInt(binding.txtTongTienThanhToan.getText().toString());
-            SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
-            int mand = sharedPreferences.getInt("mataikhoan", 0);
-            int tienHienCo = sharedPreferences.getInt("sotien", 0);
+            showDialogThanhToan();
 
-            LocalDate currentDate = LocalDate.now();
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String ngayHienTai = currentDate.format(formatter);
-
-            if (tienHienCo >= totalAmount) {
-                int soTienConLai = tienHienCo - totalAmount;
-                NguoiDungDao nguoiDungDao = new NguoiDungDao(getContext());
-                if (nguoiDungDao.updateSoTien(mand, soTienConLai)) {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("sotien", soTienConLai);
-                    editor.apply();
-                    DonHang donHang = new DonHang(mand, ngayHienTai, totalAmount, "Đang giao hàng");
-                    int orderId = donHangDao.insertDonHang(donHang);
-                    if (orderId != 0) {
-                        listDonHang.clear();
-                        listDonHang.addAll(donHangDao.getDsDonHang());
-                        if (totalAmount > 0) {
-                        for (GioHang gioHang : list) {
-
-                                if (gioHang.isSelected()) {
-                                    SanPhamDao sanPhamDao = new SanPhamDao(getContext());
-                                    SanPham sanPham = sanPhamDao.getSanPhamById(gioHang.getMaSanPham());
-                                    if (sanPham != null) {
-                                        DonHangChiTiet chiTietDonHan = new DonHangChiTiet(orderId, gioHang.getMaSanPham(), gioHang.getSoLuongMua(), sanPham.getGia(), gioHang.getSoLuongMua() * sanPham.getGia());
-                                        chiTietDao.insertDonHangChiTiet(chiTietDonHan);
-                                    } else {
-                                        Toast.makeText(getContext(), "Sản phẩm không tìm thấy trong cơ sở dữ liệu", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
-                        }else {
-                            Toast.makeText(getContext(), "Vui lòng chọn sản phẩm để thanh toán", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        for (GioHang selected : list) {
-                            if (selected.isSelected()) {
-                                gioHangDao.deleteGioHang(selected);
-                            }
-                        }
-                        binding.txtTongTienThanhToan.setText(String.valueOf(0));
-                        list = gioHangDao.getDSGioHang();
-                        gioHangAdapter.updateCartList(list);
-                        displayCart(list);
-
-
-//                        Toast.makeText(getContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
-                        Snackbar.make(getView(), "Thanh toán thành công", Snackbar.LENGTH_SHORT).show();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("maDonHang", orderId);
-
-                        frgConfilmThanhToan frgConfilmThanhToan = new frgConfilmThanhToan();
-                        frgConfilmThanhToan.setArguments(bundle);
-                        FragmentManager fragmentManager = getParentFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayoutMain, frgConfilmThanhToan);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-
-                    } else {
-                        Toast.makeText(getContext(), "Thất bại khi thêm đơn hàng!", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Thất bại khi cập nhật tài khoản!", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(getContext(), "Số tiền trong tài khoản không đủ!", Toast.LENGTH_SHORT).show();
-            }
         });
 
 
@@ -215,5 +150,109 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         if (binding != null && binding.txtTongTienThanhToan != null) {
             binding.txtTongTienThanhToan.setText(String.valueOf(totalAmount));
         }
+    }
+
+    private void showDialogThanhToan() {
+        LayoutInflater layoutInflater = getLayoutInflater();
+        DialogConfilmThanhToanBinding thanhToanBinding = DialogConfilmThanhToanBinding.inflate(layoutInflater);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(thanhToanBinding.getRoot());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        thanhToanBinding.btnThanhToan.setOnClickListener(view -> {
+            for (GioHang gioHang : list) {
+                if (gioHang.getSoLuong() == 0) {
+                    Toast.makeText(getContext(), "Sản phẩm " + gioHang.getTenSanPham() + " đã hết hàng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            int totalAmount = Integer.parseInt(binding.txtTongTienThanhToan.getText().toString());
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
+            int mand = sharedPreferences.getInt("mataikhoan", 0);
+            int tienHienCo = sharedPreferences.getInt("sotien", 0);
+
+            LocalDate currentDate = LocalDate.now();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String ngayHienTai = currentDate.format(formatter);
+
+            if (tienHienCo >= totalAmount) {
+                int soTienConLai = tienHienCo - totalAmount;
+                NguoiDungDao nguoiDungDao = new NguoiDungDao(getContext());
+                if (nguoiDungDao.updateSoTien(mand, soTienConLai)) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("sotien", soTienConLai);
+                    editor.apply();
+                    DonHang donHang = new DonHang(mand, ngayHienTai, totalAmount, "Chờ phê duyệt");
+                    int orderId = donHangDao.insertDonHang(donHang);
+                    if (orderId != 0) {
+                        listDonHang.clear();
+                        listDonHang.addAll(donHangDao.getDsDonHang());
+                        if (totalAmount > 0) {
+                            for (GioHang gioHang : list) {
+
+                                if (gioHang.isSelected()) {
+                                    SanPhamDao sanPhamDao = new SanPhamDao(getContext());
+                                    SanPham sanPham = sanPhamDao.getSanPhamById(gioHang.getMaSanPham());
+                                    if (sanPham != null) {
+                                        DonHangChiTiet chiTietDonHan = new DonHangChiTiet(orderId, gioHang.getMaSanPham(), gioHang.getSoLuongMua(), sanPham.getGia(), gioHang.getSoLuongMua() * sanPham.getGia());
+                                        chiTietDao.insertDonHangChiTiet(chiTietDonHan);
+                                    } else {
+                                        Toast.makeText(getContext(), "Sản phẩm không tìm thấy trong cơ sở dữ liệu", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "Vui lòng chọn sản phẩm để thanh toán", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+
+                        // Cập nhật số lượng sản phẩm sau khi thanh toán thành công
+                        for (GioHang gioHang : list) {
+                            int newQuantity = gioHang.getSoLuong() - gioHang.getSoLuongMua();
+                            if (newQuantity < 0) {
+                                Toast.makeText(getContext(), "Sản phẩm " + gioHang.getTenSanPham() + "không đủ số lượng trong kho", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            sanPhamDao.updateSlSanPham(gioHang.getMaSanPham(), newQuantity);
+                        }
+                        for (GioHang selected : list) {
+                            if (selected.isSelected()) {
+                                gioHangDao.deleteGioHang(selected);
+                            }
+                        }
+
+                        binding.txtTongTienThanhToan.setText(String.valueOf(0));
+                        list = gioHangDao.getDSGioHang();
+                        gioHangAdapter.updateCartList(list);
+                        displayCart(list);
+
+                        Snackbar.make(getView(), "Thanh toán thành công", Snackbar.LENGTH_SHORT).show();
+
+
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("maDonHang", orderId);
+
+                        frgConfilmThanhToan frgConfilmThanhToan = new frgConfilmThanhToan();
+                        frgConfilmThanhToan.setArguments(bundle);
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frameLayoutMain, frgConfilmThanhToan);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(getContext(), "Thất bại khi thêm đơn hàng!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Thất bại khi cập nhật tài khoản!", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getContext(), "Số tiền trong tài khoản không đủ!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        thanhToanBinding.btnThoat.setOnClickListener(view -> dialog.dismiss());
+
     }
 }

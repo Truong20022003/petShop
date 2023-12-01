@@ -55,10 +55,19 @@ public class SanPhamCT extends AppCompatActivity {
                 binding.rcvDanhGia.setLayoutManager(layoutManager);
                 adapterDanhGia = new adapter_danh_gia(list, this);
                 binding.rcvDanhGia.setAdapter(adapterDanhGia);
+                if (selectedSanPham.getSoluong() == 0) {
+                    binding.btnThemCtVaoGio.setVisibility(View.GONE);
+                    binding.txtHetHang.setVisibility(View.VISIBLE);
+                } else {
+                    binding.btnThemCtVaoGio.setVisibility(View.VISIBLE);
+                    binding.txtHetHang.setVisibility(View.GONE);
+                }
             }
         }
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         gioHangDao = new GioHangDao(this);
+
+
         binding.btnThemCtVaoGio.setOnClickListener(view -> {
             SanPham selectedSanPham = intent.getParcelableExtra("sanPham");
             if (selectedSanPham != null) {

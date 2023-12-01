@@ -32,17 +32,21 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
         this.context = context;
         dao = new DonHangDao(context);
     }
-    public interface OnItemClick{
+
+    public interface OnItemClick {
         void onItemClick(int position);
     }
+
     private OnItemClick mListener;
-    public void setOnItemClick(OnItemClick listener){
+
+    public void setOnItemClick(OnItemClick listener) {
         mListener = listener;
     }
+
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemQlDonHangBinding binding = ItemQlDonHangBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        ItemQlDonHangBinding binding = ItemQlDonHangBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
         return new Viewholder(binding);
     }
@@ -50,12 +54,12 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
         DonHang donHang = list.get(position);
-        holder.binding.txtMdonhang.setText("Mã đơn hàng: " +String.valueOf(donHang.getMaDonHang()));
-        holder.binding.txtMnguoidung.setText("Mã người dung: " +String.valueOf(donHang.getMaTaiKhoan()));
-        holder.binding.txtDHTennguoidung.setText("Tên người dùng: " +donHang.getTenTaiKhoan());
-        holder.binding.txtNgayDat.setText("Ngày đặt hàng: " +donHang.getNgayDatHang());
+        holder.binding.txtMdonhang.setText("Mã đơn hàng: " + String.valueOf(donHang.getMaDonHang()));
+        holder.binding.txtMnguoidung.setText("Mã người dung: " + String.valueOf(donHang.getMaTaiKhoan()));
+        holder.binding.txtDHTennguoidung.setText("Tên người dùng: " + donHang.getTenTaiKhoan());
+        holder.binding.txtNgayDat.setText("Ngày đặt hàng: " + donHang.getNgayDatHang());
         holder.binding.txtTrangThai.setText("Trạng thái: " + donHang.getTrangthai());
-        holder.binding.txtTongTien.setText("Tổng tiền: " +String.valueOf(donHang.getTongTien()));
+        holder.binding.txtTongTien.setText("Tổng tiền: " + String.valueOf(donHang.getTongTien()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,82 +69,69 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
                 }
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-                DialogUpdateTrangThaiDonhangBinding dialogUpdateTrangThaiDonhangBinding = DialogUpdateTrangThaiDonhangBinding.inflate(inflater);
-                builder.setView(dialogUpdateTrangThaiDonhangBinding.getRoot());
-                Dialog dialog = builder.create();
-                dialog.show();
+        holder.itemView.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            DialogUpdateTrangThaiDonhangBinding dialogUpdateTrangThaiDonhangBinding = DialogUpdateTrangThaiDonhangBinding.inflate(inflater);
+            builder.setView(dialogUpdateTrangThaiDonhangBinding.getRoot());
+            Dialog dialog = builder.create();
+            dialog.show();
 
-                dialogUpdateTrangThaiDonhangBinding.btnxacnhanTrangthai.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                      String trangthai= dialogUpdateTrangThaiDonhangBinding.txtTrangThai.getText().toString();
-                        if (trangthai.equals("")) {
-                            dialogUpdateTrangThaiDonhangBinding.txtTrangThai.setError("Vui lòng không để trống trạng thái");
+            dialogUpdateTrangThaiDonhangBinding.btnxacnhanTrangthai.setOnClickListener(view12 -> {
+                String trangthai = dialogUpdateTrangThaiDonhangBinding.txtTrangThai.getText().toString();
+                if (trangthai.equals("")) {
+                    dialogUpdateTrangThaiDonhangBinding.txtTrangThai.setError("Vui lòng không để trống trạng thái");
 
-                        }
-//                        DonHang donHang1= dao.getDsDonHang();
-//                        donHang1.setTrangthai(trangthai);
-//                        boolean check= dao.updateDonHang(donHang1);
-//                        if (check){
-//                            list.clear();
-//                            list.addAll(dao.getDsDonHang());
-//
-//                            notifyDataSetChanged();
-//                            dialog.dismiss();
-//                            Toast.makeText(context, "Thay đổi trang thái thành công", Toast.LENGTH_SHORT).show();
-//                        }else {
-//                            Toast.makeText(context, "Thay đổi trạng thái thất bại", Toast.LENGTH_SHORT).show();
-//                        }
-                    }
-                });
+                }
+                list = dao.getDonHangByMaTaiKhoan(donHang.getMaTaiKhoan());
+                donHang.setMaDonHang(donHang.getMaDonHang());
+                donHang.setTrangthai(trangthai);
+                boolean check = dao.updateDonHang(donHang);
+                if (check) {
+                    list.clear();
+                    list.addAll(dao.getDsDonHang());
 
-                dialogUpdateTrangThaiDonhangBinding.btnhuyTrangthai.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-            }
+                    notifyDataSetChanged();
+                    dialog.dismiss();
+                    Toast.makeText(context, "Thay đổi trang thái thành công", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Thay đổi trạng thái thất bại", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            dialogUpdateTrangThaiDonhangBinding.btnhuyTrangthai.setOnClickListener(view1 -> dialog.dismiss());
         });
-        holder.binding.btnXoaDonHang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        holder.binding.btnXoaDonHang.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 
-                DialogXoaDonHangBinding dialogXoaDonHangBinding = DialogXoaDonHangBinding.inflate(inflater);
-                builder.setView(dialogXoaDonHangBinding.getRoot());
+            DialogXoaDonHangBinding dialogXoaDonHangBinding = DialogXoaDonHangBinding.inflate(inflater);
+            builder.setView(dialogXoaDonHangBinding.getRoot());
 
-                Dialog dialog = builder.create();
-                dialog.getWindow().setBackgroundDrawableResource(R.drawable.nen_dialog_doan);
-                dialog.show();
-                dialogXoaDonHangBinding.btnOutXoaDonHang.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+            Dialog dialog = builder.create();
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.nen_dialog_doan);
+            dialog.show();
+            dialogXoaDonHangBinding.btnOutXoaDonHang.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                    dialog.dismiss();
+                }
+            });
+            dialogXoaDonHangBinding.btnConfilmXoaDonHang.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (dao.xoaDonHang(donHang)) {
+                        list.clear();
+                        list.addAll(dao.getDsDonHang());
+                        notifyDataSetChanged();
                         dialog.dismiss();
+                        Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
                     }
-                });
-                dialogXoaDonHangBinding.btnConfilmXoaDonHang.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (dao.xoaDonHang(donHang)){
-                            list.clear();
-                            list.addAll(dao.getDsDonHang());
-                            notifyDataSetChanged();
-                            dialog.dismiss();
-                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
+                }
+            });
         });
     }
 
@@ -149,9 +140,10 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
         return list.size();
     }
 
-    public class Viewholder extends RecyclerView.ViewHolder{
+    public class Viewholder extends RecyclerView.ViewHolder {
         ItemQlDonHangBinding binding;
-        public Viewholder( ItemQlDonHangBinding binding) {
+
+        public Viewholder(ItemQlDonHangBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -70,12 +70,13 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
 
 
         holder.binding.btncong.setOnClickListener(view -> {
-            if (gioHang.getSoLuongMua() >= 1) {
+            if (gioHang.getSoLuongMua() < gioHang.getSoLuong()) {
                 gioHang.setSoLuongMua(gioHang.getSoLuongMua() + 1);
-
                 dao.updateGioHang(gioHang);
                 notifyDataSetChanged();
                 updateTotalPrice();
+            } else {
+                Toast.makeText(context, "Không thể mua thêm, số lượng trong kho đã đạt tối đa", Toast.LENGTH_SHORT).show();
             }
         });
         holder.binding.btntru.setOnClickListener(view -> {
@@ -102,7 +103,7 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
 
     }
 
-        public void updateCartList(ArrayList<GioHang> updatedList) {
+    public void updateCartList(ArrayList<GioHang> updatedList) {
         list.clear();
         list.addAll(updatedList);
         notifyDataSetChanged();

@@ -308,6 +308,13 @@ public class frgTrangChu extends Fragment {
 
 
         }
+        if (sanPham.getSoluong() == 0) {
+            chiTietSanPhamBinding.btnThemVaoGio.setVisibility(View.GONE);
+            chiTietSanPhamBinding.txtHetHang.setVisibility(View.VISIBLE);
+        } else {
+            chiTietSanPhamBinding.btnThemVaoGio.setVisibility(View.VISIBLE);
+            chiTietSanPhamBinding.txtHetHang.setVisibility(View.GONE);
+        }
         chiTietSanPhamBinding.btnDongDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

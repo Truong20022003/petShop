@@ -94,6 +94,17 @@
                 android:background="@drawable/khung_button"
                 android:text="Thêm vào giỏ"
                 android:textColor="@color/mau_chu" />
+            <TextView
+                android:id="@+id/txtHetHang"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Đã hết hàng"
+                android:layout_margin="20dp"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:textColor="@color/mau_do"
+                android:fontFamily="@font/baloothambi2regular"
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>

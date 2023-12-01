@@ -76,14 +76,23 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
         holder.binding.txtgiaHat.setText("Giá sp:" + String.valueOf(list.get(position).getGia()));
         holder.binding.txttrangThaiSanPham.setText("Số lượt bán: 200");
         Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.binding.imgAnhspGianHang);
-        holder.binding.btnThemvaogio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mAddToCartClickListener != null) {
-                    mAddToCartClickListener.onAddToCartClick(list.get(holder.getAdapterPosition()));
+
+        if (list.get(position).getSoluong() == 0) {
+            holder.binding.btnThemvaogio.setVisibility(View.GONE);
+            holder.binding.txtHetHang.setVisibility(View.VISIBLE);
+        } else {
+            holder.binding.btnThemvaogio.setVisibility(View.VISIBLE);
+            holder.binding.txtHetHang.setVisibility(View.GONE);
+            holder.binding.btnThemvaogio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mAddToCartClickListener != null) {
+                        mAddToCartClickListener.onAddToCartClick(list.get(holder.getAdapterPosition()));
+                    }
                 }
-            }
-        });
+            });
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

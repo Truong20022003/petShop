@@ -63,6 +63,7 @@ public class adapter_trangchu extends RecyclerView.Adapter<adapter_trangchu.View
         holder.biding.txttenSanPham.setText(list.get(position).getTensanpham());
         holder.biding.txtgiasp.setText(String.valueOf(list.get(position).getGia()));
         Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.biding.imgAnhSpTrangChu);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +73,11 @@ public class adapter_trangchu extends RecyclerView.Adapter<adapter_trangchu.View
                 }
             }
         });
+        if (list.get(position).getSoluong() == 0) {
+            holder.biding.btnmuahang.setVisibility(View.GONE);
+        } else {
+            holder.biding.btnmuahang.setVisibility(View.VISIBLE);
+        }
         holder.biding.btnmuahang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -24,7 +24,7 @@ public class GioHangDao {
         ArrayList<GioHang> list = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         try {
-            Cursor c = database.rawQuery("SELECT GIOHANG.magiohang, SANPHAM.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia,SANPHAM.anhsanpham FROM GIOHANG, SANPHAM WHERE GIOHANG.masanpham = SANPHAM.masanpham", null);
+            Cursor c = database.rawQuery("SELECT GIOHANG.magiohang, SANPHAM.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia,SANPHAM.anhsanpham,SANPHAM.soluong FROM GIOHANG, SANPHAM WHERE GIOHANG.masanpham = SANPHAM.masanpham", null);
             if (c.getCount() != 0) {
                 c.moveToFirst();
                 do {
@@ -36,6 +36,7 @@ public class GioHangDao {
                     gioHang.setTenSanPham(c.getString(4));
                     gioHang.setGiaSanPham(c.getInt(5));
                     gioHang.setAnhSanPham(c.getString(6));
+                    gioHang.setSoLuong(c.getInt(7));
                     list.add(gioHang);
                 } while (c.moveToNext());
             }
@@ -44,15 +45,17 @@ public class GioHangDao {
         }
         return list;
     }
-    public boolean insertGioHang(GioHang gioHang){
+
+    public boolean insertGioHang(GioHang gioHang) {
         SQLiteDatabase da = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("masanpham",gioHang.getMaSanPham());
-        values.put("mataikhoan",gioHang.getMaNguoiDung());
-        values.put("soluong",gioHang.getSoLuongMua());
-        long check = da.insert("GIOHANG",null,values);
-        return check>0;
+        values.put("masanpham", gioHang.getMaSanPham());
+        values.put("mataikhoan", gioHang.getMaNguoiDung());
+        values.put("soluong", gioHang.getSoLuongMua());
+        long check = da.insert("GIOHANG", null, values);
+        return check > 0;
     }
+
     public boolean updateGioHang(GioHang gioHang) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -60,11 +63,13 @@ public class GioHangDao {
         int rowsAffected = database.update("GIOHANG", values, "magiohang = ?", new String[]{String.valueOf(gioHang.getMaGioHang())});
         return rowsAffected > 0;
     }
-    public boolean deleteGioHang(GioHang gioHang){
+
+    public boolean deleteGioHang(GioHang gioHang) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        long check = sqLiteDatabase.delete("GIOHANG","magiohang = ?",new String[]{String.valueOf(gioHang.getMaGioHang())});
-        return check >0;
+        long check = sqLiteDatabase.delete("GIOHANG", "magiohang = ?", new String[]{String.valueOf(gioHang.getMaGioHang())});
+        return check > 0;
     }
+
     public GioHang getGioHangByMasp(int masp, int mand) {
         GioHang gioHang = null;
         SQLiteDatabase database = dbHelper.getReadableDatabase();
@@ -84,6 +89,7 @@ public class GioHangDao {
         }
         return gioHang;
     }
+
     public void clearGioHang() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete("GIOHANG", null, null);
