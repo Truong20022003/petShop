@@ -74,6 +74,8 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
     private ArrayList<SanPham> sanPhams = new ArrayList<>();
     private SanPhamDao sanPhamDao;
 
+
+
     public frgGioHang() {
     }
 
@@ -83,12 +85,12 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         rcv.setLayoutManager(layoutManager);
 
         if (gioHangAdapter == null) {
-            gioHangAdapter = new adapter_gio_hang(getContext(),sharedViewModel, cartList);
+            gioHangAdapter = new adapter_gio_hang(getContext(), sharedViewModel, cartList);
             rcv.setAdapter(gioHangAdapter);
 
         } else {
             gioHangAdapter.updateCartList(cartList);
-gioHangAdapter.notifyDataSetChanged();
+            gioHangAdapter.notifyDataSetChanged();
         }
     }
 
@@ -102,29 +104,29 @@ gioHangAdapter.notifyDataSetChanged();
         RecyclerView rcv = binding.rcvGioHang;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rcv.setLayoutManager(layoutManager);
-        gioHangAdapter = new adapter_gio_hang(getContext(),sharedViewModel, list);
+        gioHangAdapter = new adapter_gio_hang(getContext(), sharedViewModel, list);
         rcv.setAdapter(gioHangAdapter);
         gioHangDao = new GioHangDao(getActivity());
-        ItemTouchHelper sw=new ItemTouchHelper(new swipe(gioHangAdapter));
+        ItemTouchHelper sw = new ItemTouchHelper(new swipe(gioHangAdapter));
         sw.attachToRecyclerView(rcv);
         gioHangAdapter.setTotalPriceListener(this);
-
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
+        int mand = sharedPreferences.getInt("mataikhoan", 0);
         chiTietDao = new DonHangChiTietDao(getContext());
         donHangDao = new DonHangDao(getContext());
 
         sanPhamDao = new SanPhamDao(getContext());
-
-        sharedViewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         sharedViewModel.getMasp().observe(getViewLifecycleOwner(), masp -> {
 
             if (isAdded() && isVisible()) {
                 if (sharedViewModel.getAddToCartClicked().getValue() != null && sharedViewModel.getAddToCartClicked().getValue()) {
                     updateGioHangByMaSp(masp);
-//                    sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
+                    sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
                 }
             }
         });
-        list = gioHangDao.getDSGioHang();
+        list = gioHangDao.getDanhSachGioHangByMaNguoiDung(mand);
         displayCart(list);
 
         binding.btnThanhToan.setOnClickListener(view -> {

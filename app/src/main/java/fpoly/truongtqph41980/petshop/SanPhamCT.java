@@ -76,7 +76,7 @@ public class SanPhamCT extends AppCompatActivity implements ViewModelStoreOwner 
                 }
             }
         }
-                sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
 //        sharedViewModel = new ViewModelProvider().get(SharedViewModel.class);
         gioHangDao = new GioHangDao(this);
@@ -92,6 +92,7 @@ public class SanPhamCT extends AppCompatActivity implements ViewModelStoreOwner 
 
 
     }
+
     private void addToCart(SanPham sanPham) {
         int maSanPham = sanPham.getMasanpham();
         int slSanPham = getSoLuongSp(maSanPham);
@@ -135,7 +136,6 @@ public class SanPhamCT extends AppCompatActivity implements ViewModelStoreOwner 
         }
         return 0;
     }
-
 
 
 }

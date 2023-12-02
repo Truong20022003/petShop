@@ -48,6 +48,7 @@ public class Profile extends AppCompatActivity {
         );
         binding.imgBack.setOnClickListener(view ->
                 startActivity(new Intent(Profile.this, MainActivity.class))
+
         );
         binding.btnXem.setOnClickListener(new View.OnClickListener() {
             @Override

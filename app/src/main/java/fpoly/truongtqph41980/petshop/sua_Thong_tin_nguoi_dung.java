@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import fpoly.truongtqph41980.petshop.Dao.NguoiDungDao;
 import fpoly.truongtqph41980.petshop.Model.NguoiDung;
 import fpoly.truongtqph41980.petshop.databinding.ActivitySuaThongTinNguoiDungBinding;
@@ -15,7 +17,9 @@ import fpoly.truongtqph41980.petshop.databinding.ActivitySuaThongTinNguoiDungBin
 public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
     ActivitySuaThongTinNguoiDungBinding biding;
     NguoiDungDao dao;
-    NguoiDung nguoiDung = new NguoiDung();
+    NguoiDung nguoiDung;
+    private ArrayList<NguoiDung> list = new ArrayList<>();
+    String tendangnhap1, matkhaucu1, matkhaumoi1, nhaplaimkmoi1, hoten1, email1, diachi1, sodienthoai1, matkhau, anh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +28,16 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
         biding = ActivitySuaThongTinNguoiDungBinding.inflate(getLayoutInflater());
         setContentView(biding.getRoot());
         SharedPreferences preferences = getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
+        int maTK = preferences.getInt("mataikhoan",0);
         String tenDN = preferences.getString("tendangnhap", "");
-        String matkhau = preferences.getString("matkhau", "");
+        matkhau = preferences.getString("matkhau", "");
         String hoten = preferences.getString("hoten", "");
         String email = preferences.getString("email", "");
         String sodienthoai = preferences.getString("sodienthoai", "");
         String diachi = preferences.getString("diachi", "");
         String urlAnh = preferences.getString("anhtaikhoan", "");
         dao = new NguoiDungDao(this);
+        nguoiDung = dao.getNguoiDungByMaTaiKhoan(maTK);
         biding.edtTenDangNhapDangKy.setText(tenDN);
         biding.edtNhapHoTen.setText(hoten);
         biding.edtNhapEmailDangKy.setText(email);
@@ -43,85 +49,140 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
         biding.btnDongY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String tendangnhap = biding.edtTenDangNhapDangKy.getText().toString();
-                String matkhaucu = biding.edmatKhau.getText().toString();
-                String matkhaumoi = biding.edmatKhauMoi.getText().toString();
-                String nhaplaimkmoi = biding.edtNhapLaiPassMoi.getText().toString();
-                String hoten = biding.edtNhapHoTen.getText().toString();
-                String email = biding.edtNhapEmailDangKy.getText().toString();
-                String diachi = biding.edtNhapDiaChiDangKy.getText().toString();
-                String sodienthoai = biding.edtNhapSDT.getText().toString();
-//                newPass.equals(reNewPass)
-                if (tendangnhap.isEmpty()) {
-                    biding.edtTenDangNhapDangKy.setError("Vui lòng nhập tên đăng nhập");
-                } else {
-                    biding.edtTenDangNhapDangKy.setError(null);
-                }
-                ////
-                if (matkhaumoi.isEmpty() || nhaplaimkmoi.isEmpty()) {
-                    biding.edmatKhauMoi.setError("Vui lòng nhập lại mật khẩu");
-                    biding.edtNhapLaiPassMoi.setError("Vui lòng nhập lại mật khẩu");
-                } else if (!matkhaumoi.equals(nhaplaimkmoi)) {
-                    biding.edtNhapLaiPassMoi.setError("Mật khẩu không trùng nhau");
-                    biding.edmatKhauMoi.setError("Mật khẩu không trùng nhau");
-                } else {
-                    biding.edmatKhauMoi.setError(null);
-                    biding.edtNhapLaiPassMoi.setError(null);
-                }
-                //
-                if (hoten.isEmpty()) {
-                    biding.edtNhapHoTen.setError("Vui lòng nhập họ tên");
-                } else {
-                    biding.edtNhapHoTen.setError(null);
-                }
-                ///
-                if (sodienthoai.isEmpty()) {
-                    biding.edtNhapSDT.setError("Vui lòng nhập số điện thoại");
-                } else if (!isValidPhoneNumber(sodienthoai)) {
-                    biding.edtNhapSDT.setError("Số điện thoại không hợp lệ");
-                } else {
-                    biding.edtNhapSDT.setError(null);
-                }
-                ////
-                if (diachi.isEmpty()) {
-                    biding.edtNhapDiaChiDangKy.setError("Vui lòng nhập địa chỉ");
-                } else {
-                    biding.edtNhapDiaChiDangKy.setError(null);
-                }
-                ///
-                if (email.isEmpty()) {
-                    biding.edtNhapEmailDangKy.setError("Vui lòng nhập email");
-                } else if (!isValidEmail(email)) {
-                    biding.edtNhapEmailDangKy.setError("Email không hợp lệ");
-                } else {
-                    biding.edtNhapEmailDangKy.setError(null);
-                }
-                if (matkhaucu.isEmpty()) {
-                    biding.edmatKhau.setError("Vui lòng nhập mật khẩu");
-                } else {
-                    biding.edmatKhau.setError(null);
-                }
-                ////
-                if (matkhaucu.equals(matkhau)) {
-                    boolean result = dao.updatekhachhang(nguoiDung);
-                    if (result) {
-                        // Đăng ký thành công
-                        Intent intent = new Intent(sua_Thong_tin_nguoi_dung.this, Profile.class);
-                        startActivity(intent);
-                        Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                validTenDangNhap();
+                validMatKhauCu();
+                validNhapLaiMatKhauMoi();
+                validMatKhauMoi();
+                validEmail();
+                validDiaChi();
+                validHoTen();
+                validSoDienThoai();
+                validUrl();
+                if (biding.edtTenDangNhapDangKy.getError() == null &&
+                        biding.edmatKhau.getError() == null &&
+                        biding.edmatKhauMoi.getError() == null &&
+                        biding.edtNhapLaiPassMoi.getError() == null &&
+                        biding.edtNhapHoTen.getError() == null &&
+                        biding.edtNhapEmailDangKy.getError() == null &&
+                        biding.edtNhapDiaChiDangKy.getError() == null &&
+                        biding.edtNhapSDT.getError() == null &&
+                        biding.edtNhapUrl.getError() == null) {
+                    if (matkhaucu1.equals(matkhau)) {
+                        nguoiDung.setTenDangNhap(tendangnhap1);
+                        nguoiDung.setMatKhau(matkhaumoi1);
+                        nguoiDung.setHoTen(hoten1);
+                        nguoiDung.setEmail(email1);
+                        nguoiDung.setDiaChi(diachi1);
+                        nguoiDung.setAnhnguoidung(urlAnh);
+                        nguoiDung.setSoDienThoai(sodienthoai1);
+                        boolean result = dao.updatekhachhang(nguoiDung);
+                        if (result) {
+                            list.clear();
+                            list = dao.getAllNguoiDung();
+                            Intent intent = new Intent(sua_Thong_tin_nguoi_dung.this, Profile.class);
+                            startActivity(intent);
+                            Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Đăng ký thất bại
+                            Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        // Đăng ký thất bại
-                        Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+                        biding.edmatKhau.setError("mật khẩu cũ không trùng khớp");
                     }
-                } else{
-                    biding.edmatKhau.setError("mật khẩu cũ không trùng khớp");
                 }
             }
         });
     }
 
+    private void validTenDangNhap() {
+        tendangnhap1 = biding.edtTenDangNhapDangKy.getText().toString();
+        if (tendangnhap1.isEmpty()) {
+            biding.edtTenDangNhapDangKy.setError("Vui lòng nhập tên đăng nhập");
+        } else {
+            biding.edtTenDangNhapDangKy.setError(null);
+        }
+    }
 
+    private void validMatKhauCu() {
+        matkhaucu1 = biding.edmatKhau.getText().toString();
+        if (matkhaucu1.isEmpty()) {
+            biding.edmatKhau.setError("Vui lòng nhập lại mật khẩu");
 
+        } else if (!matkhaucu1.equals(matkhau)) {
+            biding.edmatKhau.setError("Mật khẩu không đúng");
+        } else {
+            biding.edmatKhau.setError(null);
+        }
+    }
+
+    private void validMatKhauMoi() {
+        matkhaumoi1 = biding.edmatKhauMoi.getText().toString();
+        if (matkhaumoi1.isEmpty()) {
+            biding.edmatKhauMoi.setError("Vui lòng nhập mật khẩu mới");
+        } else {
+            biding.edmatKhauMoi.setError(null);
+        }
+    }
+
+    private void validNhapLaiMatKhauMoi() {
+        nhaplaimkmoi1 = biding.edtNhapLaiPassMoi.getText().toString();
+        if (nhaplaimkmoi1.isEmpty()) {
+            biding.edtNhapLaiPassMoi.setError("Vui lòng nhập lại mật khẩu");
+        } else if (nhaplaimkmoi1.equals(matkhaumoi1)) {
+            biding.edtNhapLaiPassMoi.setError("Mật khẩu không trùng nhau");
+        } else {
+            biding.edtNhapLaiPassMoi.setError(null);
+        }
+    }
+
+    private void validHoTen() {
+        hoten1 = biding.edtNhapHoTen.getText().toString();
+        if (hoten1.isEmpty()) {
+            biding.edtNhapHoTen.setError("Vui lòng nhập họ tên");
+        } else {
+            biding.edtNhapHoTen.setError(null);
+        }
+    }
+
+    private void validEmail() {
+        email1 = biding.edtNhapEmailDangKy.getText().toString();
+        if (email1.isEmpty()) {
+            biding.edtNhapEmailDangKy.setError("Vui lòng nhập email");
+        } else if (!isValidEmail(email1)) {
+            biding.edtNhapEmailDangKy.setError("Email không hợp lệ");
+        } else {
+            biding.edtNhapEmailDangKy.setError(null);
+        }
+    }
+
+    private void validDiaChi() {
+        diachi1 = biding.edtNhapDiaChiDangKy.getText().toString();
+        if (diachi1.isEmpty()) {
+            biding.edtNhapDiaChiDangKy.setError("Vui lòng nhập địa chỉ");
+        } else {
+            biding.edtNhapDiaChiDangKy.setError(null);
+        }
+    }
+
+    private void validSoDienThoai() {
+        sodienthoai1 = biding.edtNhapSDT.getText().toString();
+        if (sodienthoai1.isEmpty()) {
+            biding.edtNhapSDT.setError("Vui lòng nhập số điện thoại");
+        } else if (!isValidPhoneNumber(sodienthoai1)) {
+            biding.edtNhapSDT.setError("Số điện thoại không hợp lệ");
+        } else {
+            biding.edtNhapSDT.setError(null);
+        }
+    }
+
+    private void validUrl() {
+        anh = biding.edtNhapUrl.getText().toString();
+        if (diachi1.isEmpty()) {
+            biding.edtNhapUrl.setError("Vui lòng nhập địa chỉ");
+        } else {
+            biding.edtNhapUrl.setError(null);
+        }
+    }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
         String regex = "0\\d{9}";

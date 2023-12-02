@@ -80,10 +80,11 @@ public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
         view = binding.getRoot();
         SharedPreferences preferences = getActivity().getSharedPreferences("NGUOIDUNG", Context.MODE_PRIVATE);
         String hoten = preferences.getString("hoten", "");
-        gioHangDao = new GioHangDao(getContext());
+        gioHangDao = new GioHangDao(getActivity());
+//        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
         gioHangArrayList = gioHangDao.getDSGioHang();
-        gioHangAdapter = new adapter_gio_hang(getContext(), sharedViewModel, gioHangArrayList);
+        gioHangAdapter = new adapter_gio_hang(getActivity(), sharedViewModel, gioHangArrayList);
 
         binding.txttieuDe.setText("Hi " + hoten + ".");
         slidelist = new ArrayList<>(); // Khởi tạo slidelist trước khi sử dụng

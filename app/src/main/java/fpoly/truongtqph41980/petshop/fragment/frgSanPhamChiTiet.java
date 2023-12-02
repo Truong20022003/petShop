@@ -2,109 +2,100 @@ package fpoly.truongtqph41980.petshop.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStore;
-import androidx.lifecycle.ViewModelStoreOwner;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
-import fpoly.truongtqph41980.petshop.Model.viewmd;
 import fpoly.truongtqph41980.petshop.R;
-import fpoly.truongtqph41980.petshop.SanPhamCT;
 import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
-import fpoly.truongtqph41980.petshop.adapter.adapter_gian_hang;
-import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
-import fpoly.truongtqph41980.petshop.databinding.FragmentFrgGianHangBinding;
+import fpoly.truongtqph41980.petshop.databinding.FragmentFrgSanPhamChiTietBinding;
 
 
-public class frgGianHang extends Fragment implements ViewModelStoreOwner {
+public class frgSanPhamChiTiet extends Fragment {
 
-    public frgGianHang() {
+
+    public frgSanPhamChiTiet() {
         // Required empty public constructor
     }
-
-    FragmentFrgGianHangBinding binding;
-    View gView;
+FragmentFrgSanPhamChiTietBinding binding;
+    SanPham sanPham;
+    SanPhamDao dao;
+    SharedViewModel sharedViewModel;
+    GioHangDao gioHangDao;
     private ArrayList<SanPham> list = new ArrayList<>();
-    SanPhamDao spDao;
-    adapter_gian_hang adapterGianHang;
-    private SharedViewModel sharedViewModel;
-    private adapter_gio_hang gioHangAdapter;
-    private GioHangDao gioHangDao;
-    private ArrayList<GioHang> gioHangArrayList = new ArrayList<>();
-    // Thiết lập listener
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentFrgGianHangBinding.inflate(inflater, container, false);
-        gView = binding.getRoot();
-
-        spDao = new SanPhamDao(getActivity());
+        binding = FragmentFrgSanPhamChiTietBinding.inflate(inflater,container,false);
+        // Inflate the layout for this fragment
+        dao = new SanPhamDao(getContext());
         gioHangDao = new GioHangDao(getActivity());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        binding.rcvGianHang.setLayoutManager(layoutManager);
-        list = spDao.getsanphamall();
         sharedViewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+        list = dao.getsanphamall();
+        Bundle bundle = getArguments();
+        if (bundle!= null){
+            int maSanPham = bundle.getInt("maSanPham");
+            String tenLoai = bundle.getString("tenLoaiSP");
+            sanPham = dao.getSanPhamById(maSanPham);
 
-        adapterGianHang = new adapter_gian_hang(getActivity(), list, sharedViewModel);
-        binding.rcvGianHang.setAdapter(adapterGianHang);
-//        sharedViewModel = new ViewModelProvider(getViewModelStore(), ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication())).get(SharedViewModel.class);
+            binding.txtMaSp.setText("Mã sản phẩm: "+ String.valueOf(maSanPham));
+            binding.txttensp.setText("Tên: "+ sanPham.getTensanpham());
+            binding.txtGiaSp.setText("Giá: "+ String.valueOf(sanPham.getGia()));
+            binding.txtLoaisp.setText("Loại: "+ tenLoai);
+            binding.txtSoluotban.setText("số lượt bán: 200");
+            binding.txtSoluong.setText("Số lượng: " + String.valueOf(sanPham.getSoluong()));
+            binding.txtMotaChiTiet.setText("Mô tả: " + sanPham.getMota());
+            Picasso.get().load(sanPham.getAnhSanPham()).into(binding.imganhsp);
+            binding.btnThemCtVaoGio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addToCart(sanPham);
+                }
+            });
 
-        gioHangAdapter = new adapter_gio_hang(getActivity(), sharedViewModel, gioHangArrayList);
+            if (sanPham.getSoluong() == 0) {
+                binding.btnThemCtVaoGio.setVisibility(View.GONE);
+                binding.txtHetHang.setVisibility(View.VISIBLE);
+            } else {
+                binding.btnThemCtVaoGio.setVisibility(View.VISIBLE);
+                binding.txtHetHang.setVisibility(View.GONE);
+            }
 
-        adapterGianHang.setOnAddToCartClickListener(new adapter_gian_hang.OnAddToCartClickListener() {
+        }
+
+        binding.back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onAddToCartClick(SanPham sanPham) {
+            public void onClick(View view) {
+                frgGianHang frgGianHang = new frgGianHang();
 
-                addToCart(sanPham);
 
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayoutMain, frgGianHang);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
-
-        adapterGianHang.setOnItemClickListener(position -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("maSanPham", list.get(position).getMasanpham());
-            bundle.putString("tenLoaiSP",list.get(position).getTenloaisanpham());
-            frgSanPhamChiTiet frgSanPhamChiTiet = new frgSanPhamChiTiet();
-            frgSanPhamChiTiet.setArguments(bundle);
-
-            FragmentManager fragmentManager = getParentFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frameLayoutMain, frgSanPhamChiTiet);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        });
-        // Inflate the layout for this fragment
-        return gView;
+        return binding.getRoot();
     }
-
     private int getSoLuongSp(int maSanPham) {
         for (SanPham sanPham : list) {
             if (sanPham.getMasanpham() == maSanPham) {
@@ -113,13 +104,6 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
         }
         return 0; // Trả về 0 nếu không tìm thấy sản phẩm
     }
-
-    @NonNull
-    @Override
-    public ViewModelStore getViewModelStore() {
-        return new ViewModelStore();
-    }
-
     private void addToCart(SanPham sanPham) {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
         int mand = sharedPreferences.getInt("mataikhoan", 0);
@@ -133,7 +117,7 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
                 sharedViewModel.setMasp(maSanPham);
                 sharedViewModel.setAddToCartClicked(true);
                 sharedViewModel.addProductToCart(maSanPham);
-                sharedViewModel.setQuantityToAdd(1);
+//                sharedViewModel.setQuantityToAdd(1);
                 gioHangDao.insertGioHang(new GioHang(maSanPham, mand, 1));
                 Snackbar.make(getView(), "Đã thêm vào giỏ hàng", Snackbar.LENGTH_SHORT).show();
 
@@ -153,6 +137,5 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
             }
         }
     }
-
 
 }

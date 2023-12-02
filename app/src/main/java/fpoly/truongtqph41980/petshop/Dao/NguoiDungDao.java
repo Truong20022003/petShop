@@ -67,15 +67,7 @@ public class NguoiDungDao {
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         try {
             Cursor cursor = database.rawQuery("SELECT * FROM TAIKHOAN WHERE tendangnhap = ? AND matkhau = ?", new String[]{tenDangNhap, matKhau});
-//            "mataikhoan integer primary key autoincrement," +
-//                    " tendangnhap text not null," +
-//                    " matkhau text not null," +
-//                    " hoten text not null," +
-//                    " email text not null," +
-//                    " sodienthoai text not null," +
-//                    " diachi text not null," +
-//                    " sotien integer not null," +
-//                    "loaitaikhoan text not null)";
+
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 editor = sharedPreferences.edit();
@@ -171,4 +163,34 @@ public class NguoiDungDao {
 
         return result != -1;
     }
+    public NguoiDung getNguoiDungByMaTaiKhoan(int maTaiKhoan) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        NguoiDung nguoiDung = null;
+
+        try {
+            Cursor cursor = db.rawQuery("SELECT * FROM TAIKHOAN WHERE mataikhoan = ?", new String[]{String.valueOf(maTaiKhoan)});
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                nguoiDung = new NguoiDung();
+                nguoiDung.setMaTaiKhoan(cursor.getInt(0));
+                nguoiDung.setTenDangNhap(cursor.getString(1));
+                nguoiDung.setMatKhau(cursor.getString(2));
+                nguoiDung.setHoTen(cursor.getString(3));
+                nguoiDung.setEmail(cursor.getString(4));
+                nguoiDung.setSoDienThoai(cursor.getString(5));
+                nguoiDung.setDiaChi(cursor.getString(6));
+                nguoiDung.setSoTien(cursor.getInt(7));
+                nguoiDung.setLoaiTaiKhoan(cursor.getString(8));
+                nguoiDung.setAnhnguoidung(cursor.getString(9));
+            }
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.e(TAG, "Lỗi", e);
+        }
+
+        return nguoiDung;
+    }
+
 }

@@ -8,6 +8,8 @@ import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStore;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,7 +31,9 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
+import fpoly.truongtqph41980.petshop.Model.Myapplication;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
+import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.databinding.ActivityMainBinding;
 import fpoly.truongtqph41980.petshop.fragment.ThongKe;
 import fpoly.truongtqph41980.petshop.fragment.frgGianHang;
@@ -55,7 +59,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
         navigationView = binding.navigationViewMain;
+
         binding.navigationViewMain.getHeaderView(0);
         Toolbar toolbar = binding.toolbarMain;
         setSupportActionBar(toolbar);
@@ -69,8 +76,11 @@ public class MainActivity extends AppCompatActivity {
         handleBottomNavigationItemSelected();
         if (savedInstanceState == null) {
             replaceFragment(new frgTrangChu());
-
+            getSupportActionBar().setTitle("Trang chủ");
         }
+
+
+
         binding.btnProFile.setOnClickListener(view ->
                 startActivity(new Intent(MainActivity.this, Profile.class)));
 
@@ -161,6 +171,11 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
+//    @NonNull
+//    @Override
+//    public ViewModelStore getViewModelStore() {
+//        return viewModelStore;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -199,7 +214,6 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutMain, fragment).commit();
     }
-
 
 
 

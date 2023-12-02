@@ -45,6 +45,36 @@ public class GioHangDao {
         }
         return list;
     }
+    public ArrayList<GioHang> getDanhSachGioHangByMaNguoiDung(int maNguoiDung) {
+        ArrayList<GioHang> list = new ArrayList<>();
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        try {
+            // Thêm điều kiện WHERE cho mã người dùng
+            String query = "SELECT GIOHANG.magiohang, GIOHANG.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia,SANPHAM.anhsanpham,SANPHAM.soluong " +
+                    "FROM GIOHANG, SANPHAM " +
+                    "WHERE GIOHANG.masanpham = SANPHAM.masanpham AND GIOHANG.mataikhoan = ?";
+
+            Cursor c = database.rawQuery(query, new String[]{String.valueOf(maNguoiDung)});
+            if (c.getCount() != 0) {
+                c.moveToFirst();
+                do {
+                    GioHang gioHang = new GioHang();
+                    gioHang.setMaGioHang(c.getInt(0));
+                    gioHang.setMaSanPham(c.getInt(1));
+                    gioHang.setMaNguoiDung(c.getInt(2));
+                    gioHang.setSoLuongMua(c.getInt(3));
+                    gioHang.setTenSanPham(c.getString(4));
+                    gioHang.setGiaSanPham(c.getInt(5));
+                    gioHang.setAnhSanPham(c.getString(6));
+                    gioHang.setSoLuong(c.getInt(7));
+                    list.add(gioHang);
+                } while (c.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.i(TAG, "Lỗiiii", e);
+        }
+        return list;
+    }
 
     public boolean insertGioHang(GioHang gioHang) {
         SQLiteDatabase da = dbHelper.getWritableDatabase();
@@ -74,13 +104,13 @@ public class GioHangDao {
         GioHang gioHang = null;
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         try {
-            Cursor cursor = database.rawQuery("SELECT * FROM GIOHANG WHERE masanpham = ? AND mataikhoan = ?", new String[]{String.valueOf(masp), String.valueOf(mand)});
+            Cursor cursor = database.rawQuery("SELECT GIOHANG.magiohang, GIOHANG.mataikhoan, GIOHANG.masanpham, GIOHANG.soluong FROM GIOHANG WHERE masanpham = ? AND mataikhoan = ?", new String[]{String.valueOf(masp), String.valueOf(mand)});
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 gioHang = new GioHang();
                 gioHang.setMaGioHang(cursor.getInt(0));
-                gioHang.setMaNguoiDung(cursor.getInt(1));
-                gioHang.setMaSanPham(cursor.getInt(2));
+                gioHang.setMaSanPham(cursor.getInt(1));
+                gioHang.setMaNguoiDung(cursor.getInt(2));
                 gioHang.setSoLuongMua(cursor.getInt(3));
             }
             cursor.moveToNext();
