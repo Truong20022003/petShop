@@ -35,6 +35,7 @@ public class SanPhamCT extends AppCompatActivity implements ViewModelStoreOwner 
     private adapter_danh_gia adapterDanhGia;
     private ArrayList<DanhGia> list = new ArrayList<>();
 
+
     private ArrayList<SanPham> listSanPham = new ArrayList<>();
     private SanPhamDao sanPhamDao;
 //    private adapter_gio_hang gioHangAdapter;
@@ -67,6 +68,7 @@ public class SanPhamCT extends AppCompatActivity implements ViewModelStoreOwner 
                 binding.rcvDanhGia.setLayoutManager(layoutManager);
                 adapterDanhGia = new adapter_danh_gia(list, this);
                 binding.rcvDanhGia.setAdapter(adapterDanhGia);
+                adapterDanhGia.notifyDataSetChanged();
                 if (selectedSanPham.getSoluong() == 0) {
                     binding.btnThemCtVaoGio.setVisibility(View.GONE);
                     binding.txtHetHang.setVisibility(View.VISIBLE);
