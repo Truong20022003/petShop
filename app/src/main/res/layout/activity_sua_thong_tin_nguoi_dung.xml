@@ -244,6 +244,7 @@
             android:background="@drawable/khung_button_dangnhap"
             android:fontFamily="@font/baloothambi2semibold"
             android:gravity="center"
+            android:layout_marginBottom="10sp"
             android:text="OK"
             android:textSize="22sp" />
 

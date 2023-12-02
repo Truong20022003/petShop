@@ -30,6 +30,12 @@ public class DonHangChiTiet {
         this.thanhTien = thanhTien;
     }
 
+    public DonHangChiTiet(int maSanPham, String tenSanPham, int soLuong) {
+        this.maSanPham = maSanPham;
+        this.tenSanPham = tenSanPham;
+        this.soLuong = soLuong;
+    }
+
     public DonHangChiTiet(int maChiTietDonHang, int maDonHang, int maSanPham, String tenSanPham, int soLuong, int donGia, int thanhTien) {
         this.maChiTietDonHang = maChiTietDonHang;
         this.maDonHang = maDonHang;
