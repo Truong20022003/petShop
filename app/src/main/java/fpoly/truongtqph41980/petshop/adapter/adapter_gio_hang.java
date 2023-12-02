@@ -1,13 +1,7 @@
 package fpoly.truongtqph41980.petshop.adapter;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -22,12 +16,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
-import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
-import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.databinding.ItemGioHangBinding;
-import fpoly.truongtqph41980.petshop.fragment.frgGioHang;
 
 public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.ViewHolder> {
 
@@ -38,7 +29,7 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
     private TotalPriceListener listener;
     private SharedViewModel sharedViewModel;
 
-    public adapter_gio_hang(Context context,SharedViewModel sharedViewModel, ArrayList<GioHang> list) {
+    public adapter_gio_hang(Context context, SharedViewModel sharedViewModel, ArrayList<GioHang> list) {
         this.context = context;
         this.list = list;
         this.sharedViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(SharedViewModel.class);
@@ -102,6 +93,7 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
 
     }
 
+
     public void updateCartList(ArrayList<GioHang> updatedList) {
         list.clear();
         list.addAll(updatedList);
@@ -114,6 +106,17 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
         if (dao.deleteGioHang(gioHang)) {
             list.remove(gioHang);
             sharedViewModel.removeProductFromCart(gioHang.getMaSanPham());
+            notifyDataSetChanged();
+            updateTotalPrice();
+        } else {
+            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void removeItem2(int pos) {
+        GioHang gioHang1=list.get(pos);
+        if (dao.deleteGioHang(gioHang1)) {
+            list.remove(gioHang1);
+            sharedViewModel.removeProductFromCart(gioHang1.getMaSanPham());
             notifyDataSetChanged();
             updateTotalPrice();
         } else {
@@ -138,6 +141,11 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
     public void setTotalPriceListener(TotalPriceListener listener) {
         this.listener = listener;
     }
+
+    public Context getContext() {
+        return context;
+    }
+
 
     public interface TotalPriceListener {
         void onTotalPriceUpdated(int totalAmount);

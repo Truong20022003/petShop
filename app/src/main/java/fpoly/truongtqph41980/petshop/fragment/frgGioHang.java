@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,6 +49,7 @@ import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.adapter.adapter_don_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gian_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
+import fpoly.truongtqph41980.petshop.adapter.swipe;
 import fpoly.truongtqph41980.petshop.databinding.DialogConfilmThanhToanBinding;
 import fpoly.truongtqph41980.petshop.databinding.DialogThemSanPhamBinding;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgGioHangBinding;
@@ -103,7 +105,8 @@ gioHangAdapter.notifyDataSetChanged();
         gioHangAdapter = new adapter_gio_hang(getContext(),sharedViewModel, list);
         rcv.setAdapter(gioHangAdapter);
         gioHangDao = new GioHangDao(getActivity());
-
+        ItemTouchHelper sw=new ItemTouchHelper(new swipe(gioHangAdapter));
+        sw.attachToRecyclerView(rcv);
         gioHangAdapter.setTotalPriceListener(this);
 
         chiTietDao = new DonHangChiTietDao(getContext());

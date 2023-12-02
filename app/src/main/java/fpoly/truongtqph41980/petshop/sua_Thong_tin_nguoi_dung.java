@@ -31,12 +31,6 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
         String sodienthoai = preferences.getString("sodienthoai", "");
         String diachi = preferences.getString("diachi", "");
         String urlAnh = preferences.getString("anhtaikhoan", "");
-//        binding.txtPMaNguoiDung.setText("Mã tài khoản: " + String.valueOf(mand));
-//        binding.txtPTenDangNhap.setText("Tên đăng nhập: " + tenDN);
-//        binding.txtPHoTen.setText("Họ tên: " + hoten);
-//        binding.txtPEmail.setText("Email: " + email);
-//        binding.txtPSoDienThoai.setText("Số điện thoại: " + sodienthoai);
-//        binding.txtPDiaChi.setText("Địa chỉ: " + diachi);
         dao = new NguoiDungDao(this);
         biding.edtTenDangNhapDangKy.setText(tenDN);
         biding.edtNhapHoTen.setText(hoten);
@@ -73,20 +67,6 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
                 } else {
                     biding.edmatKhauMoi.setError(null);
                     biding.edtNhapLaiPassMoi.setError(null);
-                    if (matkhaucu.equals(matkhau)) {
-                        boolean result = dao.updatekhachhang(nguoiDung);
-                        if (result) {
-                            // Đăng ký thành công
-                            Intent intent = new Intent(sua_Thong_tin_nguoi_dung.this, Profile.class);
-                            startActivity(intent);
-                            Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Đăng ký thất bại
-                            Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        biding.edmatKhau.setError("mật khẩu cũ không trùng khớp");
-                    }
                 }
                 //
                 if (hoten.isEmpty()) {
@@ -122,10 +102,26 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
                     biding.edmatKhau.setError(null);
                 }
                 ////
-
+                if (matkhaucu.equals(matkhau)) {
+                    boolean result = dao.updatekhachhang(nguoiDung);
+                    if (result) {
+                        // Đăng ký thành công
+                        Intent intent = new Intent(sua_Thong_tin_nguoi_dung.this, Profile.class);
+                        startActivity(intent);
+                        Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Đăng ký thất bại
+                        Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                } else{
+                    biding.edmatKhau.setError("mật khẩu cũ không trùng khớp");
+                }
             }
         });
     }
+
+
+
 
     private boolean isValidPhoneNumber(String phoneNumber) {
         String regex = "0\\d{9}";
