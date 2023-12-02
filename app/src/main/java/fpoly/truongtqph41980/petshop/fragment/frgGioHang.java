@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -80,12 +81,12 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         rcv.setLayoutManager(layoutManager);
 
         if (gioHangAdapter == null) {
-            gioHangAdapter = new adapter_gio_hang(getContext(), cartList);
+            gioHangAdapter = new adapter_gio_hang(getContext(),sharedViewModel, cartList);
             rcv.setAdapter(gioHangAdapter);
 
         } else {
             gioHangAdapter.updateCartList(cartList);
-
+gioHangAdapter.notifyDataSetChanged();
         }
     }
 
@@ -97,11 +98,11 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         gView = binding.getRoot();
 
         RecyclerView rcv = binding.rcvGioHang;
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rcv.setLayoutManager(layoutManager);
-        gioHangAdapter = new adapter_gio_hang(getContext(), list);
+        gioHangAdapter = new adapter_gio_hang(getContext(),sharedViewModel, list);
         rcv.setAdapter(gioHangAdapter);
-        gioHangDao = new GioHangDao(getContext());
+        gioHangDao = new GioHangDao(getActivity());
 
         gioHangAdapter.setTotalPriceListener(this);
 
@@ -110,13 +111,13 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
 
         sanPhamDao = new SanPhamDao(getContext());
 
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
         sharedViewModel.getMasp().observe(getViewLifecycleOwner(), masp -> {
 
             if (isAdded() && isVisible()) {
                 if (sharedViewModel.getAddToCartClicked().getValue() != null && sharedViewModel.getAddToCartClicked().getValue()) {
                     updateGioHangByMaSp(masp);
-                    sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
+//                    sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
                 }
             }
         });
@@ -138,9 +139,9 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
             ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
             list.clear();
             list.addAll(updatedCartList);
-            gioHangAdapter.notifyDataSetChanged();
-            displayCart(updatedCartList);
 
+            displayCart(updatedCartList);
+            gioHangAdapter.notifyDataSetChanged();
         } else {
         }
     }
@@ -190,7 +191,6 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
                         listDonHang.addAll(donHangDao.getDsDonHang());
                         if (totalAmount > 0) {
                             for (GioHang gioHang : list) {
-
                                 if (gioHang.isSelected()) {
                                     SanPhamDao sanPhamDao = new SanPhamDao(getContext());
                                     SanPham sanPham = sanPhamDao.getSanPhamById(gioHang.getMaSanPham());

@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SharedViewModel extends ViewModel {
-    private MutableLiveData<Integer> maspLiveData  = new MutableLiveData<>();
-    private MutableLiveData<Boolean> addToCartClickedLiveData  = new MutableLiveData<>();
+    private MutableLiveData<Integer> maspLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> addToCartClickedLiveData = new MutableLiveData<>();
     private Set<Integer> cartProductIds = new HashSet<>();
     private MutableLiveData<Integer> quantityToAddLiveData = new MutableLiveData<>();
 
@@ -22,19 +22,19 @@ public class SharedViewModel extends ViewModel {
     }
 
     public void setMasp(int value) {
-        maspLiveData .setValue(value);
+        maspLiveData.setValue(value);
     }
 
     public LiveData<Integer> getMasp() {
-        return maspLiveData ;
+        return maspLiveData;
     }
 
     public LiveData<Boolean> getAddToCartClicked() {
-        return addToCartClickedLiveData ;
+        return addToCartClickedLiveData;
     }
 
     public void setAddToCartClicked(boolean clicked) {
-        addToCartClickedLiveData .setValue(clicked);
+        addToCartClickedLiveData.setValue(clicked);
     }
 
     public void addProductToCart(int masp) {
@@ -45,4 +45,7 @@ public class SharedViewModel extends ViewModel {
         return cartProductIds.contains(masp);
     }
 
+    public void removeProductFromCart(int masp) {
+        cartProductIds.remove(masp);
+    }
 }

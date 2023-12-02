@@ -44,7 +44,6 @@ public class frgConfilmThanhToan extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             int maDonHang = bundle.getInt("maDonHang", 0);
-            Log.d("Mã đơn hàng", String.valueOf(maDonHang));
             if (maDonHang != 0) {
                 list = chiTietDao.getChiTietDonHangByMaDonHang(maDonHang);
                 adapterThanhToan = new adapter_thanh_toan(list, getContext());

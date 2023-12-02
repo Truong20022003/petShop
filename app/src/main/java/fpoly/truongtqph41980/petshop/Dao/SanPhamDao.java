@@ -25,6 +25,7 @@ public class SanPhamDao {
         if (cursor.getCount()!=0){
             cursor.moveToFirst();
             do {
+//                int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham, String mota, String anhSanPham, int soluong
                 list.add(new SanPham(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getInt(7)));
             }while (cursor.moveToNext());
         }

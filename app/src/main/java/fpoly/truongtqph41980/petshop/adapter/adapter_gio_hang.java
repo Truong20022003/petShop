@@ -2,6 +2,7 @@ package fpoly.truongtqph41980.petshop.adapter;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -22,6 +25,7 @@ import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
+import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.databinding.ItemGioHangBinding;
 import fpoly.truongtqph41980.petshop.fragment.frgGioHang;
 
@@ -32,10 +36,12 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
     GioHangDao dao;
 
     private TotalPriceListener listener;
+    private SharedViewModel sharedViewModel;
 
-    public adapter_gio_hang(Context context, ArrayList<GioHang> list) {
+    public adapter_gio_hang(Context context,SharedViewModel sharedViewModel, ArrayList<GioHang> list) {
         this.context = context;
         this.list = list;
+        this.sharedViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(SharedViewModel.class);
         dao = new GioHangDao(context);
 
     }
@@ -49,6 +55,7 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         GioHang gioHang = list.get(position);
         // Hiển thị thông tin sản phẩm
         holder.binding.txtgia.setText(String.valueOf(gioHang.getSoLuongMua() * gioHang.getGiaSanPham()));
@@ -87,17 +94,9 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
                 notifyDataSetChanged();
                 updateTotalPrice();
             } else {
+
                 removeItem(gioHang);
-//                    gioHang.setSoLuongMua(gioHang.getSoLuongMua() - 1);
-//                    if (dao.deleteGioHang(gioHang)) {
-//                        list.clear();
-//                        list.addAll(dao.getDSGioHang());
-//
-//                        notifyDataSetChanged();
-//                        updateTotalPrice();
-//                    } else {
-//                        Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
-//                    }
+
             }
         });
 
@@ -106,20 +105,22 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
     public void updateCartList(ArrayList<GioHang> updatedList) {
         list.clear();
         list.addAll(updatedList);
+//        this.list = updatedList;
         notifyDataSetChanged();
 
     }
 
-
     private void removeItem(GioHang gioHang) {
         if (dao.deleteGioHang(gioHang)) {
             list.remove(gioHang);
+            sharedViewModel.removeProductFromCart(gioHang.getMaSanPham());
             notifyDataSetChanged();
             updateTotalPrice();
         } else {
             Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void updateTotalPrice() {
         if (listener != null) {

@@ -69,7 +69,7 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
                 }
             }
         });
-        holder.itemView.setOnClickListener(view -> {
+        holder.binding.btnchinhsuaTrangThai.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             DialogUpdateTrangThaiDonhangBinding dialogUpdateTrangThaiDonhangBinding = DialogUpdateTrangThaiDonhangBinding.inflate(inflater);

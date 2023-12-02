@@ -24,7 +24,7 @@ public class GioHangDao {
         ArrayList<GioHang> list = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         try {
-            Cursor c = database.rawQuery("SELECT GIOHANG.magiohang, SANPHAM.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia,SANPHAM.anhsanpham,SANPHAM.soluong FROM GIOHANG, SANPHAM WHERE GIOHANG.masanpham = SANPHAM.masanpham", null);
+            Cursor c = database.rawQuery("SELECT GIOHANG.magiohang, GIOHANG.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia,SANPHAM.anhsanpham,SANPHAM.soluong FROM GIOHANG, SANPHAM WHERE GIOHANG.masanpham = SANPHAM.masanpham", null);
             if (c.getCount() != 0) {
                 c.moveToFirst();
                 do {
@@ -79,11 +79,11 @@ public class GioHangDao {
                 cursor.moveToFirst();
                 gioHang = new GioHang();
                 gioHang.setMaGioHang(cursor.getInt(0));
-                gioHang.setMaSanPham(cursor.getInt(1));
-                gioHang.setMaNguoiDung(cursor.getInt(2));
+                gioHang.setMaNguoiDung(cursor.getInt(1));
+                gioHang.setMaSanPham(cursor.getInt(2));
                 gioHang.setSoLuongMua(cursor.getInt(3));
             }
-            cursor.close();
+            cursor.moveToNext();
         } catch (Exception e) {
             Log.e(TAG, "Error", e);
         }
@@ -106,8 +106,8 @@ public class GioHangDao {
                 do {
                     GioHang gioHang = new GioHang();
                     gioHang.setMaGioHang(c.getInt(0));
-                    gioHang.setMaSanPham(c.getInt(1));
-                    gioHang.setMaNguoiDung(c.getInt(2));
+                    gioHang.setMaNguoiDung(c.getInt(1));
+                    gioHang.setMaSanPham(c.getInt(2));
                     gioHang.setSoLuongMua(c.getInt(3));
                     gioHang.setSelected(true);
                     selectedItems.add(gioHang);

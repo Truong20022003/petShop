@@ -29,11 +29,12 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
     private final ArrayList<SanPham> list;
     SanPhamDao dao;
     private ArrayList<Boolean> isClickThemVaoGio;
+    private  SharedViewModel sharedViewModel;
 
-    public adapter_gian_hang(Context context, ArrayList<SanPham> list) {
+    public adapter_gian_hang(Context context, ArrayList<SanPham> list, SharedViewModel sharedViewModel) {
         this.context = context;
         this.list = list;
-
+        this.sharedViewModel = sharedViewModel;
         dao = new SanPhamDao(context);
 
     }

@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -50,7 +51,7 @@ import fpoly.truongtqph41980.petshop.databinding.DialogChiTietSanPhamBinding;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgTrangChuBinding;
 
 
-public class frgTrangChu extends Fragment {
+public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
     View view;
     FragmentFrgTrangChuBinding binding;
     ArrayList<SanPham> list;
@@ -62,6 +63,7 @@ public class frgTrangChu extends Fragment {
     private SharedViewModel sharedViewModel;
     private adapter_gio_hang gioHangAdapter;
     private GioHangDao gioHangDao;
+    private ArrayList<GioHang> gioHangArrayList = new ArrayList<>();
     private boolean hasMatchingProducts = true; // Thêm biến boolean
 
     public frgTrangChu() {
@@ -78,6 +80,11 @@ public class frgTrangChu extends Fragment {
         view = binding.getRoot();
         SharedPreferences preferences = getActivity().getSharedPreferences("NGUOIDUNG", Context.MODE_PRIVATE);
         String hoten = preferences.getString("hoten", "");
+        gioHangDao = new GioHangDao(getContext());
+        sharedViewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+        gioHangArrayList = gioHangDao.getDSGioHang();
+        gioHangAdapter = new adapter_gio_hang(getContext(), sharedViewModel, gioHangArrayList);
+
         binding.txttieuDe.setText("Hi " + hoten + ".");
         slidelist = new ArrayList<>(); // Khởi tạo slidelist trước khi sử dụng
         slidelist.add(new Slideiten(R.drawable.anh10));
@@ -199,15 +206,12 @@ public class frgTrangChu extends Fragment {
         });
 
         adapter.notifyDataSetChanged();
-        gioHangDao = new GioHangDao(getContext());
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        gioHangAdapter = new adapter_gio_hang(getContext(), new ArrayList<>());
         adapter.setOnAddToCartClickListenerTrangChu(new adapter_trangchu.OnAddToCartClickListenerTrangChu() {
             @Override
             public void onAddToCartClick(SanPham sanPham) {
                 addToCart(sanPham);
-                Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+
             }
         });
         adapter.setOnItemClick(new adapter_trangchu.OnItemClick() {
@@ -247,37 +251,50 @@ public class frgTrangChu extends Fragment {
         slideHanlder.postDelayed(sildeRunnable, 3000);
     }
 
+    private int getSoLuongSp(int maSanPham) {
+        for (SanPham sanPham : list) {
+            if (sanPham.getMasanpham() == maSanPham) {
+                return sanPham.getSoluong();
+            }
+        }
+        return 0; // Trả về 0 nếu không tìm thấy sản phẩm
+    }
+
     private void addToCart(SanPham sanPham) {
-
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
-
         int mand = sharedPreferences.getInt("mataikhoan", 0);
+
+        int slSanPham = getSoLuongSp(sanPham.getMasanpham());
+
         if (!sharedViewModel.isProductInCart(sanPham.getMasanpham())) {
-            sharedViewModel.setMasp(sanPham.getMasanpham());
-            sharedViewModel.setAddToCartClicked(true);
-            sharedViewModel.addProductToCart(sanPham.getMasanpham());
-            sharedViewModel.setQuantityToAdd(1);
+            // Nếu sản phẩm chưa có trong giỏ hàng
+            if (slSanPham > 0) {
+                // Nếu có số lượng sản phẩm > 0, thêm sản phẩm vào giỏ hàng với số lượng là 1
+                sharedViewModel.setMasp(sanPham.getMasanpham());
+                sharedViewModel.setAddToCartClicked(true);
+                sharedViewModel.addProductToCart(sanPham.getMasanpham());
+                sharedViewModel.setQuantityToAdd(1);
+                gioHangDao.insertGioHang(new GioHang(sanPham.getMasanpham(), mand, 1));
+                Snackbar.make(getView(), "Đã thêm vào giỏ hàng", Snackbar.LENGTH_SHORT).show();
 
-            gioHangDao.insertGioHang(new GioHang(sanPham.getMasanpham(), mand, 1));
-
+            } else {
+                // Nếu số lượng sản phẩm <= 0, thông báo người dùng
+                Toast.makeText(getActivity(), "Sản phẩm đã hết hàng", Toast.LENGTH_SHORT).show();
+            }
         } else {
-
+            // Nếu sản phẩm đã có trong giỏ hàng
             GioHang hang = gioHangDao.getGioHangByMasp(sanPham.getMasanpham(), mand);
             if (hang != null) {
-                hang.setSoLuongMua(hang.getSoLuongMua() + 1);
-                gioHangDao.updateGioHang(hang);
-            } else {
-                GioHang newCartItem = new GioHang(sanPham.getMasanpham(), mand, 1);
-                gioHangDao.insertGioHang(newCartItem);
+                if (hang.getSoLuongMua() < slSanPham) {
+                    hang.setSoLuongMua(hang.getSoLuongMua() + 1);
+                    gioHangDao.updateGioHang(hang);
+                    Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Số lượng sản phẩm đã đạt giới hạn", Toast.LENGTH_SHORT).show();
+                }
             }
 
-            gioHangAdapter.notifyDataSetChanged();
-
         }
-        ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
-        gioHangAdapter.updateCartList(updatedCartList);
-        gioHangAdapter.notifyDataSetChanged();
-
     }
 
     private void updateText() {
