@@ -76,7 +76,7 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
             builder.setView(dialogUpdateTrangThaiDonhangBinding.getRoot());
             Dialog dialog = builder.create();
             dialog.show();
-
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.nen_dialog_doan);
             dialogUpdateTrangThaiDonhangBinding.btnxacnhanTrangthai.setOnClickListener(view12 -> {
                 String trangthai = dialogUpdateTrangThaiDonhangBinding.txtTrangThai.getText().toString();
                 if (trangthai.equals("")) {
@@ -121,14 +121,31 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
             dialogXoaDonHangBinding.btnConfilmXoaDonHang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (dao.xoaDonHang(donHang)) {
-                        list.clear();
-                        list.addAll(dao.getDsDonHang());
-                        notifyDataSetChanged();
-                        dialog.dismiss();
-                        Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+//                    if (dao.xoaDonHang(donHang)) {
+//                        list.clear();
+//                        list.addAll(dao.getDsDonHang());
+//                        notifyDataSetChanged();
+//                        dialog.dismiss();
+//                        Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+//                    }
+                    int check = dao.xoaDonHang(list.get(holder.getAdapterPosition()).getMaDonHang());
+                    switch (check) {
+                        case 1:
+                            list.clear();
+                            list = dao.getDsDonHang();
+                            notifyDataSetChanged();
+                            Toast.makeText(context, "Xóa thành công Đơn hàng", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 0:
+                            Toast.makeText(context, "Xóa không thành công Đơn hàng", Toast.LENGTH_SHORT).show();
+                            break;
+                        case -1:
+                            Toast.makeText(context, "Không xóa được Đơn hàng này vì đang còn tồn tại trong chi tiết hóa đơn", Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            break;
                     }
                 }
             });

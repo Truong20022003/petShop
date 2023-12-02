@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +21,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import fpoly.truongtqph41980.petshop.Dao.DanhGiaDao;
 import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
+import fpoly.truongtqph41980.petshop.Model.DanhGia;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
+import fpoly.truongtqph41980.petshop.adapter.adapter_danh_gia;
+import fpoly.truongtqph41980.petshop.adapter.adapter_san_pham;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgSanPhamChiTietBinding;
 
 
@@ -41,6 +46,9 @@ FragmentFrgSanPhamChiTietBinding binding;
     SharedViewModel sharedViewModel;
     GioHangDao gioHangDao;
     private ArrayList<SanPham> list = new ArrayList<>();
+    adapter_danh_gia adapter;
+    ArrayList<DanhGia>list1=new ArrayList<>();
+    DanhGiaDao danhGiaDao;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,6 +58,8 @@ FragmentFrgSanPhamChiTietBinding binding;
         gioHangDao = new GioHangDao(getActivity());
         sharedViewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
         list = dao.getsanphamall();
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+        binding.rcvDanhGia.setLayoutManager(layoutManager);
         Bundle bundle = getArguments();
         if (bundle!= null){
             int maSanPham = bundle.getInt("maSanPham");
@@ -64,6 +74,11 @@ FragmentFrgSanPhamChiTietBinding binding;
             binding.txtSoluong.setText("Số lượng: " + String.valueOf(sanPham.getSoluong()));
             binding.txtMotaChiTiet.setText("Mô tả: " + sanPham.getMota());
             Picasso.get().load(sanPham.getAnhSanPham()).into(binding.imganhsp);
+            danhGiaDao=new DanhGiaDao(getContext());
+            list1=danhGiaDao.getDanhGiaByMaSanPham(maSanPham);
+
+            adapter = new adapter_danh_gia(list1, getContext());
+            binding.rcvDanhGia.setAdapter(adapter);
             binding.btnThemCtVaoGio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.DonHangChiTietDao;
+import fpoly.truongtqph41980.petshop.Model.DanhGia;
 import fpoly.truongtqph41980.petshop.Model.DonHangChiTiet;
 import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.adapter.adapter_don_hang_chi_tiet;
