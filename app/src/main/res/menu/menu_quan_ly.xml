@@ -42,7 +42,12 @@
         android:icon="@drawable/ic_thongke"
         android:orderInCategory="600"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/action_LichSu"
+        android:title="Lịch sử đơn hàng"
+        android:icon="@drawable/baseline_lich_su_mua"
+        android:orderInCategory="600"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_qlVeChungToi"
         android:title="Về chúng tôi"

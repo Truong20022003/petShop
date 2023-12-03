@@ -43,6 +43,7 @@ import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Model.Slideiten;
 import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
+import fpoly.truongtqph41980.petshop.adapter.adapter_don_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_slide;
 import fpoly.truongtqph41980.petshop.adapter.adapter_sp_namngang;
@@ -140,7 +141,12 @@ public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
         adapter = new adapter_trangchu(list, getContext());
         binding.rcvtrangchu.setAdapter(adapter);
         binding.rcvNamngang.setAdapter(adapteranh);
-
+        adapteranh.setOnItemClick(new adapter_don_hang.OnItemClick() {
+            @Override
+            public void onItemClick(int position) {
+                showDialogChiTietSanPham(adapteranh.getViTriSp(position));
+            }
+        });
         binding.edtimKiem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {

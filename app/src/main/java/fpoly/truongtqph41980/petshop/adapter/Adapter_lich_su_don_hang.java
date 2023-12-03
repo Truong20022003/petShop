@@ -30,6 +30,15 @@ public class Adapter_lich_su_don_hang extends RecyclerView.Adapter<Adapter_lich_
         this.context = context;
         dao = new DonHangDao(context);
     }
+    public interface OnItemClick {
+        void onItemClick(int position);
+    }
+
+    private adapter_don_hang.OnItemClick mListener;
+
+    public void setOnItemClick(adapter_don_hang.OnItemClick listener) {
+        mListener = listener;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,6 +56,15 @@ public class Adapter_lich_su_don_hang extends RecyclerView.Adapter<Adapter_lich_
         holder.binding.txtNgayDat.setText("Ngày đặt hàng: " +donHang.getNgayDatHang());
         holder.binding.txtTrangThai.setText("Trạng thái: " + donHang.getTrangthai());
         holder.binding.txtTongTien.setText("Tổng tiền: " +String.valueOf(donHang.getTongTien()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onItemClick(holder.getAdapterPosition());
+
+                }
+            }
+        });
 
     }
 

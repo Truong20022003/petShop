@@ -46,6 +46,7 @@ import fpoly.truongtqph41980.petshop.fragment.frgQuanLyNguoiDung;
 import fpoly.truongtqph41980.petshop.fragment.frgQuanLySanPham;
 import fpoly.truongtqph41980.petshop.fragment.frgTrangChu;
 import fpoly.truongtqph41980.petshop.fragment.frg_Ve_Chung_Toi;
+import fpoly.truongtqph41980.petshop.fragment.frg_lich_su_don_hang;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -72,13 +73,11 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setTitle("PetShop");
 
 
-
         handleBottomNavigationItemSelected();
         if (savedInstanceState == null) {
             replaceFragment(new frgTrangChu());
             getSupportActionBar().setTitle("Trang chủ");
         }
-
 
 
         binding.btnProFile.setOnClickListener(view ->
@@ -100,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new ThongKe());
             } else if (item.getItemId() == R.id.action_qlVeChungToi) {
                 replaceFragment(new frg_Ve_Chung_Toi());
+            } else if (item.getItemId() == R.id.action_LichSu) {
+                replaceFragment(new frg_lich_su_don_hang());
             } else if (item.getItemId() == R.id.action_qlDangXuat) {
                 Intent intent = new Intent(MainActivity.this, man_hinh_dang_nhap.class);
                 startActivity(intent);
@@ -112,17 +113,20 @@ public class MainActivity extends AppCompatActivity {
         });
         SharedPreferences sharedPreferences = getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
         String loaiTaiKhoan = sharedPreferences.getString("loaitaikhoan", "");
-        int sotien = sharedPreferences.getInt("sotien",0);
+        int sotien = sharedPreferences.getInt("sotien", 0);
+        Menu menu = navigationView.getMenu();
         if (!loaiTaiKhoan.equals("admin")) {
-            Menu menu = navigationView.getMenu();
+
             menu.findItem(R.id.action_qlnguoidung).setVisible(false);
             menu.findItem(R.id.action_qlsanpham).setVisible(false);
             menu.findItem(R.id.action_qlLoaisanpham).setVisible(false);
             menu.findItem(R.id.action_qlDonHang).setVisible(false);
             menu.findItem(R.id.action_qlNapTien).setVisible(false);
             menu.findItem(R.id.action_qlThongKe).setVisible(false);
+        }else {
+            menu.findItem(R.id.action_LichSu).setVisible(false);
         }
-        String urlAnh = sharedPreferences.getString("anhtaikhoan","");
+        String urlAnh = sharedPreferences.getString("anhtaikhoan", "");
         Picasso.get().load(urlAnh).into(binding.btnProFile);
         binding.txtSoTien.setText(String.valueOf(sotien));
 //        binding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -185,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    private void hideKeyboard(@NonNull View view) {
+    //    private void hideKeyboard(@NonNull View view) {
 //        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 //        if (imm != null) {
 //            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -214,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutMain, fragment).commit();
     }
-
 
 
 }

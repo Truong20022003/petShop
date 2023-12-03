@@ -28,7 +28,21 @@ public class adapter_sp_namngang extends RecyclerView.Adapter<adapter_sp_namngan
         spd= new SanPhamDao(context);
     }
 
+    public interface OnItemClick {
+        void onItemClick(int position);
+    }
 
+    private adapter_don_hang.OnItemClick mListener;
+
+    public void setOnItemClick(adapter_don_hang.OnItemClick listener) {
+        mListener = listener;
+    }
+    public SanPham getViTriSp(int position) {
+        if (position >= 0 && position < list.size()) {
+            return list.get(position);
+        }
+        return null;
+    }
     @NonNull
     @Override
     public ViewHol onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,7 +57,10 @@ public class adapter_sp_namngang extends RecyclerView.Adapter<adapter_sp_namngan
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onItemClick(holder.getAdapterPosition());
 
+                }
             }
         });
     }
