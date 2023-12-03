@@ -57,51 +57,7 @@ public class adapter_thanh_toan extends RecyclerView.Adapter<adapter_thanh_toan.
         holder.binding.txtThanhTien.setText("Thành tiền: " + String.valueOf(list.get(position).getThanhTien()));
         Picasso.get().load(list.get(position).getAnhsanpham()).into(holder.binding.imgAnhSp);
         DonHangChiTiet ct=list.get(position);
-//        holder.binding.btnthemdanhgia.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                LayoutInflater layoutInflater = ((Activity) context).getLayoutInflater();
-//                DialogDanhGiaBinding dialogDanhGiaBinding = DialogDanhGiaBinding.inflate(layoutInflater);
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setView(dialogDanhGiaBinding.getRoot());
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-//                dialogDanhGiaBinding.btnthembinhluan.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        String danhgia = dialogDanhGiaBinding.eddanhgia.getText().toString();
-//                        String nhanxet = dialogDanhGiaBinding.ednhanxet.getText().toString();
-//                        LocalDate currentDate = LocalDate.now();
-//                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//                        String ngayHienTai = currentDate.format(formatter);
-//                        if (danhgia.isEmpty()) {
-//                            dialogDanhGiaBinding.eddanhgia.setError("Vui lòng không để trống");
-//                        } else {
-//                            dialogDanhGiaBinding.eddanhgia.setError(null);
-//                        }
-//                        if (nhanxet.isEmpty()) {
-//                            dialogDanhGiaBinding.ednhanxet.setError("Vui lòng không để trống");
-//                        } else {
-//                            dialogDanhGiaBinding.ednhanxet.setError(null);
-//                        }
-//                        if (dialogDanhGiaBinding.eddanhgia.getError() == null && dialogDanhGiaBinding.ednhanxet.getError() == null) {
-//                            boolean check=dao2.addDanhGia(ct.getMaSanPham(), danhgia, nhanxet, ngayHienTai);
-//                            if (check) {
-//                               ArrayList<DanhGia>list1=new ArrayList<>();
-//                                list1 =dao2.getDanhGiaByMaSanPham(ct.getMaSanPham());
-//                                Toast.makeText(context, "Thêm  thành công", Toast.LENGTH_SHORT).show();
-//                                dialog.dismiss();
-//                            } else {
-//                                Toast.makeText(context, "Thêm không thành công", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }else {
-//                            Toast.makeText(context, "truong lol", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//
-//            }
-//        });
+
     }
 
     @Override

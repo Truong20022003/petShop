@@ -33,7 +33,6 @@ import com.squareup.picasso.Picasso;
 
 import fpoly.truongtqph41980.petshop.Model.Myapplication;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
-import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.databinding.ActivityMainBinding;
 import fpoly.truongtqph41980.petshop.fragment.ThongKe;
 import fpoly.truongtqph41980.petshop.fragment.frgGianHang;

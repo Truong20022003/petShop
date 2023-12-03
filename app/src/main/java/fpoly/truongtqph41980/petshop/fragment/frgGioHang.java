@@ -45,7 +45,7 @@ import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Model.viewmd;
 import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.ViewActivity.Thanh_Toan_Hoa_Don;
-import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
+
 import fpoly.truongtqph41980.petshop.adapter.adapter_don_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gian_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
@@ -69,7 +69,7 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
     private adapter_don_hang adapterDonHang;
     private frgQuanLyDonHang frgQuanLyDonHang;
     private ArrayList<DonHang> listDonHang = new ArrayList<>();
-    private SharedViewModel sharedViewModel;
+
     private DonHangChiTietDao chiTietDao;
     private ArrayList<SanPham> sanPhams = new ArrayList<>();
     private SanPhamDao sanPhamDao;
@@ -116,16 +116,7 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         donHangDao = new DonHangDao(getContext());
 
         sanPhamDao = new SanPhamDao(getContext());
-//        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-//        sharedViewModel.getMasp().observe(getViewLifecycleOwner(), masp -> {
-//
-//            if (isAdded() && isVisible()) {
-//                if (sharedViewModel.getAddToCartClicked().getValue() != null && sharedViewModel.getAddToCartClicked().getValue()) {
-//                    updateGioHangByMaSp(masp);
-//                    sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
-//                }
-//            }
-//        });
+
         list = gioHangDao.getDanhSachGioHangByMaNguoiDung(mand);
         displayCart(list);
 

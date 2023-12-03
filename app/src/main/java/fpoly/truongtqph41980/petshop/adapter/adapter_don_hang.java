@@ -122,15 +122,6 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
             dialogXoaDonHangBinding.btnConfilmXoaDonHang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    if (dao.xoaDonHang(donHang)) {
-//                        list.clear();
-//                        list.addAll(dao.getDsDonHang());
-//                        notifyDataSetChanged();
-//                        dialog.dismiss();
-//                        Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
-//                    }
                     int check = dao.xoaDonHang(list.get(holder.getAdapterPosition()).getMaDonHang());
                     switch (check) {
                         case 1:

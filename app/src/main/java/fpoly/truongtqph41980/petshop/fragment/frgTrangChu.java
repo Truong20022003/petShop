@@ -42,7 +42,7 @@ import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Model.Slideiten;
 import fpoly.truongtqph41980.petshop.R;
-import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
+
 import fpoly.truongtqph41980.petshop.adapter.adapter_don_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_slide;
@@ -61,7 +61,7 @@ public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
     ArrayList<SanPham> listdem;
     private List<Slideiten> slidelist;
     private Handler slideHanlder = new Handler(Looper.getMainLooper());
-    private SharedViewModel sharedViewModel;
+
     private adapter_gio_hang gioHangAdapter;
     private GioHangDao gioHangDao;
     private ArrayList<GioHang> gioHangArrayList = new ArrayList<>();
@@ -82,8 +82,7 @@ public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
         SharedPreferences preferences = getActivity().getSharedPreferences("NGUOIDUNG", Context.MODE_PRIVATE);
         String hoten = preferences.getString("hoten", "");
         gioHangDao = new GioHangDao(getActivity());
-//        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        sharedViewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+
         gioHangArrayList = gioHangDao.getDSGioHang();
         gioHangAdapter = new adapter_gio_hang(getActivity(), gioHangArrayList);
 
@@ -119,14 +118,7 @@ public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
                 super.onPageSelected(position);
                 slideHanlder.removeCallbacks(sildeRunnable);
                 slideHanlder.postDelayed(sildeRunnable, 3000);
-                // Kiểm tra nếu đang ở vị trí cuối cùng
-//                if (position == slidelist.size() - 1) {
-//                    // Post runnable để tự động cuộn về vị trí đầu tiên
-//                    slideHanlder.postDelayed(sildeRunnable, 3000);
-//                } else {
-//                    // Nếu không phải vị trí cuối cùng, hủy runnable
-//                    slideHanlder.removeCallbacks(sildeRunnable);
-//                }
+
             }
         });
         dao = new SanPhamDao(getContext());
@@ -134,9 +126,7 @@ public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
         listdem = dao.getsanphamall();
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         binding.rcvtrangchu.setLayoutManager(gridLayoutManager);
-//        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         binding.rcvNamngang.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
-//        binding.rcvtrangchu.setLayoutManager(gridLayoutManager);
         adapteranh = new adapter_sp_namngang(list, getContext());
         adapter = new adapter_trangchu(list, getContext());
         binding.rcvtrangchu.setAdapter(adapter);
@@ -297,42 +287,7 @@ public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
             }
         }
     }
-//    private void addToCart(SanPham sanPham) {
-//        SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
-//        int mand = sharedPreferences.getInt("mataikhoan", 0);
-//
-//        int slSanPham = getSoLuongSp(sanPham.getMasanpham());
-//
-//        if (!sharedViewModel.isProductInCart(sanPham.getMasanpham())) {
-//            // Nếu sản phẩm chưa có trong giỏ hàng
-//            if (slSanPham > 0) {
-//                // Nếu có số lượng sản phẩm > 0, thêm sản phẩm vào giỏ hàng với số lượng là 1
-//                sharedViewModel.setMasp(sanPham.getMasanpham());
-//                sharedViewModel.setAddToCartClicked(true);
-//                sharedViewModel.addProductToCart(sanPham.getMasanpham());
-//                sharedViewModel.setQuantityToAdd(1);
-//                gioHangDao.insertGioHang(new GioHang(sanPham.getMasanpham(), mand, 1));
-//                Snackbar.make(getView(), "Đã thêm vào giỏ hàng", Snackbar.LENGTH_SHORT).show();
-//
-//            } else {
-//                // Nếu số lượng sản phẩm <= 0, thông báo người dùng
-//                Toast.makeText(getActivity(), "Sản phẩm đã hết hàng", Toast.LENGTH_SHORT).show();
-//            }
-//        } else {
-//            // Nếu sản phẩm đã có trong giỏ hàng
-//            GioHang hang = gioHangDao.getGioHangByMasp(sanPham.getMasanpham(), mand);
-//            if (hang != null) {
-//                if (hang.getSoLuongMua() < slSanPham) {
-//                    hang.setSoLuongMua(hang.getSoLuongMua() + 1);
-//                    gioHangDao.updateGioHang(hang);
-//                    Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(getActivity(), "Số lượng sản phẩm đã đạt giới hạn", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//        }
-//    }
+
 
     private void updateText() {
         if (!hasMatchingProducts) {

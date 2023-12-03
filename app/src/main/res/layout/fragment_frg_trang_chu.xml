@@ -28,6 +28,7 @@
                 android:id="@+id/edtim_kiem"
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
+                android:imeOptions="actionDone"
                 android:layout_below="@+id/txttieu_de"
                 android:layout_marginHorizontal="20sp"
                 android:layout_marginTop="10sp"

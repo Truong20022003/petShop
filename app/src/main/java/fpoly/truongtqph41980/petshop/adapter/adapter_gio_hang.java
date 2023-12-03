@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
-import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
 import fpoly.truongtqph41980.petshop.databinding.ItemGioHangBinding;
 
 public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.ViewHolder> {

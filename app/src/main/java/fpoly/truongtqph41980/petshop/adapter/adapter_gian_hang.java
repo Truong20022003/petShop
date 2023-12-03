@@ -20,7 +20,7 @@ import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 
-import fpoly.truongtqph41980.petshop.Viewmd.SharedViewModel;
+
 import fpoly.truongtqph41980.petshop.databinding.ItemGianHangBinding;
 import fpoly.truongtqph41980.petshop.databinding.ItemSanphamBinding;
 

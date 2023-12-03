@@ -11,9 +11,7 @@ public class PreferenceUtils {
     public static boolean isFirstRun(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("NGUOIDUNG", Context.MODE_PRIVATE);
         boolean isFirstRun = preferences.getBoolean(KEY_FIRST_RUN, true);
-        Log.d("PreferenceUtilsssssssss", "isFirstRun: " + isFirstRun);
         if (isFirstRun) {
-            Log.d("PreferenceUtilssssssssss", "First run detected, performing necessary tasks");
             // Đây là lần đầu tiên, thực hiện các công việc cần thiết
             // ...
 
