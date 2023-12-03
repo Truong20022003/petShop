@@ -116,16 +116,16 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         donHangDao = new DonHangDao(getContext());
 
         sanPhamDao = new SanPhamDao(getContext());
-        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-        sharedViewModel.getMasp().observe(getViewLifecycleOwner(), masp -> {
-
-            if (isAdded() && isVisible()) {
-                if (sharedViewModel.getAddToCartClicked().getValue() != null && sharedViewModel.getAddToCartClicked().getValue()) {
-                    updateGioHangByMaSp(masp);
-                    sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
-                }
-            }
-        });
+//        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+//        sharedViewModel.getMasp().observe(getViewLifecycleOwner(), masp -> {
+//
+//            if (isAdded() && isVisible()) {
+//                if (sharedViewModel.getAddToCartClicked().getValue() != null && sharedViewModel.getAddToCartClicked().getValue()) {
+//                    updateGioHangByMaSp(masp);
+//                    sharedViewModel.setAddToCartClicked(true); // Đặt lại trạng thái
+//                }
+//            }
+//        });
         list = gioHangDao.getDanhSachGioHangByMaNguoiDung(mand);
         displayCart(list);
 

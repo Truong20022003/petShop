@@ -61,7 +61,12 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
     public void setOnAddToCartClickListener(OnAddToCartClickListener listener) {
         mAddToCartClickListener = listener;
     }
-
+    public SanPham getViTriSanPham(int position) {
+        if (position >= 0 && position < list.size()) {
+            return  list.get(position);
+        }
+        return null;
+    }
 
     @NonNull
     @Override
@@ -75,7 +80,7 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
         SanPham sanPham = list.get(position);
         holder.binding.txttenHat.setText("Tên sp:" + list.get(position).getTensanpham());
         holder.binding.txtgiaHat.setText("Giá sp:" + String.valueOf(list.get(position).getGia()));
-        holder.binding.txttrangThaiSanPham.setText("Số lượt bán: 200");
+        holder.binding.txttrangThaiSanPham.setText("Tồn kho: "+String.valueOf(list.get(position).getSoluong()));
         Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.binding.imgAnhspGianHang);
 
         if (list.get(position).getSoluong() == 0) {

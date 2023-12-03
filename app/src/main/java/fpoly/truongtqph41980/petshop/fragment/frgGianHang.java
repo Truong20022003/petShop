@@ -59,7 +59,6 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
     // Thiết lập listener
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,7 +82,7 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
             @Override
             public void onAddToCartClick(SanPham sanPham) {
 
-                addToCart(sanPham);
+                themVaoGio(sanPham);
 
             }
         });
@@ -91,7 +90,7 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
         adapterGianHang.setOnItemClickListener(position -> {
             Bundle bundle = new Bundle();
             bundle.putInt("maSanPham", list.get(position).getMasanpham());
-            bundle.putString("tenLoaiSP",list.get(position).getTenloaisanpham());
+            bundle.putString("tenLoaiSP", list.get(position).getTenloaisanpham());
             frgSanPhamChiTiet frgSanPhamChiTiet = new frgSanPhamChiTiet();
             frgSanPhamChiTiet.setArguments(bundle);
 
@@ -119,6 +118,70 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
     public ViewModelStore getViewModelStore() {
         return new ViewModelStore();
     }
+
+    private void themVaoGio(SanPham sanPham) {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
+        int mand = sharedPreferences.getInt("mataikhoan", 0);
+        int maSanPham = sanPham.getMasanpham();
+        int slSanPham = getSoLuongSp(maSanPham);
+        gioHangArrayList = gioHangDao.getDanhSachGioHangByMaNguoiDung(mand);
+
+        boolean isProductInCart = false;
+
+        for (GioHang gioHang : gioHangArrayList) {
+            if (gioHang.getMaSanPham() == maSanPham) {
+                isProductInCart = true;
+                if (gioHang.getSoLuongMua() < slSanPham) {
+                    gioHang.setSoLuongMua(gioHang.getSoLuongMua() + 1);
+                    gioHangDao.updateGioHang(gioHang);
+                    Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Số lượng sản phẩm đã đạt giới hạn", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
+
+        if (!isProductInCart) {
+            if (slSanPham > 0) {
+                gioHangDao.insertGioHang(new GioHang(maSanPham, mand, 1));
+            } else {
+                Toast.makeText(getActivity(), "Sản phẩm hết hàng", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+//    private void themVaoGio(SanPham sanPham) {
+//        SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
+//        int mand = sharedPreferences.getInt("mataikhoan", 0);
+//        int maSanPham = sanPham.getMasanpham();
+//        int slSanPham = getSoLuongSp(maSanPham);
+//        gioHangArrayList = gioHangDao.getDanhSachGioHangByMaNguoiDung(mand);
+//
+//            for (GioHang gioHang : gioHangArrayList) {
+//                if (gioHang.getMaSanPham() == maSanPham) {
+//                    if (slSanPham > 0) {
+//                        gioHangDao.insertGioHang(new GioHang(maSanPham, mand, 1));
+//                    } else {
+//                        Toast.makeText(getActivity(), "Sản phẩm hết hàng", Toast.LENGTH_SHORT).show();
+//                    }
+//                }else {
+//                    GioHang gioHang1 = gioHangDao.getGioHangByMasp(maSanPham, mand);
+//                    if (gioHang1 != null) {
+//                        if (gioHang1.getSoLuongMua() < slSanPham) {
+//                            gioHang1.setSoLuongMua(gioHang1.getSoLuongMua() + 1);
+//                            gioHangDao.updateGioHang(gioHang1);
+//                            Snackbar.make(getView(), "Đã cập nhật giỏ hàng thành công", Snackbar.LENGTH_SHORT).show();
+//                        } else {
+//                            Toast.makeText(getActivity(), "Số lượng sản phẩm đã đạt giới hạn", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }
+//            }
+//
+//
+//    }
 
     private void addToCart(SanPham sanPham) {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
