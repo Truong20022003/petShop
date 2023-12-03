@@ -105,7 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tenkoquantrong"
-                    android:layout_marginLeft="15sp"
+                    android:layout_marginLeft="10sp"
                     tools:listitem="@layout/item_trang_chu" />
 
             </RelativeLayout>

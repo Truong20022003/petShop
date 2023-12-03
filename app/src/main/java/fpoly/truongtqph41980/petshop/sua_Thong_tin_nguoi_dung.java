@@ -44,7 +44,12 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
         biding.edtNhapDiaChiDangKy.setText(diachi);
         biding.edtNhapSDT.setText(String.valueOf(sodienthoai));
         //////
-
+        biding.imgTroVeDangNhap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(sua_Thong_tin_nguoi_dung.this, Profile.class));
+            }
+        });
 
         biding.btnDongY.setOnClickListener(new View.OnClickListener() {
             @Override
