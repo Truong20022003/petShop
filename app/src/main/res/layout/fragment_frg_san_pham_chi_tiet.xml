@@ -147,7 +147,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvDanhGia"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/txtDanhGia"
                 tools:listitem="@layout/item_rcv_danh_gia" />
         </RelativeLayout>

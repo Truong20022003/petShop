@@ -24,8 +24,7 @@ public class DanhGia {
         this.ngayDanhGia = ngayDanhGia;
     }
 
-    public DanhGia(int maTaiKhoan, String tenTaiKhoan, int maSanPham, String tenSanPham, String danhGia, String nhanXet, String ngayDanhGia) {
-        this.maTaiKhoan = maTaiKhoan;
+    public DanhGia( String tenTaiKhoan, int maSanPham, String tenSanPham, String danhGia, String nhanXet, String ngayDanhGia) {
         this.tenTaiKhoan = tenTaiKhoan;
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;

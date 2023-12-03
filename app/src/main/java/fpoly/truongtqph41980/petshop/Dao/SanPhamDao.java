@@ -18,52 +18,56 @@ public class SanPhamDao {
     public SanPhamDao(Context context) {
         dbs = new dbHelper(context);
     }
-    public ArrayList<SanPham> getsanphamall(){
+
+    public ArrayList<SanPham> getsanphamall() {
         ArrayList<SanPham> list = new ArrayList();
         SQLiteDatabase database = dbs.getReadableDatabase();
-        Cursor cursor = database.rawQuery("select sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham,lsp.tenloaisanpham,sp.mota,sp.anhsanpham,sp.soluong from SANPHAM sp, LOAISANPHAM lsp where sp.maloaisanpham = lsp.maLoaisanpham",null);
-        if (cursor.getCount()!=0){
+        Cursor cursor = database.rawQuery("select sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham,lsp.tenloaisanpham,sp.mota,sp.anhsanpham,sp.soluong from SANPHAM sp, LOAISANPHAM lsp where sp.maloaisanpham = lsp.maLoaisanpham", null);
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
 //                int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham, String mota, String anhSanPham, int soluong
-                list.add(new SanPham(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getInt(7)));
-            }while (cursor.moveToNext());
+                list.add(new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getInt(7)));
+            } while (cursor.moveToNext());
         }
         return list;
     }
-    public boolean insert(String tensanpham, int gia, int maloaisanpham,String mota,String anhsanpham,int soluong){
+
+    public boolean insert(String tensanpham, int gia, int maloaisanpham, String mota, String anhsanpham, int soluong) {
         SQLiteDatabase db = dbs.getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put("tensanpham",tensanpham);
-        values.put("gia",gia);
-        values.put("maloaisanpham",maloaisanpham);
-        values.put("mota",mota);
-        values.put("anhsanpham",anhsanpham);
-        values.put("soluong",soluong);
-        long check = db.insert("SANPHAM",null,values);
-        if(check == -1){
+        values.put("tensanpham", tensanpham);
+        values.put("gia", gia);
+        values.put("maloaisanpham", maloaisanpham);
+        values.put("mota", mota);
+        values.put("anhsanpham", anhsanpham);
+        values.put("soluong", soluong);
+        long check = db.insert("SANPHAM", null, values);
+        if (check == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-    public boolean update(int masanpham,String tensanpham, int gia, int maloaisanpham,String mota,String anhsanpham,int soluong){
+
+    public boolean update(int masanpham, String tensanpham, int gia, int maloaisanpham, String mota, String anhsanpham, int soluong) {
         SQLiteDatabase db = dbs.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("tensanpham",tensanpham);
-        values.put("gia",gia);
-        values.put("maloaisanpham",maloaisanpham);
-        values.put("mota",mota);
-        values.put("anhsanpham",anhsanpham);
-        values.put("soluong",soluong);
+        values.put("tensanpham", tensanpham);
+        values.put("gia", gia);
+        values.put("maloaisanpham", maloaisanpham);
+        values.put("mota", mota);
+        values.put("anhsanpham", anhsanpham);
+        values.put("soluong", soluong);
 
-        long check = db.update("SANPHAM",values,"masanpham = ?", new String[]{String.valueOf(masanpham)});
-        if(check == -1){
+        long check = db.update("SANPHAM", values, "masanpham = ?", new String[]{String.valueOf(masanpham)});
+        if (check == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
+
     public int delete(int masanpham) {
         SQLiteDatabase db = dbs.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from CHITIETDONHANG where masanpham = ?", new String[]{String.valueOf(masanpham)});
@@ -85,32 +89,34 @@ public class SanPhamDao {
     private static final String COL_MOTA = "mota";
     private static final String COL_ANHSP = "anhsanpham";
     private static final String COL_SOLUONG = "soluong";
+
     // ... các phương thức khác
     @SuppressLint("Range")
     public SanPham getSanPhamById(int masanpham) {
         SQLiteDatabase database = dbs.getReadableDatabase();
         SanPham sanPham = null;
 
-        String[] columns = {COL_MASP, COL_TENSP, COL_GIA, COL_MALOAI, COL_MOTA, COL_ANHSP,COL_SOLUONG};
+        String[] columns = {COL_MASP, COL_TENSP, COL_GIA, COL_MALOAI, COL_MOTA, COL_ANHSP, COL_SOLUONG};
         String selection = COL_MASP + "=?";
         String[] selectionArgs = {String.valueOf(masanpham)};
 
         Cursor cursor = database.query("SANPHAM", columns, selection, selectionArgs, null, null, null);
 
         if (cursor.moveToFirst()) {
-             int maSanPham = cursor.getInt(cursor.getColumnIndex(COL_MASP));
+            int maSanPham = cursor.getInt(cursor.getColumnIndex(COL_MASP));
             String tenSanPham = cursor.getString(cursor.getColumnIndex(COL_TENSP));
             int gia = cursor.getInt(cursor.getColumnIndex(COL_GIA));
             int maLoaiSanPham = cursor.getInt(cursor.getColumnIndex(COL_MALOAI));
             String moTa = cursor.getString(cursor.getColumnIndex(COL_MOTA));
             String anhSanPham = cursor.getString(cursor.getColumnIndex(COL_ANHSP));
             int sl = cursor.getInt(cursor.getColumnIndex(COL_SOLUONG));
-            sanPham = new SanPham(maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham,sl);
+            sanPham = new SanPham(maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham, sl);
         }
 
         cursor.close();
         return sanPham;
     }
+
     public boolean updateSlSanPham(int maSanPham, int newQuantity) {
         SQLiteDatabase database = dbs.getWritableDatabase();
         ContentValues values = new ContentValues();

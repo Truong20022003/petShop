@@ -14,7 +14,9 @@ import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.DanhGiaDao;
 import fpoly.truongtqph41980.petshop.Dao.DonHangChiTietDao;
+import fpoly.truongtqph41980.petshop.Model.DanhGia;
 import fpoly.truongtqph41980.petshop.Model.DonHangChiTiet;
+import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.databinding.ItemDonHangChiTietBinding;
 import fpoly.truongtqph41980.petshop.databinding.ItemLsDonHangChiTietBinding;
 
@@ -29,7 +31,16 @@ public class adapter_ls_don_hang_chi_tiet  extends RecyclerView.Adapter<adapter_
         dao = new DonHangChiTietDao(context);
         dao2=new DanhGiaDao(context);
     }
+    private OnAddDanhGia mAddDanhGia;
 
+    //nút thêm vào giỏ hàng
+    public interface OnAddDanhGia {
+        void onAddDanhia(DonHangChiTiet donHangChiTiet);
+    }
+
+    public void setonAddDanhia(OnAddDanhGia listener) {
+        mAddDanhGia = listener;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,6 +59,14 @@ public class adapter_ls_don_hang_chi_tiet  extends RecyclerView.Adapter<adapter_
         holder.binding.txttensanpham.setText("Tên sản phẩm: " + list.get(position).getTenSanPham());
         Picasso.get().load(list.get(position).getAnhsanpham()).into(holder.binding.imgAnhsp);
         DonHangChiTiet ct = list.get(position);
+        holder.binding.btnDanhGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mAddDanhGia != null) {
+                    mAddDanhGia.onAddDanhia(list.get(holder.getAdapterPosition()));
+                }
+            }
+        });
     }
 
     @Override

@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imgAnhsp"
         android:layout_width="130dp"
-        android:layout_height="150sp"
+        android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop" />
 
@@ -86,17 +86,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10sp"
-            android:fontFamily="@font/baloothambi2regular"
-            android:text="Thành tiền"
-            android:gravity="center"
             android:drawableEnd="@drawable/ic_coin"
+            android:fontFamily="@font/baloothambi2regular"
+            android:gravity="center"
+            android:text="Thành tiền"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintVertical_bias="0.884" />
 
         <TextView
             android:id="@+id/txtmaChiTietDon"
@@ -128,6 +129,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.683" />
+
+        <TextView
+            android:id="@+id/btnDanhGia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đánh giá"
+            android:textColor="#3852B0"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.886"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.905" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

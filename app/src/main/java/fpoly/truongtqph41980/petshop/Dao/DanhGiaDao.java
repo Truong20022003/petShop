@@ -58,18 +58,56 @@ public class DanhGiaDao {
         }
         return list;
     }
+    public ArrayList<DanhGia> getAllDanhGia() {
+        ArrayList<DanhGia> list = new ArrayList<>();
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
 
-    public boolean addDanhGia(int maSanPham, String danhGia, String nhanXet, String ngayDanhGia) {
+        try {
+            String query = "SELECT " +
+                    "DANHGIA.madanhgia, DANHGIA.mataikhoan, TAIKHOAN.hoten, DANHGIA.masanpham, SANPHAM.tensanpham, DANHGIA.danhgia, DANHGIA.nhanxet, DANHGIA.ngaydanhgia " +
+                    "FROM DANHGIA " +
+                    "INNER JOIN TAIKHOAN ON DANHGIA.mataikhoan = TAIKHOAN.mataikhoan " +
+                    "INNER JOIN SANPHAM ON DANHGIA.masanpham = SANPHAM.masanpham";
+
+            Cursor cursor = database.rawQuery(query, null);
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    DanhGia danhGia = new DanhGia();
+                    danhGia.setMaDanhGia(cursor.getInt(0));
+                    danhGia.setMaTaiKhoan(cursor.getInt(1));
+                    danhGia.setTenTaiKhoan(cursor.getString(2));
+                    danhGia.setMaSanPham(cursor.getInt(3));
+                    danhGia.setTenSanPham(cursor.getString(4));
+                    danhGia.setDanhGia(cursor.getString(5));
+                    danhGia.setNhanXet(cursor.getString(6));
+                    danhGia.setNgayDanhGia(cursor.getString(7));
+
+                    list.add(danhGia);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Lỗi", e);
+        } finally {
+            if (database != null && database.isOpen()) {
+                database.close();
+            }
+        }
+
+        return list;
+    }
+
+    public boolean addDanhGia(int mataikhoan,int maSanPham, String danhGia, String nhanXet, String ngayDanhGia) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         try {
             // Chuẩn bị dữ liệu để chèn vào bảng DANHGIA
             ContentValues values = new ContentValues();
+            values.put("mataikhoan",mataikhoan);
             values.put("masanpham", maSanPham);
             values.put("danhgia", danhGia);
             values.put("nhanxet", nhanXet);
             values.put("ngaydanhgia", ngayDanhGia);
-
-            // Thực hiện chèn dữ liệu vào bảng DANHGIA
             long result = database.insert("DANHGIA", null, values);
 
             // Kiểm tra kết quả và trả về true nếu thành công, false nếu thất bại

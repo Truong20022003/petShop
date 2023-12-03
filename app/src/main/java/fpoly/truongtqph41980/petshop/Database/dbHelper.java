@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class dbHelper extends SQLiteOpenHelper {
     static String DB_NAME = "PetShop";
-    static int DB_VERSION = 2;
+    static int DB_VERSION = 3;
 
     public dbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -131,11 +131,11 @@ public class dbHelper extends SQLiteOpenHelper {
                 " nhanxet text not null," +
                 " ngaydanhgia text not null)";
         sqLiteDatabase.execSQL(danhGia);
-        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(1,1,2,'Tốt','Mèo rất thích','11/11/2023')");
-        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(2,5,3,'Khá tốt','Mèo rất thích','11/12/2023')");
-        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(3,4,4,'Khá tốt','Mèo rất thích','12/13/2023')");
-        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(4,3,3,'Tốt','Mèo rất thích','11/14/2023')");
-        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(5,2,2,'Tốt','Mèo rất thích','11/15/2023')");
+//        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(1,1,2,'Tốt','Mèo rất thích','11/11/2023')");
+//        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(2,5,3,'Khá tốt','Mèo rất thích','11/12/2023')");
+//        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(3,4,4,'Khá tốt','Mèo rất thích','12/13/2023')");
+//        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(4,3,3,'Tốt','Mèo rất thích','11/14/2023')");
+//        sqLiteDatabase.execSQL("INSERT INTO DANHGIA VALUES(5,2,2,'Tốt','Mèo rất thích','11/15/2023')");
     }
 
     @Override
