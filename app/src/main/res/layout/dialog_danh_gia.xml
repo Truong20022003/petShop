@@ -2,25 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10sp"
+    android:padding="5sp"
+    android:background="@color/hong_nhat"
+    android:gravity="center"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="danh gia"
+        android:text="Đánh giá sản phẩm"
+     android:textStyle="bold"
+        android:layout_marginBottom="6sp"
+        android:textColor="@color/black"
         android:textSize="30sp" />
 
     <EditText
         android:id="@+id/eddanhgia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#EDE7F6"
+        android:layout_marginBottom="10sp"
+        android:paddingVertical="15sp"
         android:hint="Nhập đánh giá" />
 
     <EditText
         android:id="@+id/ednhanxet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:paddingVertical="15sp"
+        android:background="#EDE7F6"
         android:hint="Nhập nhận xét" />
 
     <Button
@@ -28,5 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="them binh luan" />
+        android:background="#FBE7F8"
+        android:textColor="@color/mau_do"
+        android:text="Gửi" />
 </LinearLayout>
