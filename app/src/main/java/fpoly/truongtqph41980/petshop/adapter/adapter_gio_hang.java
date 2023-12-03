@@ -27,12 +27,12 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
     GioHangDao dao;
 
     private TotalPriceListener listener;
-    private SharedViewModel sharedViewModel;
 
-    public adapter_gio_hang(Context context, SharedViewModel sharedViewModel, ArrayList<GioHang> list) {
+
+    public adapter_gio_hang(Context context,  ArrayList<GioHang> list) {
         this.context = context;
         this.list = list;
-        this.sharedViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(SharedViewModel.class);
+
         dao = new GioHangDao(context);
 
     }
@@ -105,7 +105,7 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
     private void removeItem(GioHang gioHang) {
         if (dao.deleteGioHang(gioHang)) {
             list.remove(gioHang);
-            sharedViewModel.removeProductFromCart(gioHang.getMaSanPham());
+
             notifyDataSetChanged();
             updateTotalPrice();
         } else {
@@ -116,7 +116,7 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
         GioHang gioHang1=list.get(pos);
         if (dao.deleteGioHang(gioHang1)) {
             list.remove(gioHang1);
-            sharedViewModel.removeProductFromCart(gioHang1.getMaSanPham());
+
             notifyDataSetChanged();
             updateTotalPrice();
         } else {

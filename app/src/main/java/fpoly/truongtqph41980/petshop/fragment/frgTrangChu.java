@@ -85,7 +85,7 @@ public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
 //        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
         gioHangArrayList = gioHangDao.getDSGioHang();
-        gioHangAdapter = new adapter_gio_hang(getActivity(), sharedViewModel, gioHangArrayList);
+        gioHangAdapter = new adapter_gio_hang(getActivity(), gioHangArrayList);
 
         binding.txttieuDe.setText("Hi " + hoten + ".");
         slidelist = new ArrayList<>(); // Khởi tạo slidelist trước khi sử dụng

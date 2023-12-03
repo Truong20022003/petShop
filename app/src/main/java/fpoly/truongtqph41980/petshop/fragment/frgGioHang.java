@@ -85,7 +85,7 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         rcv.setLayoutManager(layoutManager);
 
         if (gioHangAdapter == null) {
-            gioHangAdapter = new adapter_gio_hang(getContext(), sharedViewModel, cartList);
+            gioHangAdapter = new adapter_gio_hang(getContext(), cartList);
             rcv.setAdapter(gioHangAdapter);
 
         } else {
@@ -104,7 +104,7 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         RecyclerView rcv = binding.rcvGioHang;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rcv.setLayoutManager(layoutManager);
-        gioHangAdapter = new adapter_gio_hang(getContext(), sharedViewModel, list);
+        gioHangAdapter = new adapter_gio_hang(getContext(), list);
         rcv.setAdapter(gioHangAdapter);
         gioHangDao = new GioHangDao(getActivity());
         ItemTouchHelper sw = new ItemTouchHelper(new swipe(gioHangAdapter));
