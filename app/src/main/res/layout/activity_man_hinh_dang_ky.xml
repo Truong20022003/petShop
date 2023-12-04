@@ -71,6 +71,7 @@
                         android:fontFamily="@font/baloothambi2regular"
                         android:hint="Gán link ảnh hoặc thêm sau"
                         android:textColorHint="@color/mau_chu"
+                        android:imeOptions="actionNext"
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -88,6 +89,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/baloothambi2regular"
                         android:hint="Nhập tên đăng nhập"
+                        android:imeOptions="actionNext"
                         android:textColorHint="@color/mau_chu"
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -109,6 +111,7 @@
                         android:id="@+id/edt_Nhap_Pass_DangKy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
                         android:fontFamily="@font/baloothambi2regular"
                         android:hint="Nhập mật khẩu"
                         android:textSize="16sp" />
@@ -131,6 +134,7 @@
                         android:id="@+id/edt_Nhap_Lai_Pass_DangKy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
                         android:fontFamily="@font/baloothambi2regular"
                         android:hint="Nhập lại mật khẩu"
                         android:textSize="16sp" />
@@ -153,6 +157,7 @@
                         android:id="@+id/edt_Nhap_Ho_Ten_DangKy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
                         android:fontFamily="@font/baloothambi2regular"
                         android:hint="Nhập họ và tên"
                         android:textSize="16sp" />
@@ -175,6 +180,7 @@
                         android:id="@+id/edt_Nhap_SDT_DangKy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
                         android:fontFamily="@font/baloothambi2regular"
                         android:hint="Nhập số điện thoại"
                         android:textSize="16sp" />
@@ -197,6 +203,7 @@
                         android:id="@+id/edt_Nhap_Dia_Chi_DangKy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
                         android:fontFamily="@font/baloothambi2regular"
                         android:hint="Nhập địa chỉ"
                         android:textSize="16sp" />
@@ -219,6 +226,8 @@
                         android:id="@+id/edt_Nhap_Email_DangKy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+
                         android:fontFamily="@font/baloothambi2regular"
                         android:hint="Nhập email"
                         android:textSize="16sp" />

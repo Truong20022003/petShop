@@ -213,6 +213,7 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
                             }
                             sanPhamDao.updateSlSanPham(gioHang.getMaSanPham(), newQuantity);
                         }
+                        //khi thanh toán thành công thì xóa những item đc chọn
                         for (GioHang selected : list) {
                             if (selected.isSelected()) {
                                 gioHangDao.deleteGioHang(selected);

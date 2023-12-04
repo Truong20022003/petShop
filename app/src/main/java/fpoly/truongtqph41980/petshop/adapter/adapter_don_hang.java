@@ -126,8 +126,9 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
                     switch (check) {
                         case 1:
                             list.clear();
-                            list = dao.getDsDonHang();
+                            list.addAll(dao.getDsDonHang());
                             notifyDataSetChanged();
+                            dialog.dismiss();
                             Toast.makeText(context, "Xóa thành công Đơn hàng", Toast.LENGTH_SHORT).show();
                             break;
                         case 0:

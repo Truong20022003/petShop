@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CompoundButton;
 
 import fpoly.truongtqph41980.petshop.Dao.NguoiDungDao;
@@ -29,6 +30,8 @@ public class man_hinh_dang_nhap extends AppCompatActivity {
         checkRemember();
         NguoiDungDao nguoiDungDao = new NguoiDungDao(this);
 
+        binding.tiedtTenDangNhap.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+        binding.tiedtNhapMatKhau.setImeOptions(EditorInfo.IME_ACTION_DONE);
         binding.btnDangNhap.setOnClickListener(view -> {
 
             String userName = binding.tiedtTenDangNhap.getText().toString();
@@ -58,8 +61,8 @@ public class man_hinh_dang_nhap extends AppCompatActivity {
                 man_hinh_dang_nhap.this.startActivity(intent);
                 this.finish();
             } else {
-                binding.tinLTenDangNhap.setError("Tên đăng nhập không đúng");
-                binding.tipLMatKhau.setError("Mật khẩu không đúng");
+                binding.tiedtTenDangNhap.setError("Tên đăng nhập không đúng");
+                binding.tiedtNhapMatKhau.setError("Mật khẩu không đúng");
             }
 
         });
