@@ -65,20 +65,12 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
 
         adapterGianHang = new adapter_gian_hang(getActivity(), list);
         binding.rcvGianHang.setAdapter(adapterGianHang);
-//        sharedViewModel = new ViewModelProvider(getViewModelStore(), ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication())).get(SharedViewModel.class);
-
         gioHangAdapter = new adapter_gio_hang(getActivity(), gioHangArrayList);
 
-        adapterGianHang.setOnAddToCartClickListener(new adapter_gian_hang.OnAddToCartClickListener() {
-            @Override
-            public void onAddToCartClick(SanPham sanPham) {
-
-                themVaoGio(sanPham);
-
-            }
-        });
+        adapterGianHang.setOnAddToCartClickListener(sanPham -> themVaoGio(sanPham));
 
         adapterGianHang.setOnItemClickListener(position -> {
+            // truyền mã đơn hàng được click để qua màn hình đơn hàng chi tiết gọi phương thức lấy ra đơn chi tiết bằng mã đơn hàng này
             Bundle bundle = new Bundle();
             bundle.putInt("maSanPham", list.get(position).getMasanpham());
             bundle.putString("tenLoaiSP", list.get(position).getTenloaisanpham());
@@ -95,6 +87,7 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
         return gView;
     }
 
+    //Phương thức để lấy ra tồn kho của sản phẩm bằng mã của sản phẩm đấy
     private int getSoLuongSp(int maSanPham) {
         for (SanPham sanPham : list) {
             if (sanPham.getMasanpham() == maSanPham) {
@@ -104,24 +97,27 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
         return 0; // Trả về 0 nếu không tìm thấy sản phẩm
     }
 
-    @NonNull
-    @Override
-    public ViewModelStore getViewModelStore() {
-        return new ViewModelStore();
-    }
-
+    //Phương thức thêm vào giỏ
     private void themVaoGio(SanPham sanPham) {
+
+        // Lấy ra nhưng thông tin cần thiết của người dùng để thực hiện công việc
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
         int mand = sharedPreferences.getInt("mataikhoan", 0);
         int maSanPham = sanPham.getMasanpham();
         int slSanPham = getSoLuongSp(maSanPham);
+
+        //Gọi phương thức lấy ra danh sách giỏ hàng của từng người dùng
         gioHangArrayList = gioHangDao.getDanhSachGioHangByMaNguoiDung(mand);
 
         boolean isProductInCart = false;
 
+        // duyệt qua danh sách giỏ hàng
         for (GioHang gioHang : gioHangArrayList) {
+
+            //nếu sản phẩm được thêm đã có trong giỏ hàng thì thực hiện thêm số lượng
             if (gioHang.getMaSanPham() == maSanPham) {
                 isProductInCart = true;
+                // nếu số lượng trong giỏ hàng của sản phẩm được thêm ít hơn số lượng sản phẩm tồn kho thì cho phép +1 vào giỏ hàng
                 if (gioHang.getSoLuongMua() < slSanPham) {
                     gioHang.setSoLuongMua(gioHang.getSoLuongMua() + 1);
                     gioHangDao.updateGioHang(gioHang);
@@ -132,7 +128,7 @@ public class frgGianHang extends Fragment implements ViewModelStoreOwner {
                 break;
             }
         }
-
+        // nếu sản phẩm được thêm vào giỏ chưa có trong giỏ thì thực hiện thêm giỏ hàng
         if (!isProductInCart) {
             if (slSanPham > 0) {
                 gioHangDao.insertGioHang(new GioHang(maSanPham, mand, 1));

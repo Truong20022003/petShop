@@ -90,7 +90,7 @@ public class dbHelper extends SQLiteOpenHelper {
 
 
 
-        //7. Bảng chi tiết đơn hàng
+        //6. Bảng chi tiết đơn hàng
         String chiTietDonHang = "CREATE TABLE CHITIETDONHANG(" +
                 "machitietdonhang integer primary key autoincrement," +
                 " madonhang integer REFERENCES DONHANG(madonhang)," +
@@ -105,7 +105,7 @@ public class dbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("INSERT INTO CHITIETDONHANG VALUES(4,2,3,2,30,30)");
         sqLiteDatabase.execSQL("INSERT INTO CHITIETDONHANG VALUES(5,3,5,5,10,10)");
 
-        //9. Bảng đánh giá
+        //7. Bảng đánh giá
         String danhGia = "CREATE TABLE DANHGIA(" +
                 "madanhgia integer primary key autoincrement," +
                 " mataikhoan integer REFERENCES TAIKHOAN(mataikhoan)," +

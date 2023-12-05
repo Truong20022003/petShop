@@ -2,26 +2,17 @@ package fpoly.truongtqph41980.petshop.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,16 +33,12 @@ import fpoly.truongtqph41980.petshop.Model.DonHang;
 import fpoly.truongtqph41980.petshop.Model.DonHangChiTiet;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
-import fpoly.truongtqph41980.petshop.Model.viewmd;
 import fpoly.truongtqph41980.petshop.R;
-import fpoly.truongtqph41980.petshop.ViewActivity.Thanh_Toan_Hoa_Don;
 
 import fpoly.truongtqph41980.petshop.adapter.adapter_don_hang;
-import fpoly.truongtqph41980.petshop.adapter.adapter_gian_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
 import fpoly.truongtqph41980.petshop.adapter.swipe;
 import fpoly.truongtqph41980.petshop.databinding.DialogConfilmThanhToanBinding;
-import fpoly.truongtqph41980.petshop.databinding.DialogThemSanPhamBinding;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgGioHangBinding;
 
 
@@ -83,11 +70,10 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         RecyclerView rcv = binding.rcvGioHang;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rcv.setLayoutManager(layoutManager);
-
+            //
         if (gioHangAdapter == null) {
             gioHangAdapter = new adapter_gio_hang(getContext(), cartList);
             rcv.setAdapter(gioHangAdapter);
-
         } else {
             gioHangAdapter.updateCartList(cartList);
             gioHangAdapter.notifyDataSetChanged();
@@ -130,17 +116,7 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
     }
 
 
-    public void updateGioHangByMaSp(int masp) {
-        if (masp > 0) {
-            ArrayList<GioHang> updatedCartList = gioHangDao.getDSGioHang();
-            list.clear();
-            list.addAll(updatedCartList);
 
-            displayCart(updatedCartList);
-            gioHangAdapter.notifyDataSetChanged();
-        } else {
-        }
-    }
 
     @Override
     public void onTotalPriceUpdated(int totalAmount) {
@@ -149,48 +125,80 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
         }
     }
 
+    //Code phương thức thanh toán
     private void showDialogThanhToan() {
+        //Mở dialog xác nhận
         LayoutInflater layoutInflater = getLayoutInflater();
         DialogConfilmThanhToanBinding thanhToanBinding = DialogConfilmThanhToanBinding.inflate(layoutInflater);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(thanhToanBinding.getRoot());
         AlertDialog dialog = builder.create();
         dialog.show();
+
+        //Thực hiện chức năng thanh toán ấn nút
         thanhToanBinding.btnThanhToan.setOnClickListener(view -> {
+
+            //kiểm tra số lượng cuả từng sản phẩm được chọn khi click thanh toán
             for (GioHang gioHang : list) {
                 if (gioHang.getSoLuong() == 0) {
                     Toast.makeText(getContext(), "Sản phẩm " + gioHang.getTenSanPham() + " đã hết hàng", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
+            // Ép kiểu tổng tiền thành kiểu Integer
             int totalAmount = Integer.parseInt(binding.txtTongTienThanhToan.getText().toString());
+            // lấy ra thông tin người dùng đã được lưu trong sharedPreferences
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("NGUOIDUNG", MODE_PRIVATE);
+            //Lấy ra mã người dùng
             int mand = sharedPreferences.getInt("mataikhoan", 0);
+            //Lấy ra số tiền hiện có trong tài khoản của người dùng
             int tienHienCo = sharedPreferences.getInt("sotien", 0);
 
+            //Lấy ra ngày tháng năm hiện tại
             LocalDate currentDate = LocalDate.now();
-
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String ngayHienTai = currentDate.format(formatter);
 
+            //Kiểm tra số tiền hiện có trong tài khoản của người dùng có đủ để thanh toán hay không
             if (tienHienCo >= totalAmount) {
+
+                //nếu tiền trong tài khoản đủ thì sẽ thực hiện trừ tiền
                 int soTienConLai = tienHienCo - totalAmount;
                 NguoiDungDao nguoiDungDao = new NguoiDungDao(getContext());
+
+                //Update lại tiền trong tài khoản của người dùng
                 if (nguoiDungDao.updateSoTien(mand, soTienConLai)) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
+                    // put lại số tiền còn lại lên SharedPreferences
                     editor.putInt("sotien", soTienConLai);
                     editor.apply();
+                    // khởi tạo đơn hàng mới khi đã lấy ra được thông tin cần thiết
+                    // mặc định trạng thái khi thanh toán thành công là chờ phê duyệt
                     DonHang donHang = new DonHang(mand, ngayHienTai, totalAmount, "Chờ phê duyệt");
+                    //insert đơn hàng vào database
                     int orderId = donHangDao.insertDonHang(donHang);
                     if (orderId != 0) {
                         listDonHang.clear();
                         listDonHang.addAll(donHangDao.getDsDonHang());
-                        if (totalAmount > 0) {
+
+                        //Kiểm tra xem đã có item nào được chọn hay chưa
+                        boolean ktraItemDuocChon = false;
+                        for (GioHang gioHang : list) {
+                            if (gioHang.isSelected()) {
+                                ktraItemDuocChon = true;
+                                break;
+                            }
+                        }
+                        //nếu đã có item được chọn để thanh toán thì thực hiện tiếp công việc
+                        if (ktraItemDuocChon) {
+                            // duyệt qua list gioHang và kiểm tra xem những item nào được chọn
                             for (GioHang gioHang : list) {
                                 if (gioHang.isSelected()) {
+                                    // lấy ra những sản phẩm được chọn để thanh toán
                                     SanPhamDao sanPhamDao = new SanPhamDao(getContext());
                                     SanPham sanPham = sanPhamDao.getSanPhamById(gioHang.getMaSanPham());
                                     if (sanPham != null) {
+                                        //thực hiện tạo chi tiết đơn hàng bằng những item giỏ hàng đã được chọn
                                         DonHangChiTiet chiTietDonHan = new DonHangChiTiet(orderId, gioHang.getMaSanPham(), gioHang.getSoLuongMua(), sanPham.getGia(), gioHang.getSoLuongMua() * sanPham.getGia());
                                         chiTietDao.insertDonHangChiTiet(chiTietDonHan);
                                     } else {
@@ -227,7 +235,9 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
 
                         Snackbar.make(getView(), "Thanh toán thành công", Snackbar.LENGTH_SHORT).show();
 
-
+                        //Sau khi thanh toán thành công
+                        // Set mã đơn hàng vừa tạo ở trên và chuyển qua màn hình frgConfilmThanhToan
+                        // để hiển thị những đơn hàng chi tiết mà người dùng vừa tạo
                         Bundle bundle = new Bundle();
                         bundle.putInt("maDonHang", orderId);
 

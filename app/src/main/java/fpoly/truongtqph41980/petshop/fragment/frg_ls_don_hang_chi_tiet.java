@@ -105,8 +105,6 @@ public class frg_ls_don_hang_chi_tiet extends Fragment {
                                     dialogDanhGiaBinding.ednhanxet.setError(null);
                                 }
                                 if (dialogDanhGiaBinding.eddanhgia.getError() == null && dialogDanhGiaBinding.ednhanxet.getError() == null) {
-                                    Log.d("danhgiaaaaaa: ", danhgia);
-                                    Log.d("nhanxettt: ", nhanxet);
                                     danhGiaDao.addDanhGia(mand,donHangChiTiet.getMaSanPham(), danhgia, nhanxet, ngayHienTai);
                                     Toast.makeText(getContext(), "Thêm  thành công", Toast.LENGTH_SHORT).show();
                                     dialogD.dismiss();
