@@ -62,6 +62,7 @@ public class frgQuanLyDonHang extends Fragment {
                 frgDonHangChiTiet.setArguments(bundle);
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
                 fragmentTransaction.replace(R.id.frameLayoutMain, frgDonHangChiTiet);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();

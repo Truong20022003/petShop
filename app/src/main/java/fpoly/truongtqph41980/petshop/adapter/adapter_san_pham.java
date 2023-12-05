@@ -129,7 +129,7 @@ public class adapter_san_pham extends RecyclerView.Adapter<adapter_san_pham.view
                         switch (check) {
                             case 1:
                                 list.clear();
-                                list = dao.getsanphamall();
+                                list.addAll(dao.getsanphamall());
                                 notifyDataSetChanged();
                                 Toast.makeText(context, "Xóa thành công sản phẩm", Toast.LENGTH_SHORT).show();
                                 break;

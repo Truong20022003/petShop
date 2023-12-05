@@ -58,6 +58,7 @@ public class frgConfilmThanhToan extends Fragment {
                 frgGioHang frgGioHang=new frgGioHang();
                 FragmentManager fragmentManager=getParentFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
                 fragmentTransaction.replace(R.id.frameLayoutMain,frgGioHang);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();

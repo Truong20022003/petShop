@@ -51,6 +51,7 @@ public class frgQuanLyNguoiDung extends Fragment {
         binding.flNguoiDung.setOnClickListener(view -> {
             frgAddNguoiDung frgAddNguoiDung = new frgAddNguoiDung();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
             transaction.replace(R.id.frameLayoutMain, frgAddNguoiDung);
             transaction.addToBackStack(null);
             transaction.commit();
