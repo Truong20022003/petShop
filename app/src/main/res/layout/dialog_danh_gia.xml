@@ -22,7 +22,7 @@
         android:id="@+id/eddanhgia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#EDE7F6"
+        android:background="@drawable/khung_button"
         android:layout_marginBottom="10sp"
         android:paddingVertical="15sp"
         android:hint="Nhập đánh giá" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10sp"
         android:paddingVertical="15sp"
-        android:background="#EDE7F6"
+        android:background="@drawable/khung_button"
         android:hint="Nhập nhận xét" />
 
     <Button
@@ -42,6 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="#FBE7F8"
-        android:textColor="@color/mau_do"
+        android:textColor="@color/mau_chu"
         android:text="Gửi" />
 </LinearLayout>

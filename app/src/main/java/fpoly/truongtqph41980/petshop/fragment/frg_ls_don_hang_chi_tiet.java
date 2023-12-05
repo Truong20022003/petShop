@@ -80,6 +80,7 @@ public class frg_ls_don_hang_chi_tiet extends Fragment {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setView(dialogDanhGiaBinding.getRoot());
                         AlertDialog dialogD = builder.create();
+                        dialogD.getWindow().setBackgroundDrawableResource(R.drawable.nen_dialog_doan);
                         dialogD.show();
 
 
