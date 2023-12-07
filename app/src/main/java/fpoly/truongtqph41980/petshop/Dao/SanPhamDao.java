@@ -14,6 +14,13 @@ import fpoly.truongtqph41980.petshop.Model.SanPham;
 
 public class SanPhamDao {
     dbHelper dbs;
+    private static final String COL_MASP = "masanpham";
+    private static final String COL_TENSP = "tensanpham";
+    private static final String COL_GIA = "gia";
+    private static final String COL_MALOAI = "maloaisanpham";
+    private static final String COL_MOTA = "mota";
+    private static final String COL_ANHSP = "anhsanpham";
+    private static final String COL_SOLUONG = "soluong";
 
     public SanPhamDao(Context context) {
         dbs = new dbHelper(context);
@@ -82,13 +89,7 @@ public class SanPhamDao {
         }
     }
 
-    private static final String COL_MASP = "masanpham";
-    private static final String COL_TENSP = "tensanpham";
-    private static final String COL_GIA = "gia";
-    private static final String COL_MALOAI = "maloaisanpham";
-    private static final String COL_MOTA = "mota";
-    private static final String COL_ANHSP = "anhsanpham";
-    private static final String COL_SOLUONG = "soluong";
+
 
     // ... các phương thức khác
     @SuppressLint("Range")
