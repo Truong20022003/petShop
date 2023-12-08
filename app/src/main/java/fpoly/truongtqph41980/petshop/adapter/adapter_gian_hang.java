@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
+import fpoly.truongtqph41980.petshop.Interface.OnAddToCart;
+import fpoly.truongtqph41980.petshop.Interface.OnItemClick;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 
@@ -39,26 +41,20 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
 
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
 
     // Biến để lưu trữ listener
-    private OnItemClickListener mListener;
+    private OnItemClick mListener;
 
     // Phương thức để thiết lập listener
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClick listener) {
         mListener = listener;
     }
 
-    private OnAddToCartClickListener mAddToCartClickListener;
+    private OnAddToCart mAddToCartClickListener;
 
-    //nút thêm vào giỏ hàng
-    public interface OnAddToCartClickListener {
-        void onAddToCartClick(SanPham sanPham);
-    }
 
-    public void setOnAddToCartClickListener(OnAddToCartClickListener listener) {
+
+    public void setOnAddToCartClickListener(OnAddToCart listener) {
         mAddToCartClickListener = listener;
     }
     public SanPham getViTriSanPham(int position) {

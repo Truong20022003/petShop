@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
+import fpoly.truongtqph41980.petshop.Interface.OnItemClick;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.databinding.ItemListSpTrangChuBinding;
 import fpoly.truongtqph41980.petshop.databinding.ItemTrangChuBinding;
@@ -28,13 +29,9 @@ public class adapter_sp_namngang extends RecyclerView.Adapter<adapter_sp_namngan
         spd= new SanPhamDao(context);
     }
 
-    public interface OnItemClick {
-        void onItemClick(int position);
-    }
+    private OnItemClick mListener;
 
-    private adapter_don_hang.OnItemClick mListener;
-
-    public void setOnItemClick(adapter_don_hang.OnItemClick listener) {
+    public void setOnItemClick(OnItemClick listener) {
         mListener = listener;
     }
     public SanPham getViTriSp(int position) {

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.DonHangChiTietDao;
 import fpoly.truongtqph41980.petshop.Dao.DonHangDao;
+import fpoly.truongtqph41980.petshop.Interface.OnItemClick;
 import fpoly.truongtqph41980.petshop.Model.DonHang;
 import fpoly.truongtqph41980.petshop.Model.DonHangChiTiet;
 import fpoly.truongtqph41980.petshop.R;
@@ -50,7 +51,7 @@ public class frgQuanLyDonHang extends Fragment {
         adapterDonHang = new adapter_don_hang(list, getContext());
         binding.rcvDonHang.setAdapter(adapterDonHang);
         chiTietDao = new DonHangChiTietDao(getContext());
-        adapterDonHang.setOnItemClick(new adapter_don_hang.OnItemClick() {
+        adapterDonHang.setOnItemClick(new OnItemClick() {
             @Override
             public void onItemClick(int position) {
                 DonHang donHang = list.get(position);

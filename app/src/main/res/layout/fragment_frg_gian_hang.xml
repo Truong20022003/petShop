@@ -3,17 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="5sp"
     android:orientation="vertical"
+    android:paddingBottom="5sp"
     tools:context=".fragment.frgGianHang">
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/btnSapXep"
-    android:background="@drawable/ic_menu"
-    android:layout_gravity="right"
-    android:layout_marginRight="15sp"
-    />
+
+
+    <Button
+        android:id="@+id/btnSapXep"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_gravity="end"
+        android:layout_marginRight="15sp"
+        android:background="@drawable/khung_sap_xep"
+        android:text="Sắp xếp"
+        android:textColor="@color/mau_hong"
+        android:textSize="13dp" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_Gian_Hang"
         android:layout_width="match_parent"

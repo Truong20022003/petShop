@@ -38,6 +38,8 @@ import java.util.List;
 
 import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
+import fpoly.truongtqph41980.petshop.Interface.OnAddToCart;
+import fpoly.truongtqph41980.petshop.Interface.OnItemClick;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.Model.Slideiten;
@@ -52,7 +54,7 @@ import fpoly.truongtqph41980.petshop.databinding.DialogChiTietSanPhamBinding;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgTrangChuBinding;
 
 
-public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
+public class frgTrangChu extends Fragment {
     View view;
     FragmentFrgTrangChuBinding binding;
     ArrayList<SanPham> list;
@@ -131,7 +133,7 @@ public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
         adapter = new adapter_trangchu(list, getContext());
         binding.rcvtrangchu.setAdapter(adapter);
         binding.rcvNamngang.setAdapter(adapteranh);
-        adapteranh.setOnItemClick(new adapter_don_hang.OnItemClick() {
+        adapteranh.setOnItemClick(new OnItemClick() {
             @Override
             public void onItemClick(int position) {
                 showDialogChiTietSanPham(adapteranh.getViTriSp(position));
@@ -204,14 +206,14 @@ public class frgTrangChu extends Fragment implements ViewModelStoreOwner {
 
         adapter.notifyDataSetChanged();
 
-        adapter.setOnAddToCartClickListenerTrangChu(new adapter_trangchu.OnAddToCartClickListenerTrangChu() {
+        adapter.setOnAddToCartClickListenerTrangChu(new OnAddToCart() {
             @Override
             public void onAddToCartClick(SanPham sanPham) {
                 themVaoGio(sanPham);
 
             }
         });
-        adapter.setOnItemClick(new adapter_trangchu.OnItemClick() {
+        adapter.setOnItemClick(new OnItemClick() {
             @Override
             public void onItemClick(int position) {
                 showDialogChiTietSanPham(adapter.getViTriSp(position));

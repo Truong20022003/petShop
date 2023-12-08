@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.DanhGiaDao;
 import fpoly.truongtqph41980.petshop.Dao.DonHangChiTietDao;
+import fpoly.truongtqph41980.petshop.Interface.OnAddDanhGia;
 import fpoly.truongtqph41980.petshop.Model.DanhGia;
 import fpoly.truongtqph41980.petshop.Model.DonHangChiTiet;
 import fpoly.truongtqph41980.petshop.R;
@@ -70,7 +71,7 @@ public class frg_ls_don_hang_chi_tiet extends Fragment {
                 list = chiTietDao.getChiTietDonHangByMaDonHang(maDonHang);
                 adapterDonHangChiTiet = new adapter_ls_don_hang_chi_tiet(list, getContext());
                 binding.rcvLichSuDonHang.setAdapter(adapterDonHangChiTiet);
-                adapterDonHangChiTiet.setonAddDanhia(new adapter_ls_don_hang_chi_tiet.OnAddDanhGia() {
+                adapterDonHangChiTiet.setonAddDanhia(new OnAddDanhGia() {
                     @Override
                     public void onAddDanhia(DonHangChiTiet donHangChiTiet) {
 

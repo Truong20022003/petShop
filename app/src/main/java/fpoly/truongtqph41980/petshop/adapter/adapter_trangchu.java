@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
+import fpoly.truongtqph41980.petshop.Interface.OnAddToCart;
+import fpoly.truongtqph41980.petshop.Interface.OnItemClick;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.databinding.ItemTrangChuBinding;
 
@@ -29,15 +31,9 @@ public class adapter_trangchu extends RecyclerView.Adapter<adapter_trangchu.View
 
         dao = new SanPhamDao(context);
     }
-    private OnAddToCartClickListenerTrangChu mAddToCartClickListener;
+    private OnAddToCart mAddToCartClickListener;
 
-    //nút thêm vào giỏ hàng
-    public interface OnAddToCartClickListenerTrangChu {
-        void onAddToCartClick(SanPham sanPham);
-    }
-    public interface OnItemClick{
-        void onItemClick(int position);
-    }
+
     private OnItemClick mListener;
     public void setOnItemClick(OnItemClick listener){
         mListener = listener;
@@ -48,7 +44,7 @@ public class adapter_trangchu extends RecyclerView.Adapter<adapter_trangchu.View
         }
         return null;
     }
-    public void setOnAddToCartClickListenerTrangChu(OnAddToCartClickListenerTrangChu listener) {
+    public void setOnAddToCartClickListenerTrangChu(OnAddToCart listener) {
         mAddToCartClickListener = listener;
     }
     @NonNull

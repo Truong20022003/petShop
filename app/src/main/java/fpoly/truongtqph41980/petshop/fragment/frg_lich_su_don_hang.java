@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.DonHangDao;
+import fpoly.truongtqph41980.petshop.Interface.OnItemClick;
 import fpoly.truongtqph41980.petshop.Model.DonHang;
 import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.adapter.Adapter_lich_su_don_hang;
@@ -48,7 +49,8 @@ FragmentFrgLichSuDonHangBinding binding;
         list = dao.getDonHangByMaTaiKhoan(mand);
         adapterDonHang = new Adapter_lich_su_don_hang(list,getActivity());
         binding.rcvLichSuDonHang.setAdapter(adapterDonHang);
-        adapterDonHang.setOnItemClick(new adapter_don_hang.OnItemClick() {
+
+        adapterDonHang.setOnItemClick(new OnItemClick() {
             @Override
             public void onItemClick(int position) {
                 DonHang donHang = list.get(position);
@@ -58,7 +60,7 @@ FragmentFrgLichSuDonHangBinding binding;
                 bundle.putInt("maDonHang", maDonHang);
                 frg_ls_don_hang_chi_tiet frgLsDonHangChiTiet = new frg_ls_don_hang_chi_tiet();
                 frgLsDonHangChiTiet.setArguments(bundle);
-                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentManager fragmentManager = frg_lich_su_don_hang.this.getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
                 fragmentTransaction.replace(R.id.frameLayoutMain, frgLsDonHangChiTiet);

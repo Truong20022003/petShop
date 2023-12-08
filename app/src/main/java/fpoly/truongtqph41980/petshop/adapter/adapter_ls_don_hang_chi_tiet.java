@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.DanhGiaDao;
 import fpoly.truongtqph41980.petshop.Dao.DonHangChiTietDao;
+import fpoly.truongtqph41980.petshop.Interface.OnAddDanhGia;
 import fpoly.truongtqph41980.petshop.Model.DanhGia;
 import fpoly.truongtqph41980.petshop.Model.DonHangChiTiet;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
@@ -32,11 +33,6 @@ public class adapter_ls_don_hang_chi_tiet  extends RecyclerView.Adapter<adapter_
         dao2=new DanhGiaDao(context);
     }
     private OnAddDanhGia mAddDanhGia;
-
-    //nút thêm vào giỏ hàng
-    public interface OnAddDanhGia {
-        void onAddDanhia(DonHangChiTiet donHangChiTiet);
-    }
 
     public void setonAddDanhia(OnAddDanhGia listener) {
         mAddDanhGia = listener;

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import fpoly.truongtqph41980.petshop.Dao.DonHangDao;
+import fpoly.truongtqph41980.petshop.Interface.OnItemClick;
 import fpoly.truongtqph41980.petshop.Model.DonHang;
 import fpoly.truongtqph41980.petshop.databinding.DialogXoaDonHangBinding;
 import fpoly.truongtqph41980.petshop.databinding.ItemQlDonHangBinding;
@@ -30,13 +31,10 @@ public class Adapter_lich_su_don_hang extends RecyclerView.Adapter<Adapter_lich_
         this.context = context;
         dao = new DonHangDao(context);
     }
-    public interface OnItemClick {
-        void onItemClick(int position);
-    }
 
-    private adapter_don_hang.OnItemClick mListener;
+    private OnItemClick mListener;
 
-    public void setOnItemClick(adapter_don_hang.OnItemClick listener) {
+    public void setOnItemClick(OnItemClick listener) {
         mListener = listener;
     }
     @NonNull
