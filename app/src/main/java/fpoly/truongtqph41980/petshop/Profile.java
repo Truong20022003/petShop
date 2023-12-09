@@ -46,8 +46,7 @@ public class Profile extends AppCompatActivity {
         binding.btnPDangXuat.setOnClickListener(view ->
                 startActivity(new Intent(Profile.this, man_hinh_dang_nhap.class))
         );
-        binding.imgBack.setOnClickListener(view ->
-                startActivity(new Intent(Profile.this, MainActivity.class))
+        binding.imgBack.setOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed()
 
         );
 

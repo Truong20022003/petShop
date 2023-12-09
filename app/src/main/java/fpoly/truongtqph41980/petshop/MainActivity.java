@@ -1,5 +1,7 @@
 package fpoly.truongtqph41980.petshop;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -128,6 +130,19 @@ public class MainActivity extends AppCompatActivity {
         String urlAnh = sharedPreferences.getString("anhtaikhoan", "");
         Picasso.get().load(urlAnh).into(binding.btnProFile);
         binding.txtSoTien.setText(String.valueOf(sotien));
+
+        OnBackPressedDispatcher onBackPressedDispatcher = getOnBackPressedDispatcher();
+        onBackPressedDispatcher.addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+    if (fragmentManager.getBackStackEntryCount() > 0) {
+        fragmentManager.popBackStack();
+    } else {
+        MainActivity.super.getOnBackPressedDispatcher().onBackPressed();
+    }
+            }
+        });
 //        binding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
 //            @Override
 //            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -179,6 +194,15 @@ public class MainActivity extends AppCompatActivity {
 //    public ViewModelStore getViewModelStore() {
 //        return viewModelStore;
 //    }
+//@Override
+//public void onBackPressed() {
+//    FragmentManager fragmentManager = getSupportFragmentManager();
+//    if (fragmentManager.getBackStackEntryCount() > 0) {
+//        fragmentManager.popBackStack();
+//    } else {
+//        super.onBackPressed();
+//    }
+//}
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

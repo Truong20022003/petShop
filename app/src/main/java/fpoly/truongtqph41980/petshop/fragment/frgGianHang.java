@@ -201,6 +201,15 @@ public class frgGianHang extends Fragment {
                     });
                     adapterGianHang.notifyDataSetChanged();
                 }
+//                else if (i == R.id.rdSoluotBan){
+//                    Toast.makeText(getContext(), "Sắp xếp theo số lượt bán", Toast.LENGTH_SHORT).show();
+//                    Collections.sort(list, new Comparator<SanPham>() {
+//                        @Override
+//                        public int compare(SanPham sanPham, SanPham t1) {
+//                            return Integer.compare(t1.);
+//                        }
+//                    });
+//                }
             }
         }));
 
