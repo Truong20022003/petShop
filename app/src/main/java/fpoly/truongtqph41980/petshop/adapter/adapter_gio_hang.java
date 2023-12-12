@@ -59,7 +59,6 @@ public class adapter_gio_hang extends RecyclerView.Adapter<adapter_gio_hang.View
                 holder.binding.chkChonSanPham.setChecked(b);
 
                 notifyDataSetChanged();
-
                 updateTotalPrice();
 
             }

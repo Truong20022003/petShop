@@ -15,7 +15,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -33,12 +36,18 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import fpoly.truongtqph41980.petshop.Dao.GioHangDao;
+import fpoly.truongtqph41980.petshop.Dao.LoaiSanPhamDao;
 import fpoly.truongtqph41980.petshop.Dao.SanPhamDao;
+import fpoly.truongtqph41980.petshop.Interface.OnButtonLoaiSP;
+import fpoly.truongtqph41980.petshop.Interface.OnItemClick;
 import fpoly.truongtqph41980.petshop.Model.GioHang;
+import fpoly.truongtqph41980.petshop.Model.LoaiSanPham;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 import fpoly.truongtqph41980.petshop.R;
+import fpoly.truongtqph41980.petshop.adapter.adapter_chon_loai_san_pham;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gian_hang;
 import fpoly.truongtqph41980.petshop.adapter.adapter_gio_hang;
+import fpoly.truongtqph41980.petshop.adapter.adapter_sp_namngang;
 import fpoly.truongtqph41980.petshop.databinding.DialogBottomsheetSapxepBinding;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgGianHangBinding;
 
@@ -52,11 +61,14 @@ public class frgGianHang extends Fragment {
     FragmentFrgGianHangBinding binding;
     View gView;
     private ArrayList<SanPham> list = new ArrayList<>();
+    private ArrayList<LoaiSanPham> listLoaiSP = new ArrayList<>();
     SanPhamDao spDao;
     adapter_gian_hang adapterGianHang;
 
     private adapter_gio_hang gioHangAdapter;
+    private LoaiSanPhamDao loaiSanPhamDao;
     private GioHangDao gioHangDao;
+    adapter_chon_loai_san_pham adapterChonLoaiSanPham;
     private ArrayList<GioHang> gioHangArrayList = new ArrayList<>();
     // Thiết lập listener
 
@@ -73,10 +85,44 @@ public class frgGianHang extends Fragment {
         binding.rcvGianHang.setLayoutManager(layoutManager);
         list = spDao.getsanphamall();
 
-
+        loaiSanPhamDao = new LoaiSanPhamDao(getContext());
+        listLoaiSP = loaiSanPhamDao.getalltheloai();
         adapterGianHang = new adapter_gian_hang(getActivity(), list);
         binding.rcvGianHang.setAdapter(adapterGianHang);
         gioHangAdapter = new adapter_gio_hang(getActivity(), gioHangArrayList);
+        binding.rcvLoaiSanPham.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
+        adapterChonLoaiSanPham = new adapter_chon_loai_san_pham(listLoaiSP, getContext());
+        binding.rcvLoaiSanPham.setAdapter(adapterChonLoaiSanPham);
+        binding.btnTatCa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapterGianHang.clearData(); // Xóa tất cả dữ liệu hiện tại trong adapter
+                list.clear(); // Xóa tất cả dữ liệu hiện tại trong danh sách
+                list.addAll(spDao.getsanphamall()); // Thêm tất cả phần tử mới vào danh sách
+                adapterGianHang.notifyDataSetChanged();
+//                list = spDao.getsanphamall();
+//                adapterGianHang.setData(list);
+//                adapterGianHang.notifyDataSetChanged();
+
+            }
+        });
+
+        adapterChonLoaiSanPham.setOnItemClickListener(new OnButtonLoaiSP() {
+            @Override
+            public void OnButtonLoaiSP(LoaiSanPham loaiSanPham) {
+                int maLoaiSanPham = loaiSanPham.getMaloaisp();
+                if (maLoaiSanPham != -1) {
+//                    list = spDao.getSanPhaByMaLoaiSanPham(maLoaiSanPham);
+//                    adapterGianHang.setData(list);
+//                    adapterGianHang.notifyDataSetChanged();
+                    adapterGianHang.clearData(); // Xóa tất cả dữ liệu hiện tại trong adapter
+                    list.clear(); // Xóa tất cả dữ liệu hiện tại trong danh sách
+                    list.addAll(spDao.getSanPhaByMaLoaiSanPham(maLoaiSanPham)); // Thêm tất cả phần tử mới vào danh sách
+                    adapterGianHang.notifyDataSetChanged();
+
+                }
+            }
+        });
         binding.btnSapXep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,65 +204,127 @@ public class frgGianHang extends Fragment {
     }
 
     private void showDialogSapXep() {
-        final Dialog dialog = new Dialog(getContext());
+        final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         DialogBottomsheetSapxepBinding layoutBinding = DialogBottomsheetSapxepBinding.inflate(getLayoutInflater());
         dialog.setContentView(layoutBinding.getRoot());
-        layoutBinding.radioGroupProduct.setOnCheckedChangeListener((new RadioGroup.OnCheckedChangeListener() {
+
+        layoutBinding.rbAZProduct.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == R.id.rbAZProduct) {
-                    Toast.makeText(getContext(), "Sắp xếp từ A - Z", Toast.LENGTH_SHORT).show();
-                    Collections.sort(list, new Comparator<SanPham>() {
-                                @Override
-                                public int compare(SanPham sanPham, SanPham t1) {
-                                    return sanPham.getTensanpham().compareToIgnoreCase(t1.getTensanpham());
-                                }
-                            });
-                            adapterGianHang.notifyDataSetChanged();
-
-                } else if (i == R.id.rbZAProduct) {
-                    Toast.makeText(getContext(), "Sắp xếp từ Z - A", Toast.LENGTH_SHORT).show();
-                    Collections.sort(list, new Comparator<SanPham>() {
-                        @Override
-                        public int compare(SanPham sanPham, SanPham t1) {
-                            return t1.getTensanpham().compareToIgnoreCase(sanPham.getTensanpham());
-                        }
-                    });
-                    adapterGianHang.notifyDataSetChanged();
-
-                } else if (i == R.id.rbGiaTangDan) {
-                    Toast.makeText(getContext(), "Sắp xếp giá tăng dần", Toast.LENGTH_SHORT).show();
-                    Collections.sort(list, new Comparator<SanPham>() {
-                        @Override
-                        public int compare(SanPham sanPham, SanPham t1) {
-                            return Integer.compare(sanPham.getGia(),t1.getGia());
-                        }
-                    });
-                    adapterGianHang.notifyDataSetChanged();
-                } else if (i == R.id.rbGiaGiamDan) {
-                    Toast.makeText(getContext(), "Sắp xếp giá giảm dần", Toast.LENGTH_SHORT).show();
-                    Collections.sort(list, new Comparator<SanPham>() {
-                        @Override
-                        public int compare(SanPham sanPham, SanPham t1) {
-                            return Integer.compare(t1.getGia(),sanPham.getGia());
-                        }
-                    });
-                    adapterGianHang.notifyDataSetChanged();
-                }else if (i == R.id.rdSoluotBan) {
-                    Toast.makeText(getContext(), "Sắp xếp theo số lượt bán giảm dần", Toast.LENGTH_SHORT).show();
-                    Collections.sort(list, new Comparator<SanPham>() {
-                        @Override
-                        public int compare(SanPham sanPham, SanPham t1) {
-                            return Integer.compare(t1.getSoLuotBanRa(),sanPham.getSoLuotBanRa());
-                        }
-                    });
-                    adapterGianHang.notifyDataSetChanged();
-                }
-
+            public void onClick(View view) {
+                Collections.sort(list, new Comparator<SanPham>() {
+                    @Override
+                    public int compare(SanPham sanPham, SanPham t1) {
+                        return sanPham.getTensanpham().compareToIgnoreCase(t1.getTensanpham());
+                    }
+                });
+                adapterGianHang.notifyDataSetChanged();
             }
-        }));
+        });
+
+        layoutBinding.rbZAProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(list, new Comparator<SanPham>() {
+                    @Override
+                    public int compare(SanPham sanPham, SanPham t1) {
+                        return t1.getTensanpham().compareToIgnoreCase(sanPham.getTensanpham());
+                    }
+                });
+                adapterGianHang.notifyDataSetChanged();
+            }
+        });
+        layoutBinding.rbGiaTangDan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(list, new Comparator<SanPham>() {
+                    @Override
+                    public int compare(SanPham sanPham, SanPham t1) {
+                        return Integer.compare(sanPham.getGia(), t1.getGia());
+                    }
+                });
+                adapterGianHang.notifyDataSetChanged();
+            }
+        });
+        layoutBinding.rbGiaGiamDan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(list, new Comparator<SanPham>() {
+                    @Override
+                    public int compare(SanPham sanPham, SanPham t1) {
+                        return Integer.compare(t1.getGia(), sanPham.getGia());
+                    }
+                });
+                adapterGianHang.notifyDataSetChanged();
+            }
+        });
+        layoutBinding.rdSoluotBan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(list, new Comparator<SanPham>() {
+                    @Override
+                    public int compare(SanPham sanPham, SanPham t1) {
+                        return Integer.compare(t1.getSoLuotBanRa(), sanPham.getSoLuotBanRa());
+                    }
+                });
+                adapterGianHang.notifyDataSetChanged();
+            }
+        });
+//        layoutBinding.radioGroupProduct.setOnCheckedChangeListener((new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//                if (i == R.id.rbAZProduct) {
+//                    Toast.makeText(getContext(), "Sắp xếp từ A - Z", Toast.LENGTH_SHORT).show();
+//                    Collections.sort(list, new Comparator<SanPham>() {
+//                        @Override
+//                        public int compare(SanPham sanPham, SanPham t1) {
+//                            return sanPham.getTensanpham().compareToIgnoreCase(t1.getTensanpham());
+//                        }
+//                    });
+//                    adapterGianHang.notifyDataSetChanged();
+//
+//                } else if (i == R.id.rbZAProduct) {
+//                    Toast.makeText(getContext(), "Sắp xếp từ Z - A", Toast.LENGTH_SHORT).show();
+//                    Collections.sort(list, new Comparator<SanPham>() {
+//                        @Override
+//                        public int compare(SanPham sanPham, SanPham t1) {
+//                            return t1.getTensanpham().compareToIgnoreCase(sanPham.getTensanpham());
+//                        }
+//                    });
+//                    adapterGianHang.notifyDataSetChanged();
+//
+//                } else if (i == R.id.rbGiaTangDan) {
+//                    Toast.makeText(getContext(), "Sắp xếp giá tăng dần", Toast.LENGTH_SHORT).show();
+//                    Collections.sort(list, new Comparator<SanPham>() {
+//                        @Override
+//                        public int compare(SanPham sanPham, SanPham t1) {
+//                            return Integer.compare(sanPham.getGia(), t1.getGia());
+//                        }
+//                    });
+//                    adapterGianHang.notifyDataSetChanged();
+//                } else if (i == R.id.rbGiaGiamDan) {
+//                    Toast.makeText(getContext(), "Sắp xếp giá giảm dần", Toast.LENGTH_SHORT).show();
+//                    Collections.sort(list, new Comparator<SanPham>() {
+//                        @Override
+//                        public int compare(SanPham sanPham, SanPham t1) {
+//                            return Integer.compare(t1.getGia(), sanPham.getGia());
+//                        }
+//                    });
+//                    adapterGianHang.notifyDataSetChanged();
+//                } else if (i == R.id.rdSoluotBan) {
+//                    Toast.makeText(getContext(), "Sắp xếp theo số lượt bán giảm dần", Toast.LENGTH_SHORT).show();
+//                    Collections.sort(list, new Comparator<SanPham>() {
+//                        @Override
+//                        public int compare(SanPham sanPham, SanPham t1) {
+//                            return Integer.compare(t1.getSoLuotBanRa(), sanPham.getSoLuotBanRa());
+//                        }
+//                    });
+//                    adapterGianHang.notifyDataSetChanged();
+//                }
+//
+//            }
+//        }));
 
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

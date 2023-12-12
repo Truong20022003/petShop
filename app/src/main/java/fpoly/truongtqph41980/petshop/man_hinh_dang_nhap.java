@@ -53,6 +53,7 @@ public class man_hinh_dang_nhap extends AppCompatActivity {
                     editor.putString("username", userName);
                     editor.putString("password", passWord);
                     editor.putBoolean("isChecked", binding.chkNhoMatKhau.isChecked());
+
                     editor.apply();
                 } else {
                     editor.clear();

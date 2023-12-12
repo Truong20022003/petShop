@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/baloothambi2semibold"
-                    android:text="Tên đăng nhập"
+                    android:text="Link ảnh"
                     android:textColor="@color/mau_chu"
                     android:textSize="18sp" />
                 <com.google.android.material.textfield.TextInputLayout
@@ -69,17 +69,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/baloothambi2regular"
-                        android:hint="Gán link ảnh hoặc thêm sau"
+                        android:hint="Gán link ảnh"
                         android:textColorHint="@color/mau_chu"
                         android:imeOptions="actionNext"
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloothambi2semibold"
+                    android:text="Tên đăng nhập"
+                    android:textColor="@color/mau_chu"
+                    android:textSize="18sp" />
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tipL_Ten_Dang_Nhap_DangKy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColorHint="@color/mau_chu"
                     android:theme="@style/PesShop2"
+
 
                     >
 

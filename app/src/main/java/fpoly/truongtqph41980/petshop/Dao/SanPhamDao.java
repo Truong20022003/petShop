@@ -146,6 +146,36 @@ public class SanPhamDao {
         // Trả về true nếu có ít nhất một hàng bị ảnh hưởng
         return rowsAffected > 0;
     }
+    public ArrayList<SanPham> getSanPhaByMaLoaiSanPham(int maLoaiSanPham) {
+        ArrayList<SanPham> list = new ArrayList();
+        SQLiteDatabase database = dbs.getReadableDatabase();
+//        SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham, String mota, String anhSanPham, int soluong,int soLuotBanRa)
+        String query = "SELECT sp.masanpham, sp.tensanpham, sp.gia, sp.maloaisanpham, lsp.tenloaisanpham, sp.mota, sp.anhsanpham, sp.soluong, sp.soluongbanra " +
+                "FROM SANPHAM sp, LOAISANPHAM lsp " +
+                "WHERE sp.maloaisanpham = lsp.maLoaisanpham AND sp.maloaisanpham = ?";
+
+        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(maLoaiSanPham)});
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                list.add(new SanPham(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getInt(2),
+                        cursor.getInt(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7),
+                        cursor.getInt(8)
+                ));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return list;
+    }
 
 
 }

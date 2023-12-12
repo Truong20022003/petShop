@@ -30,8 +30,8 @@ import fpoly.truongtqph41980.petshop.databinding.ItemGianHangBinding;
 import fpoly.truongtqph41980.petshop.databinding.ItemSanphamBinding;
 
 public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.ViewHolder> {
-    private final Context context;
-    private final ArrayList<SanPham> list;
+    private  Context context;
+    private  ArrayList<SanPham> list;
     SanPhamDao dao;
     private ArrayList<Boolean> isClickThemVaoGio;
 
@@ -43,8 +43,20 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
         dao = new SanPhamDao(context);
 
     }
+    public void setData(ArrayList<SanPham> newList) {
+        list.clear();
+        list.addAll(newList);
+        notifyDataSetChanged();
+    }
+    public void clearData() {
+        list.clear();
+        notifyDataSetChanged();
+    }
 
-
+    public void addAlll(ArrayList<SanPham> data) {
+        list.addAll(data);
+        notifyDataSetChanged();
+    }
     // Biến để lưu trữ listener
     private OnItemClick mListener;
 

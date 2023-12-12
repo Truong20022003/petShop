@@ -18,12 +18,7 @@
         <activity
             android:name=".sua_Thong_tin_nguoi_dung"
             android:exported="false" />
-        <activity
-            android:name=".lich_su_don_hang"
-            android:exported="false" />
-        <activity
-            android:name=".ViewActivity.Thanh_Toan_Hoa_Don"
-            android:exported="false" />
+
         <activity
             android:name=".ActivityManHinhCho.Man_Hinh_Cho_3"
             android:exported="false" />
@@ -36,12 +31,7 @@
         <activity
             android:name=".Profile"
             android:exported="false" />
-        <activity
-            android:name=".SanPhamCT"
-            android:exported="false" />
-        <activity
-            android:name=".VeChungToi"
-            android:exported="false" />
+
         <activity
             android:name=".man_hinh_dang_ky"
             android:exported="false" />
