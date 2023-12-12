@@ -41,7 +41,6 @@ public class Profile extends AppCompatActivity {
         binding.txtPDiaChi.setText("Địa chỉ: " + diachi);
         binding.txtPSoTien.setText("Số tiền hiện có: " + String.valueOf(tien));
         binding.txtPLoaiTaiKhoan.setText("Loại tài khoản: " + loaitaikhoan);
-//        load(list.get(position).getAnhnguoidung()).into(holder.binding.imgAnhQlNguoiDung);
         Picasso.get().load(urlAnh).into(binding.imgAvatarProfile);
         binding.btnPDangXuat.setOnClickListener(view ->
                 startActivity(new Intent(Profile.this, man_hinh_dang_nhap.class))

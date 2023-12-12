@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class dbHelper extends SQLiteOpenHelper {
     static String DB_NAME = "PetShop";
-    static int DB_VERSION = 4;
+    static int DB_VERSION = 9;
 
     public dbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -58,13 +58,14 @@ public class dbHelper extends SQLiteOpenHelper {
                 " maloaisanpham integer REFERENCES LOAISANPHAM(maloaisanpham)," +
                 " mota text not null," +
                 " anhsanpham text not null," +
-                " soluong integer not null)";
+                " soluong integer not null," +
+                " soluongbanra integer not null)";
         sqLiteDatabase.execSQL(sanPham);
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(1,'Xúc xích cho mèo',10,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.','https://cdn-img-v2.webbnc.net/uploadv2/web/12/12107/product/2019/11/11/08/48/1573462095_pro-dog-adult.jpg',12)");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(2,'Xúc xích cho chó',50,1,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.','https://pethouse.com.vn/wp-content/uploads/2023/01/ezgif-5-1e317ae8fd-800x800.jpg',222)");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(3,'Hạt cho mèo',20,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.','https://kingspet.vn/wp-content/uploads/2022/10/do-an-cho-meo-0.jpg',323)");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(4,'Pate cho mèo',30,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.','https://propetvn.com/thumbs/414x571x1/upload/photo/maximum11-2471-7550.png',22)");
-        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(5,'Túi đựng mèo',40,4,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.','https://salt.tikicdn.com/cache/w1200/media/catalog/producttmp/78/9d/63/68a697cd3ed0e2b1e7c3521a9ddf021c.jpg',0)");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(1,'Xúc xích cho mèo',10,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.','https://cdn-img-v2.webbnc.net/uploadv2/web/12/12107/product/2019/11/11/08/48/1573462095_pro-dog-adult.jpg',12,0)");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(2,'Xúc xích cho chó',50,1,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.','https://pethouse.com.vn/wp-content/uploads/2023/01/ezgif-5-1e317ae8fd-800x800.jpg',222,0)");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(3,'Hạt cho mèo',20,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.','https://kingspet.vn/wp-content/uploads/2022/10/do-an-cho-meo-0.jpg',323,0)");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(4,'Pate cho mèo',30,2,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.','https://propetvn.com/thumbs/414x571x1/upload/photo/maximum11-2471-7550.png',22,0)");
+        sqLiteDatabase.execSQL("INSERT INTO SANPHAM VALUES(5,'Túi đựng mèo',40,4,' Hạt cho mèo vị cá biển BIOLINE Cat Cod Sausage là một loại thức ăn bổ sung tươi ngon và tự nhiên cho mèo yêu của bạn. Sản phẩm được sản xuất từ thịt cá biển tươi ngon, ít chất béo, ít calo và sử dụng nước tinh khiết.','https://salt.tikicdn.com/cache/w1200/media/catalog/producttmp/78/9d/63/68a697cd3ed0e2b1e7c3521a9ddf021c.jpg',0,0)");
         //4. Bảng giỏ hàng
         String gioHang = "CREATE TABLE GIOHANG(" +
                 "magiohang integer primary key autoincrement, " +
@@ -123,10 +124,8 @@ public class dbHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS SANPHAM");
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS LOAISANPHAM");
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS GIOHANG");
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS LICHSUMUA");
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS DONHANG");
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS CHITIETDONHANG");
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS THANHTOAN");
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS DANHGIA");
             onCreate(sqLiteDatabase);
 

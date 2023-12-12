@@ -21,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -147,6 +149,8 @@ public class frgGianHang extends Fragment {
         if (!isProductInCart) {
             if (slSanPham > 0) {
                 gioHangDao.insertGioHang(new GioHang(maSanPham, mand, 1));
+                Snackbar.make(getView(), "Đã thêm vào giỏ thành công", Snackbar.LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(getActivity(), "Sản phẩm hết hàng", Toast.LENGTH_SHORT).show();
             }
@@ -200,16 +204,17 @@ public class frgGianHang extends Fragment {
                         }
                     });
                     adapterGianHang.notifyDataSetChanged();
+                }else if (i == R.id.rdSoluotBan) {
+                    Toast.makeText(getContext(), "Sắp xếp theo số lượt bán giảm dần", Toast.LENGTH_SHORT).show();
+                    Collections.sort(list, new Comparator<SanPham>() {
+                        @Override
+                        public int compare(SanPham sanPham, SanPham t1) {
+                            return Integer.compare(t1.getSoLuotBanRa(),sanPham.getSoLuotBanRa());
+                        }
+                    });
+                    adapterGianHang.notifyDataSetChanged();
                 }
-//                else if (i == R.id.rdSoluotBan){
-//                    Toast.makeText(getContext(), "Sắp xếp theo số lượt bán", Toast.LENGTH_SHORT).show();
-//                    Collections.sort(list, new Comparator<SanPham>() {
-//                        @Override
-//                        public int compare(SanPham sanPham, SanPham t1) {
-//                            return Integer.compare(t1.);
-//                        }
-//                    });
-//                }
+
             }
         }));
 

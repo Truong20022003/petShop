@@ -6,16 +6,18 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class SanPham implements Parcelable {
-private int masanpham;
-private String tensanpham;
-private int gia;
-private int maloaisanpham;
+    private int masanpham;
+    private String tensanpham;
+    private int gia;
+    private int maloaisanpham;
 
-private String tenloaisanpham;
-private String mota;
-private String anhSanPham;
-private int soluong;
-//    maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham)
+    private String tenloaisanpham;
+    private String mota;
+    private String anhSanPham;
+    private int soluong;
+    private int soLuotBanRa;
+
+    //    maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham)
     public SanPham() {
     }
 
@@ -28,7 +30,7 @@ private int soluong;
     }
 
 
-    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham, String mota, String anhSanPham, int soluong) {
+    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham, String mota, String anhSanPham, int soluong,int soLuotBanRa) {
         this.masanpham = masanpham;
         this.tensanpham = tensanpham;
         this.gia = gia;
@@ -37,9 +39,10 @@ private int soluong;
         this.mota = mota;
         this.anhSanPham = anhSanPham;
         this.soluong = soluong;
+        this.soLuotBanRa =soLuotBanRa;
     }
 
-    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String mota, String anhSanPham,int soluong) {
+    public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String mota, String anhSanPham, int soluong,int soLuotBanRa) {
         this.masanpham = masanpham;
         this.tensanpham = tensanpham;
         this.gia = gia;
@@ -47,6 +50,7 @@ private int soluong;
         this.mota = mota;
         this.anhSanPham = anhSanPham;
         this.soluong = soluong;
+        this.soLuotBanRa =soLuotBanRa;
     }
 
     public SanPham(int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham, String mota, String anhSanPham) {
@@ -55,8 +59,16 @@ private int soluong;
         this.gia = gia;
         this.maloaisanpham = maloaisanpham;
         this.tenloaisanpham = tenloaisanpham;
-        this.mota=mota;
+        this.mota = mota;
         this.anhSanPham = anhSanPham;
+    }
+
+    public int getSoLuotBanRa() {
+        return soLuotBanRa;
+    }
+
+    public void setSoLuotBanRa(int soLuotBanRa) {
+        this.soLuotBanRa = soLuotBanRa;
     }
 
     public String getAnhSanPham() {
@@ -140,7 +152,7 @@ private int soluong;
         this.tenloaisanpham = tenloaisanpham;
     }
 
-    public  SanPham(Parcel in) {
+    public SanPham(Parcel in) {
         // Đọc dữ liệu từ Parcel và đặt vào các thuộc tính
         masanpham = in.readInt();
         tensanpham = in.readString();
@@ -166,7 +178,8 @@ private int soluong;
         parcel.writeString(mota);
         parcel.writeInt(soluong);
     }
-    public static final Creator<SanPham> CREATOR = new Creator<SanPham>(){
+
+    public static final Creator<SanPham> CREATOR = new Creator<SanPham>() {
 
         @Override
         public SanPham createFromParcel(Parcel parcel) {

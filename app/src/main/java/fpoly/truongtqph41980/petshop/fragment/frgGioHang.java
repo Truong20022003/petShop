@@ -213,14 +213,17 @@ public class frgGioHang extends Fragment implements adapter_gio_hang.TotalPriceL
                         }
 
 
+
                         // Cập nhật số lượng sản phẩm sau khi thanh toán thành công
                         for (GioHang gioHang : list) {
                             int newQuantity = gioHang.getSoLuong() - gioHang.getSoLuongMua();
+                            int newSoLuongBanRa = gioHang.getSoluongbanra() + gioHang.getSoLuongMua();
                             if (newQuantity < 0) {
-                                Toast.makeText(getContext(), "Sản phẩm " + gioHang.getTenSanPham() + "không đủ số lượng trong kho", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Sản phẩm " + gioHang.getTenSanPham() + " không đủ số lượng trong kho", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            sanPhamDao.updateSlSanPham(gioHang.getMaSanPham(), newQuantity);
+                                sanPhamDao.updateSlSanPham(gioHang.getMaSanPham(), newQuantity,newSoLuongBanRa);
+
                         }
                         //khi thanh toán thành công thì xóa những item đc chọn
                         for (GioHang selected : list) {

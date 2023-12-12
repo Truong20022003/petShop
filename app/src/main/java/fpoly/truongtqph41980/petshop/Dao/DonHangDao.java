@@ -47,12 +47,6 @@ public class DonHangDao {
         return list;
     }
 
-//    public boolean xoaDonHang(DonHang donHang) {
-//        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-//        long check = sqLiteDatabase.delete("DONHANG", "madonhang = ?", new String[]{String.valueOf(donHang.getMaDonHang())});
-//        return check > 0;
-//
-//    }
 public int xoaDonHang(int madonhang) {
     SQLiteDatabase db = dbHelper.getWritableDatabase();
     Cursor cursor = db.rawQuery("select * from CHITIETDONHANG where madonhang = ?", new String[]{String.valueOf(madonhang)});

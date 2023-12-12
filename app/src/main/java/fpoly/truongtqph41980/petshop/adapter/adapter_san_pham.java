@@ -55,6 +55,15 @@ public class adapter_san_pham extends RecyclerView.Adapter<adapter_san_pham.view
         holder.txt.txttenLoaiSanPham2.setText("Tên loại sản phẩm: " + list.get(position).getTenloaisanpham());
         holder.txt.txtmoTa.setText("Mô tả: "+list.get(position).getMota());
         holder.txt.txtsoluong.setText("Số lượng: "+String.valueOf(list.get(position).getSoluong()));
+        holder.txt.txtSoLuongBanRa.setText("Số lượng đã bán: " + list.get(position).getSoLuotBanRa());
+        if (list.get(position).getSoluong() == 0){
+            holder.txt.txttrangThaiSanPham.setVisibility(View.GONE);
+            holder.txt.txttrangThaiSanPham1.setVisibility(View.VISIBLE);
+
+        }else {
+            holder.txt.txttrangThaiSanPham.setVisibility(View.VISIBLE);
+            holder.txt.txttrangThaiSanPham1.setVisibility(View.GONE);
+        }
         Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.txt.imgItemAnhSanPham);
         SanPham sp = list.get(position);
         holder.txt.btnxoa.setOnClickListener(new View.OnClickListener() {

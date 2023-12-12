@@ -21,6 +21,8 @@ public class SanPhamDao {
     private static final String COL_MOTA = "mota";
     private static final String COL_ANHSP = "anhsanpham";
     private static final String COL_SOLUONG = "soluong";
+    private static final String COL_SOLUONGBANRA = "soluongbanra";
+
 
     public SanPhamDao(Context context) {
         dbs = new dbHelper(context);
@@ -29,17 +31,27 @@ public class SanPhamDao {
     public ArrayList<SanPham> getsanphamall() {
         ArrayList<SanPham> list = new ArrayList();
         SQLiteDatabase database = dbs.getReadableDatabase();
-        Cursor cursor = database.rawQuery("select sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham,lsp.tenloaisanpham,sp.mota,sp.anhsanpham,sp.soluong from SANPHAM sp, LOAISANPHAM lsp where sp.maloaisanpham = lsp.maLoaisanpham", null);
+        Cursor cursor = database.rawQuery("select sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham,lsp.tenloaisanpham,sp.mota,sp.anhsanpham,sp.soluong, sp.soluongbanra from SANPHAM sp, LOAISANPHAM lsp where sp.maloaisanpham = lsp.maLoaisanpham", null);
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
-//                int masanpham, String tensanpham, int gia, int maloaisanpham, String tenloaisanpham, String mota, String anhSanPham, int soluong
-                list.add(new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getInt(7)));
+                list.add(new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getInt(7),cursor.getInt(8)));
             } while (cursor.moveToNext());
         }
         return list;
     }
-
+    public ArrayList<SanPham> getsanphamallSapXep() {
+        ArrayList<SanPham> list = new ArrayList();
+        SQLiteDatabase database = dbs.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select sp.masanpham, sp.tensanpham, sp.gia, lsp.maloaisanpham,lsp.tenloaisanpham,sp.mota,sp.anhsanpham,sp.soluong, sp.soluongbanra from SANPHAM sp, LOAISANPHAM lsp where sp.maloaisanpham = lsp.maLoaisanpham order by sp.soluongbanra desc", null);
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                list.add(new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getInt(7),cursor.getInt(8)));
+            } while (cursor.moveToNext());
+        }
+        return list;
+    }
     public boolean insert(String tensanpham, int gia, int maloaisanpham, String mota, String anhsanpham, int soluong) {
         SQLiteDatabase db = dbs.getReadableDatabase();
         ContentValues values = new ContentValues();
@@ -49,6 +61,7 @@ public class SanPhamDao {
         values.put("mota", mota);
         values.put("anhsanpham", anhsanpham);
         values.put("soluong", soluong);
+        values.put("soluongbanra",0);
         long check = db.insert("SANPHAM", null, values);
         if (check == -1) {
             return false;
@@ -66,7 +79,6 @@ public class SanPhamDao {
         values.put("mota", mota);
         values.put("anhsanpham", anhsanpham);
         values.put("soluong", soluong);
-
         long check = db.update("SANPHAM", values, "masanpham = ?", new String[]{String.valueOf(masanpham)});
         if (check == -1) {
             return false;
@@ -97,7 +109,7 @@ public class SanPhamDao {
         SQLiteDatabase database = dbs.getReadableDatabase();
         SanPham sanPham = null;
 
-        String[] columns = {COL_MASP, COL_TENSP, COL_GIA, COL_MALOAI, COL_MOTA, COL_ANHSP, COL_SOLUONG};
+        String[] columns = {COL_MASP, COL_TENSP, COL_GIA, COL_MALOAI, COL_MOTA, COL_ANHSP, COL_SOLUONG,COL_SOLUONGBANRA};
         String selection = COL_MASP + "=?";
         String[] selectionArgs = {String.valueOf(masanpham)};
 
@@ -111,18 +123,19 @@ public class SanPhamDao {
             String moTa = cursor.getString(cursor.getColumnIndex(COL_MOTA));
             String anhSanPham = cursor.getString(cursor.getColumnIndex(COL_ANHSP));
             int sl = cursor.getInt(cursor.getColumnIndex(COL_SOLUONG));
-            sanPham = new SanPham(maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham, sl);
+            int soluongbanra = cursor.getInt(cursor.getColumnIndex(COL_SOLUONGBANRA));
+            sanPham = new SanPham(maSanPham, tenSanPham, gia, maLoaiSanPham, moTa, anhSanPham, sl,soluongbanra);
         }
 
         cursor.close();
         return sanPham;
     }
 
-    public boolean updateSlSanPham(int maSanPham, int newQuantity) {
+    public boolean updateSlSanPham(int maSanPham, int newQuantity,int soluongbanra) {
         SQLiteDatabase database = dbs.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("soluong", newQuantity);
-
+        values.put("soluongbanra",soluongbanra);
         // Đảm bảo rằng điều kiện WHERE sử dụng mã sản phẩm đúng
         String whereClause = "masanpham = ?";
         String[] whereArgs = {String.valueOf(maSanPham)};

@@ -24,7 +24,7 @@ public class GioHangDao {
         ArrayList<GioHang> list = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         try {
-            Cursor c = database.rawQuery("SELECT GIOHANG.magiohang, GIOHANG.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia,SANPHAM.anhsanpham,SANPHAM.soluong FROM GIOHANG, SANPHAM WHERE GIOHANG.masanpham = SANPHAM.masanpham", null);
+            Cursor c = database.rawQuery("SELECT GIOHANG.magiohang, GIOHANG.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia,SANPHAM.anhsanpham,SANPHAM.soluong,SANPHAM.soluongbanra FROM GIOHANG, SANPHAM WHERE GIOHANG.masanpham = SANPHAM.masanpham", null);
             if (c.getCount() != 0) {
                 c.moveToFirst();
                 do {
@@ -37,6 +37,7 @@ public class GioHangDao {
                     gioHang.setGiaSanPham(c.getInt(5));
                     gioHang.setAnhSanPham(c.getString(6));
                     gioHang.setSoLuong(c.getInt(7));
+                    gioHang.setSoluongbanra(c.getInt(8));
                     list.add(gioHang);
                 } while (c.moveToNext());
             }
@@ -50,7 +51,7 @@ public class GioHangDao {
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         try {
             // Thêm điều kiện WHERE cho mã người dùng
-            String query = "SELECT GIOHANG.magiohang, GIOHANG.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia,SANPHAM.anhsanpham,SANPHAM.soluong " +
+            String query = "SELECT GIOHANG.magiohang, GIOHANG.masanpham, GIOHANG.mataikhoan, GIOHANG.soluong,SANPHAM.tensanpham, SANPHAM.gia,SANPHAM.anhsanpham,SANPHAM.soluong,SANPHAM.soluongbanra " +
                     "FROM GIOHANG, SANPHAM " +
                     "WHERE GIOHANG.masanpham = SANPHAM.masanpham AND GIOHANG.mataikhoan = ?";
 
@@ -67,6 +68,7 @@ public class GioHangDao {
                     gioHang.setGiaSanPham(c.getInt(5));
                     gioHang.setAnhSanPham(c.getString(6));
                     gioHang.setSoLuong(c.getInt(7));
+                    gioHang.setSoluongbanra(c.getInt(8));
                     list.add(gioHang);
                 } while (c.moveToNext());
             }

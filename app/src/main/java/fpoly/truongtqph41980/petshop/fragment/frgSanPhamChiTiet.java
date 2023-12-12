@@ -69,9 +69,11 @@ FragmentFrgSanPhamChiTietBinding binding;
             binding.txttensp.setText("Tên: "+ sanPham.getTensanpham());
             binding.txtGiaSp.setText("Giá: "+ String.valueOf(sanPham.getGia()));
             binding.txtLoaisp.setText("Loại: "+ tenLoai);
-            binding.txtSoluotban.setText("số lượt bán: 200");
+            binding.txtSoluotban.setText("số lượt bán: "+ sanPham.getSoLuotBanRa());
             binding.txtSoluong.setText("Số lượng: " + String.valueOf(sanPham.getSoluong()));
             binding.txtMotaChiTiet.setText("Mô tả: " + sanPham.getMota());
+
+
             Picasso.get().load(sanPham.getAnhSanPham()).into(binding.imganhsp);
             danhGiaDao=new DanhGiaDao(getContext());
             list1=danhGiaDao.getDanhGiaByMaSanPham(maSanPham);

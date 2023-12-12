@@ -131,18 +131,18 @@ public class MainActivity extends AppCompatActivity {
         Picasso.get().load(urlAnh).into(binding.btnProFile);
         binding.txtSoTien.setText(String.valueOf(sotien));
 
-        OnBackPressedDispatcher onBackPressedDispatcher = getOnBackPressedDispatcher();
-        onBackPressedDispatcher.addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-    if (fragmentManager.getBackStackEntryCount() > 0) {
-        fragmentManager.popBackStack();
-    } else {
-        MainActivity.super.getOnBackPressedDispatcher().onBackPressed();
-    }
-            }
-        });
+//        OnBackPressedDispatcher onBackPressedDispatcher = getOnBackPressedDispatcher();
+//        onBackPressedDispatcher.addCallback(this, new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                    FragmentManager fragmentManager = getSupportFragmentManager();
+//    if (fragmentManager.getBackStackEntryCount() > 0) {
+//        fragmentManager.popBackStack();
+//    } else {
+//        MainActivity.super.getOnBackPressedDispatcher().onBackPressed();
+//    }
+//            }
+//        });
 //        binding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
 //            @Override
 //            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {

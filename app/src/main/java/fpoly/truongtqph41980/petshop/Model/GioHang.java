@@ -11,6 +11,15 @@ public class GioHang {
     private boolean isSelected;
     private String anhSanPham;
     private int soLuong;
+    private int soluongbanra;
+
+    public int getSoluongbanra() {
+        return soluongbanra;
+    }
+
+    public void setSoluongbanra(int soluongbanra) {
+        this.soluongbanra = soluongbanra;
+    }
 
     public String getAnhSanPham() {
         return anhSanPham;

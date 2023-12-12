@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -23,6 +25,7 @@ import fpoly.truongtqph41980.petshop.Model.GioHang;
 import fpoly.truongtqph41980.petshop.Model.SanPham;
 
 
+import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.databinding.ItemGianHangBinding;
 import fpoly.truongtqph41980.petshop.databinding.ItemSanphamBinding;
 
@@ -77,6 +80,7 @@ public class adapter_gian_hang extends RecyclerView.Adapter<adapter_gian_hang.Vi
         holder.binding.txttenHat.setText("Tên sp:" + list.get(position).getTensanpham());
         holder.binding.txtgiaHat.setText("Giá sp:" + String.valueOf(list.get(position).getGia()));
         holder.binding.txttrangThaiSanPham.setText("Tồn kho: "+String.valueOf(list.get(position).getSoluong()));
+        holder.binding.txtSoluongdaban.setText("Số lượng đã bán: "+ list.get(position).getSoLuotBanRa());
         Picasso.get().load(list.get(position).getAnhSanPham()).into(holder.binding.imgAnhspGianHang);
 
         if (list.get(position).getSoluong() == 0) {

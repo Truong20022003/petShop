@@ -64,9 +64,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10sp"
                 android:fontFamily="@font/baloothambi2regular"
-                android:text="Trang thai "
+                android:text="Trạng thái: còn hàng "
                 android:textSize="20sp" />
-
+            <TextView
+                android:id="@+id/txttrang_thai_san_pham1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:fontFamily="@font/baloothambi2regular"
+                android:text="Trạng thái: hết hàng "
+                android:visibility="gone"
+                android:textColor="@color/mau_do"
+                android:textSize="20sp" />
             <TextView
                 android:id="@+id/txtgia_san_pham"
                 android:layout_width="wrap_content"
@@ -86,13 +95,20 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/txtSoLuongBanRa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="5sp"
+        android:fontFamily="@font/baloothambi2regular"
+        android:text="So luong da ban: "
+        android:textSize="20sp" />
     <TextView
         android:id="@+id/txtma_loai_san_pham2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20sp"
-        android:layout_marginTop="5sp"
         android:fontFamily="@font/baloothambi2regular"
         android:text="Ma loai san pham: "
         android:textSize="20sp" />

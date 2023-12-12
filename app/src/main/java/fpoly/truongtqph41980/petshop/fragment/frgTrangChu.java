@@ -58,6 +58,7 @@ public class frgTrangChu extends Fragment {
     View view;
     FragmentFrgTrangChuBinding binding;
     ArrayList<SanPham> list;
+    ArrayList<SanPham> listSapXep;
     SanPhamDao dao;
     adapter_trangchu adapter;
     ArrayList<SanPham> listdem;
@@ -126,10 +127,11 @@ public class frgTrangChu extends Fragment {
         dao = new SanPhamDao(getContext());
         list = dao.getsanphamall();
         listdem = dao.getsanphamall();
+        listSapXep = dao.getsanphamallSapXep();
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         binding.rcvtrangchu.setLayoutManager(gridLayoutManager);
         binding.rcvNamngang.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
-        adapteranh = new adapter_sp_namngang(list, getContext());
+        adapteranh = new adapter_sp_namngang(listSapXep, getContext());
         adapter = new adapter_trangchu(list, getContext());
         binding.rcvtrangchu.setAdapter(adapter);
         binding.rcvNamngang.setAdapter(adapteranh);

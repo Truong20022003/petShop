@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.CompoundButton;
 
@@ -29,11 +31,12 @@ public class man_hinh_dang_nhap extends AppCompatActivity {
         setContentView(binding.getRoot());
         checkRemember();
         NguoiDungDao nguoiDungDao = new NguoiDungDao(this);
-
+        Animation animation = AnimationUtils.loadAnimation(this,R.anim.anim_button);
+        binding.btnDangNhap.setAnimation(animation);
         binding.tiedtTenDangNhap.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         binding.tiedtNhapMatKhau.setImeOptions(EditorInfo.IME_ACTION_DONE);
         binding.btnDangNhap.setOnClickListener(view -> {
-
+           view.startAnimation(animation);
             String userName = binding.tiedtTenDangNhap.getText().toString();
             String passWord = binding.tiedtNhapMatKhau.getText().toString();
 
@@ -66,6 +69,7 @@ public class man_hinh_dang_nhap extends AppCompatActivity {
             }
 
         });
+
         binding.txtChuyenQuaDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

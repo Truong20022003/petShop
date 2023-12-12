@@ -57,7 +57,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10sp"
                 android:fontFamily="@font/baloothambi2regular"
-                android:text="lượt bán "
+                android:text="Tồn kho "
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/txtSoluongdaban"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:fontFamily="@font/baloothambi2regular"
+                android:text="Lượt bán ra: "
                 android:textSize="18sp" />
 
             <Button
