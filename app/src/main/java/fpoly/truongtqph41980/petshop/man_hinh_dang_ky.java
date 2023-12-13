@@ -70,6 +70,7 @@ public class man_hinh_dang_ky extends AppCompatActivity {
         String sdt = binding.edtNhapSDTDangKy.getText().toString().trim();
         String diaChi = binding.edtNhapDiaChiDangKy.getText().toString().trim();
         String email = binding.edtNhapEmailDangKy.getText().toString().trim();
+        String anh = binding.edtAnhDangKy.getText().toString().trim();
         boolean isValid = true;
         if (tenDangNhap.isEmpty()) {
             binding.tipLTenDangNhapDangKy.setError("Vui lòng nhập tên đăng nhập");
@@ -86,6 +87,12 @@ public class man_hinh_dang_ky extends AppCompatActivity {
             isValid = false;
         } else {
             binding.tipLNhapPassDangKy.setError(null);
+        }
+        if (anh.isEmpty()) {
+            binding.tipLAnhDangKy.setError("Vui lòng nhập link ảnh");
+            isValid = false;
+        } else {
+            binding.tipLAnhDangKy.setError(null);
         }
 
         if (nhapLaiMatKhau.isEmpty()) {

@@ -19,6 +19,7 @@ import fpoly.truongtqph41980.petshop.Model.NguoiDung;
 import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.adapter.adapter_nguoi_dung;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgQuanLyNguoiDungBinding;
+import fpoly.truongtqph41980.petshop.man_hinh_dang_ky;
 
 
 public class frgQuanLyNguoiDung extends Fragment {
@@ -67,8 +68,33 @@ public class frgQuanLyNguoiDung extends Fragment {
             String diaChi = bundle.getString("diaChi");
             int tien = bundle.getInt("soTien");
             String loaiTaiKhoan = bundle.getString("loaiTaiKhoan");
-            NguoiDung nd = new NguoiDung(tenDangNhap, matKhau, hoTen, email, soDienThoai, diaChi, tien, loaiTaiKhoan);
-            if (nguoiDungDao.checkDangKy(nd)) {
+            String anhtaikhoan = bundle.getString("anhTaiKhoan");
+//            nguoiDung.setTenDangNhap(binding.edtTenDangNhapDangKy.getText().toString().trim());
+//            nguoiDung.setMatKhau(binding.edtNhapPassDangKy.getText().toString().trim());
+//            nguoiDung.setHoTen(binding.edtNhapHoTenDangKy.getText().toString());
+//            nguoiDung.setSoDienThoai(binding.edtNhapSDTDangKy.getText().toString().trim());
+//            nguoiDung.setDiaChi(binding.edtNhapDiaChiDangKy.getText().toString());
+//            nguoiDung.setEmail(binding.edtNhapEmailDangKy.getText().toString().trim());
+//            nguoiDung.setSoTien(0); // Đặt số tiền mặc định khi đăng ký
+//            nguoiDung.setAnhnguoidung(binding.edtAnhDangKy.getText().toString());
+//            nguoiDung.setLoaiTaiKhoan("khachhang"); // Đặt loại tài khoản mặc định khi đăng ký
+//
+//            // Thực hiện đăng ký bằng cách thêm người dùng vào cơ sở dữ liệu
+//            NguoiDungDao dao = new NguoiDungDao(man_hinh_dang_ky.this);
+//            boolean result = dao.checkDangKy(nguoiDung);
+//            NguoiDung nd = new NguoiDung(tenDangNhap, matKhau, hoTen, email, soDienThoai, diaChi, tien, loaiTaiKhoan,anhtaikhoan);
+                NguoiDung nd = new NguoiDung();
+                nd.setTenDangNhap(tenDangNhap);
+            nd.setMatKhau(matKhau);
+            nd.setHoTen(hoTen);
+            nd.setEmail(email);
+            nd.setSoDienThoai(soDienThoai);
+            nd.setDiaChi(diaChi);
+            nd.setSoTien(tien);
+            nd.setLoaiTaiKhoan(loaiTaiKhoan);
+            nd.setAnhnguoidung(anhtaikhoan);
+            boolean kiemTra = nguoiDungDao.checkDangKy(nd);
+            if (kiemTra) {
                 list.clear();
                 list.addAll(nguoiDungDao.getAllNguoiDung());
                 adapterNguoiDung.notifyDataSetChanged();

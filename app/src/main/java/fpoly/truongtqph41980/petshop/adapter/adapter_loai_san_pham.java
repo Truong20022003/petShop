@@ -117,16 +117,38 @@ public class adapter_loai_san_pham extends RecyclerView.Adapter<adapter_loai_san
                     @Override
                     public void onClick(View v) {
                         // Xử lý khi nút "Đồng ý" được nhấn
-                        if (dao.delete(lsp)) {
-                            list.clear();
-                            list.addAll(dao.getalltheloai());
-                            notifyDataSetChanged();
-                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+
+                        int check = dao.delete(list.get(holder.getAdapterPosition()).getMaloaisp());
+                        switch (check) {
+                            case 1:
+                                list.clear();
+                                list.addAll(dao.getalltheloai());
+                                notifyDataSetChanged();
+                                Toast.makeText(context, "Xóa thành công loại sản phẩm", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 0:
+                                Toast.makeText(context, "Xóa không thành công loại sản phẩm", Toast.LENGTH_SHORT).show();
+                                break;
+                            case -1:
+                                Toast.makeText(context, "Không xóa được loai sản phẩm này vì đang còn sản phẩm trong loại", Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                break;
                         }
-                        // Đóng AlertDialog sau khi xử lý
+//                        // Đóng AlertDialog sau khi xử lý
                         dialog.dismiss();
+
+
+//                        if (dao.delete(lsp.getMaloaisp())) {
+//                            list.clear();
+//                            list.addAll(dao.getalltheloai());
+//                            notifyDataSetChanged();
+//                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+//                        }
+                        // Đóng AlertDialog sau khi xử lý
+//                        dialog.dismiss();
                     }
                 });
             }
@@ -157,41 +179,42 @@ public class adapter_loai_san_pham extends RecyclerView.Adapter<adapter_loai_san
             btnxoa = itemView.findViewById(R.id.btnxoa);
         }
     }
-    public  void dialogsualsp(LoaiSanPham lsp){
-        AlertDialog.Builder builder=new AlertDialog.Builder(context);
-        LayoutInflater inflater=((Activity)context).getLayoutInflater();
-        View view=inflater.inflate(R.layout.dialog_sualoaisanpham,null);
+
+    public void dialogsualsp(LoaiSanPham lsp) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_sualoaisanpham, null);
         builder.setView(view);
-        Dialog dialog=builder.create();
+        Dialog dialog = builder.create();
         // Thiết lập background cho AlertDialog
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.nen_dialog_doan);
         dialog.show();
-        TextInputEditText edtenlsp=view.findViewById(R.id.edten_loai_san_pham_sua);
-        TextView edmalsp=view.findViewById(R.id.txtma_loai_san_pham_sua);
-        Button btnhuy=view.findViewById(R.id.btnhuy_sualsp);
-        Button btnsua=view.findViewById(R.id.btnsualsp);
+        TextInputEditText edtenlsp = view.findViewById(R.id.edten_loai_san_pham_sua);
+        TextView edmalsp = view.findViewById(R.id.txtma_loai_san_pham_sua);
+        Button btnhuy = view.findViewById(R.id.btnhuy_sualsp);
+        Button btnsua = view.findViewById(R.id.btnsualsp);
         edtenlsp.setText(lsp.getTenloaisp());
-        edmalsp.setText("Mã loại sản phẩm: "+String.valueOf(lsp.getMaloaisp()));
+        edmalsp.setText("Mã loại sản phẩm: " + String.valueOf(lsp.getMaloaisp()));
         btnsua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 lsp.setTenloaisp(edtenlsp.getText().toString());
-                String tenlsp=edtenlsp.getText().toString();
-                if(tenlsp.isEmpty()){
-                    if(tenlsp.equals("")){
+                String tenlsp = edtenlsp.getText().toString();
+                if (tenlsp.isEmpty()) {
+                    if (tenlsp.equals("")) {
                         edtenlsp.setError("Vui lòng nhập tên loại sản phẩm");
-                    }else{
+                    } else {
                         edtenlsp.setError(null);
                     }
-                }else{
-                    if(dao.update(lsp)){
+                } else {
+                    if (dao.update(lsp)) {
                         list.clear();
                         list.addAll(dao.getalltheloai());
 //                        list=dao.getalltheloai();
                         notifyDataSetChanged();
                         dialog.dismiss();
                         Toast.makeText(context, "Update thành công", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         Toast.makeText(context, "Update không thành công", Toast.LENGTH_SHORT).show();
                     }
                 }

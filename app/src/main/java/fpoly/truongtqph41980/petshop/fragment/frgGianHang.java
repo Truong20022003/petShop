@@ -119,6 +119,7 @@ public class frgGianHang extends Fragment {
                     list.clear(); // Xóa tất cả dữ liệu hiện tại trong danh sách
                     list.addAll(spDao.getSanPhaByMaLoaiSanPham(maLoaiSanPham)); // Thêm tất cả phần tử mới vào danh sách
                     adapterGianHang.notifyDataSetChanged();
+                    Toast.makeText(getActivity(), "Bạn đã chọn: "+ loaiSanPham.getTenloaisp(), Toast.LENGTH_SHORT).show();
 
                 }
             }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
+import fpoly.truongtqph41980.petshop.Dao.NguoiDungDao;
 import fpoly.truongtqph41980.petshop.R;
 import fpoly.truongtqph41980.petshop.databinding.FragmentFrgAddNguoiDungBinding;
 
@@ -24,16 +25,17 @@ public class frgAddNguoiDung extends Fragment {
         // Required empty public constructor
     }
 
-    String tenDangNhap, matKhau, hoTen, email, soDienThoai, diaChi, loaiTaiKhoan;
+    String tenDangNhap, matKhau, hoTen, email, soDienThoai, diaChi, loaiTaiKhoan,anhTaiKhoan;
     FragmentFrgAddNguoiDungBinding binding;
 
     int soTien;
+    private NguoiDungDao dao;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFrgAddNguoiDungBinding.inflate(inflater, container, false);
-
+        dao = new NguoiDungDao(getContext());
         binding.inTenTaiKhoan.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -98,7 +100,14 @@ public class frgAddNguoiDung extends Fragment {
                 }
             }
         });
-
+        binding.inAnhTaiKhoan.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b){
+                    validUrl();
+                }
+            }
+        });
 
         binding.btnConfilmThemNguoiDung.setOnClickListener(view -> putData());
         binding.btnOutThemNguoiDung.setOnClickListener(view -> {
@@ -126,6 +135,7 @@ public class frgAddNguoiDung extends Fragment {
         validSoDienThoai();
         validSoTien();
         validLoaiTaiKhoan();
+        validUrl();
         if (binding.inTenTaiKhoan.getError() == null &&
                 binding.inMatKhau.getError() == null &&
                 binding.inHoTen.getError() == null &&
@@ -133,7 +143,8 @@ public class frgAddNguoiDung extends Fragment {
                 binding.inSoDienThoai.getError() == null &&
                 binding.inDiaChi.getError() == null &&
                 binding.inTien.getError() == null &&
-                binding.inLoaiTaiKhoan.getError() == null) {
+                binding.inLoaiTaiKhoan.getError() == null &&
+                binding.inAnhTaiKhoan.getError() == null) {
             Bundle bundle = new Bundle();
             bundle.putString("tenDangNhap", tenDangNhap);
             bundle.putString("matKhau", matKhau);
@@ -143,6 +154,7 @@ public class frgAddNguoiDung extends Fragment {
             bundle.putString("diaChi", diaChi);
             bundle.putInt("soTien", soTien);
             bundle.putString("loaiTaiKhoan", loaiTaiKhoan);
+            bundle.putString("anhTaiKhoan",anhTaiKhoan);
             frgQuanLyNguoiDung frgQuanLyNguoiDung = new frgQuanLyNguoiDung();
             frgQuanLyNguoiDung.setArguments(bundle);
             FragmentManager fragmentManager = getParentFragmentManager();
@@ -159,6 +171,8 @@ public class frgAddNguoiDung extends Fragment {
         tenDangNhap = binding.edtTenTaiKhoan.getText().toString().trim();
         if (tenDangNhap.isEmpty()) {
             binding.inTenTaiKhoan.setError("Không được để trống");
+        } else if (dao.tenDangNhapDaTonTai(tenDangNhap)) {
+            binding.inTenTaiKhoan.setError("Tên đăng nhập đã tồn tại, vui lòng chọn tên khác");
         } else {
             binding.inTenTaiKhoan.setError(null);
         }
@@ -172,7 +186,14 @@ public class frgAddNguoiDung extends Fragment {
             binding.inMatKhau.setError(null);
         }
     }
-
+    private void validUrl() {
+        anhTaiKhoan = binding.edtAnhTaiKhoan.getText().toString();
+        if (anhTaiKhoan.isEmpty()) {
+            binding.inAnhTaiKhoan.setError("Không được để trống");
+        } else {
+            binding.inAnhTaiKhoan.setError(null);
+        }
+    }
     private void validHoTen() {
         hoTen = binding.edtHoTen.getText().toString();
         if (hoTen.isEmpty()) {
