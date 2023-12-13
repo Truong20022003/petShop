@@ -1,12 +1,11 @@
 package fpoly.truongtqph41980.petshop;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +30,7 @@ public class Profile extends AppCompatActivity {
         String diachi = preferences.getString("diachi", "");
         int tien = preferences.getInt("sotien", 0);
         String loaitaikhoan = preferences.getString("loaitaikhoan", "");
-        String urlAnh = preferences.getString("anhtaikhoan","");
+        String urlAnh = preferences.getString("anhtaikhoan", "");
         binding.hiName.setText("Hi, " + hoten);
         binding.txtPMaNguoiDung.setText("Mã tài khoản: " + String.valueOf(mand));
         binding.txtPTenDangNhap.setText("Tên đăng nhập: " + tenDN);
@@ -42,17 +41,25 @@ public class Profile extends AppCompatActivity {
         binding.txtPSoTien.setText("Số tiền hiện có: " + String.valueOf(tien));
         binding.txtPLoaiTaiKhoan.setText("Loại tài khoản: " + loaitaikhoan);
         Picasso.get().load(urlAnh).into(binding.imgAvatarProfile);
-        binding.btnPDangXuat.setOnClickListener(view ->
-                startActivity(new Intent(Profile.this, man_hinh_dang_nhap.class))
+        binding.btnPDangXuat.setOnClickListener(view -> {
+                    Profile.this.startActivity(new Intent(Profile.this, man_hinh_dang_nhap.class));
+//            getOnBackPressedDispatcher().onBackPressed();
+                }
         );
-        binding.imgBack.setOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed()
+        binding.imgBack.setOnClickListener(new View.OnClickListener() {
+                                               @Override
+                                               public void onClick(View view) {
+//                                                   Profile.this.getOnBackPressedDispatcher().onBackPressed();
+                                                   Profile.this.startActivity(new Intent(Profile.this, MainActivity.class));
+                                               }
+                                           }
 
         );
 
         binding.btnhoso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Profile.this,sua_Thong_tin_nguoi_dung.class));
+                startActivity(new Intent(Profile.this, sua_Thong_tin_nguoi_dung.class));
             }
         });
     }
