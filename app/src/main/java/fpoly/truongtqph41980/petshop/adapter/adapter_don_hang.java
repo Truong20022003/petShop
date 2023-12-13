@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -77,8 +81,28 @@ public class adapter_don_hang extends RecyclerView.Adapter<adapter_don_hang.View
             Dialog dialog = builder.create();
             dialog.show();
             dialog.getWindow().setBackgroundDrawableResource(R.drawable.nen_dialog_doan);
+            dialogUpdateTrangThaiDonhangBinding.txtTrangThai.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    android.app.AlertDialog.Builder builder1 = new android.app.AlertDialog.Builder(context);
+                    builder1.setTitle("Lựa chọn trạng thái");
+                     String[] loai = {"Chờ phê duyệt","Đã phê duyệt","Đang giao hàng","Đã giao hàng"};
+
+                    builder1.setItems(loai, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialogUpdateTrangThaiDonhangBinding.txtTrangThai.setText(loai[which]);
+
+                        }
+                    });
+                    android.app.AlertDialog dialog1 = builder1.create();//tạo hộp thoại
+                    dialog1.getWindow().setBackgroundDrawableResource(R.drawable.nen_dialog_doan);
+                    dialog1.show();
+                }
+            });
             dialogUpdateTrangThaiDonhangBinding.btnxacnhanTrangthai.setOnClickListener(view12 -> {
                 String trangthai = dialogUpdateTrangThaiDonhangBinding.txtTrangThai.getText().toString();
+
                 if (trangthai.equals("")) {
                     dialogUpdateTrangThaiDonhangBinding.txtTrangThai.setError("Vui lòng không để trống trạng thái");
 

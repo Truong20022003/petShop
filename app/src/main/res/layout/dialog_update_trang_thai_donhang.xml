@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
+        android:layout_marginLeft="18sp"
         android:fontFamily="@font/baloothambi2semibold"
         android:text="Trạng thái"
         android:textColor="@color/black"
@@ -30,6 +31,9 @@
         android:layout_height="45sp"
         android:layout_margin="10sp"
         android:padding="10sp"
+        android:focusable="false"
+        android:inputType="none"
+        android:textSize="20sp"
         android:background="@drawable/vien_input_doan" />
     <FrameLayout
         android:layout_width="match_parent"

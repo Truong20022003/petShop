@@ -84,7 +84,7 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
                         if (result) {
                             list.clear();
                             list = dao.getAllNguoiDung();
-                            Intent intent = new Intent(sua_Thong_tin_nguoi_dung.this, Profile.class);
+                            Intent intent = new Intent(sua_Thong_tin_nguoi_dung.this, man_hinh_dang_nhap.class);
                             startActivity(intent);
                             Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
                         } else {
@@ -133,7 +133,7 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
         nhaplaimkmoi1 = biding.edtNhapLaiPassMoi.getText().toString();
         if (nhaplaimkmoi1.isEmpty()) {
             biding.edtNhapLaiPassMoi.setError("Vui lòng nhập lại mật khẩu");
-        } else if (nhaplaimkmoi1.equals(matkhaumoi1)) {
+        } else if (!nhaplaimkmoi1.equals(matkhaumoi1)) {
             biding.edtNhapLaiPassMoi.setError("Mật khẩu không trùng nhau");
         } else {
             biding.edtNhapLaiPassMoi.setError(null);
