@@ -174,7 +174,6 @@
             android:layout_marginTop="5sp"
             android:layout_marginRight="10sp"
             android:layout_marginBottom="12sp"
-            android:background="@drawable/khung_button"
             android:text="Đã hết hàng"
             android:textColor="@color/mau_do"
             app:layout_constraintBottom_toBottomOf="parent"

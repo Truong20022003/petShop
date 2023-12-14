@@ -42,7 +42,8 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
         biding.edtNhapHoTen.setText(hoten);
         biding.edtNhapEmailDangKy.setText(email);
         biding.edtNhapDiaChiDangKy.setText(diachi);
-        biding.edtNhapSDT.setText(String.valueOf(sodienthoai));
+        biding.edtNhapSDT.setText(sodienthoai);
+        biding.edtNhapUrl.setText(urlAnh);
         //////
         biding.imgTroVeDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +58,6 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
                 validTenDangNhap();
                 validMatKhauCu();
                 validNhapLaiMatKhauMoi();
-                validMatKhauMoi();
                 validEmail();
                 validDiaChi();
                 validHoTen();
@@ -86,7 +86,7 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
                             list = dao.getAllNguoiDung();
                             Intent intent = new Intent(sua_Thong_tin_nguoi_dung.this, man_hinh_dang_nhap.class);
                             startActivity(intent);
-                            Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đổi thông tin thành công", Toast.LENGTH_SHORT).show();
                         } else {
                             // Đăng ký thất bại
                             Toast.makeText(sua_Thong_tin_nguoi_dung.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
@@ -120,23 +120,20 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
         }
     }
 
-    private void validMatKhauMoi() {
-        matkhaumoi1 = biding.edmatKhauMoi.getText().toString();
-        if (matkhaumoi1.isEmpty()) {
-            biding.edmatKhauMoi.setError("Vui lòng nhập mật khẩu mới");
-        } else {
-            biding.edmatKhauMoi.setError(null);
-        }
-    }
+
 
     private void validNhapLaiMatKhauMoi() {
         nhaplaimkmoi1 = biding.edtNhapLaiPassMoi.getText().toString();
+        matkhaumoi1 = biding.edmatKhauMoi.getText().toString();
         if (nhaplaimkmoi1.isEmpty()) {
             biding.edtNhapLaiPassMoi.setError("Vui lòng nhập lại mật khẩu");
+        } else if (matkhaumoi1.isEmpty()) {
+            biding.edmatKhauMoi.setError("Vui lòng nhập mật khẩu mới");
         } else if (!nhaplaimkmoi1.equals(matkhaumoi1)) {
             biding.edtNhapLaiPassMoi.setError("Mật khẩu không trùng nhau");
         } else {
             biding.edtNhapLaiPassMoi.setError(null);
+            biding.edmatKhauMoi.setError(null);
         }
     }
 
@@ -182,7 +179,7 @@ public class sua_Thong_tin_nguoi_dung extends AppCompatActivity {
 
     private void validUrl() {
         anh = biding.edtNhapUrl.getText().toString();
-        if (diachi1.isEmpty()) {
+        if (anh.isEmpty()) {
             biding.edtNhapUrl.setError("Vui lòng nhập địa chỉ");
         } else {
             biding.edtNhapUrl.setError(null);

@@ -14,7 +14,7 @@ public class LoaiSanPhamDao {
     private SQLiteDatabase db;
     dbHelper dbHelper;
     public LoaiSanPhamDao(Context context) {
-         dbHelper = new dbHelper(context);
+        dbHelper dbHelper = new dbHelper(context);
         db = dbHelper.getWritableDatabase();
     }
     public boolean insert(String tenloai){
@@ -39,7 +39,7 @@ public class LoaiSanPhamDao {
         }
     }
     public int delete(int maloai){
-         db = dbHelper.getWritableDatabase();
+        db = dbHelper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from SANPHAM where maloaisanpham = ?", new String[]{String.valueOf(maloai)});
         if (cursor.getCount() != 0) {
             return -1;

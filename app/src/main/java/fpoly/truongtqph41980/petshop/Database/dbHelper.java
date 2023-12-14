@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class dbHelper extends SQLiteOpenHelper {
     static String DB_NAME = "PetShop";
-    static int DB_VERSION = 21;
+    static int DB_VERSION = 22;
 
     public dbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
