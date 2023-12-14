@@ -116,11 +116,30 @@ public class NguoiDungDao {
         cursor.close();
         return tonTai;
     }
-
-    public boolean xoaNguoiDung(NguoiDung nd) {
+//    SQLiteDatabase db = dbs.getWritableDatabase();
+//    Cursor cursor = db.rawQuery("select * from CHITIETDONHANG where masanpham = ?", new String[]{String.valueOf(masanpham)});
+//        if (cursor.getCount() != 0) {
+//        return -1;
+//    }
+//    long check = db.delete("SANPHAM", "masanpham = ?", new String[]{String.valueOf(masanpham)});
+//        if (check == -1) {
+//        return 0;
+//    } else {
+//        return 1;
+//    }
+    public int xoaNguoiDung(int mand) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        long check = database.delete("TAIKHOAN", "mataikhoan = ?", new String[]{String.valueOf(nd.getMaTaiKhoan())});
-        return check > 0;
+        Cursor cursor = database.rawQuery("Select * from DONHANG where mataikhoan = ?",new String[]{String.valueOf(mand)});
+        if (cursor.getCount()!= 0){
+            return -1;
+        }
+
+        long check = database.delete("TAIKHOAN", "mataikhoan = ?", new String[]{String.valueOf(mand)});
+        if (check == -1){
+            return 0;
+        }else {
+            return 1;
+        }
     }
 
     public boolean update(int manguoidung, String tennguoidung, int sotien) {

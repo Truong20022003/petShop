@@ -40,7 +40,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_anh_tai_khoan"
                 android:layout_width="match_parent"
-                android:layout_height="45sp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
                 android:background="@drawable/vien_input_doan"
                 android:fontFamily="@font/baloothambi2semibold"

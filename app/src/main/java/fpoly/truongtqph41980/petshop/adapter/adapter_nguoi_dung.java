@@ -66,15 +66,34 @@ public class adapter_nguoi_dung extends RecyclerView.Adapter<adapter_nguoi_dung.
                 dialogXoaNguoiDungBinding.btnConfilmXoaNguoiDung.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (dao.xoaNguoiDung(nguoiDung)){
-                            list.clear();
-                            list.addAll(dao.getAllNguoiDung());
-                            notifyDataSetChanged();
-                            dialog.dismiss();
-                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+                        int check = dao.xoaNguoiDung(list.get(holder.getAdapterPosition()).getMaTaiKhoan());
+                        switch (check) {
+                            case 1:
+                                list.clear();
+                                list.addAll(dao.getAllNguoiDung());
+                                notifyDataSetChanged();
+                                Toast.makeText(context, "Xóa thành công người dùng", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 0:
+                                Toast.makeText(context, "Xóa không thành công người dùng", Toast.LENGTH_SHORT).show();
+                                break;
+                            case -1:
+                                Toast.makeText(context, "Không xóa được người dùng này vì đang còn tồn tại trong hóa đơn", Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                break;
                         }
+                        // Đóng AlertDialog sau khi xử lý
+                        dialog.dismiss();
+//                        if (dao.xoaNguoiDung(nguoiDung)){
+//                            list.clear();
+//                            list.addAll(dao.getAllNguoiDung());
+//                            notifyDataSetChanged();
+//                            dialog.dismiss();
+//                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+//                        }else {
+//                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+//                        }
                     }
                 });
                 dialogXoaNguoiDungBinding.btnOutXoaNguoiDung.setOnClickListener(new View.OnClickListener() {
